@@ -24,8 +24,8 @@ parts:
     chapters:
     - url: https://q.utoronto.ca/files/29800489/download?download_frd=1 
       title: Prof. Parins-Fukuchi's Slides
-    - file: weekly-materials/week01/lecture/Class1_EEB125_KR.ipynb
-      title: Prof. Reid's Notebook
+    #- file: weekly-materials/week01/lecture/week1_kp.ipynb
+    #  title: Prof. Reid's Notebook
     - file: weekly-materials/week01/homework/Homework_1.ipynb
       title: Week 1 Homework
 

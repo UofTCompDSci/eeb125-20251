@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="115.03389mm"
+   height="94.074043mm"
+   viewBox="0 0 115.03389 94.074041"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="trees_phylogeny.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.2935413"
+     inkscape:cx="81.55905"
+     inkscape:cy="156.93353"
+     inkscape:window-width="1920"
+     inkscape:window-height="1094"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="TriangleStart"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="2.3239999"
+       markerHeight="2.6867051"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0.80247924,-114.26373)">
+    <path
+       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:#666666;stroke-width:0.600001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+       d="m 50.598494,189.13084 20.518427,8.60562"
+       id="path4172" />
+    <path
+       style="fill:#000000;stroke:#666666;stroke-width:0.6;stroke-dasharray:none;stop-color:#000000"
+       d="m 31.714424,158.10779 15.695692,4.10623"
+       id="path4176" />
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.7;-inkscape-stroke:none;stop-color:#000000"
+       x="-11.341654"
+       y="168.84116"
+       id="text354"
+       transform="rotate(-30)"><tspan
+         sodipodi:role="line"
+         id="tspan352"
+         style="fill:#000000;stroke:none;stroke-width:0.7"
+         x="-11.341654"
+         y="168.84116">species1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.7;-inkscape-stroke:none;stop-color:#000000"
+       x="-170.255"
+       y="4.248034"
+       id="text354-0-5"
+       transform="rotate(-90)"><tspan
+         sodipodi:role="line"
+         id="tspan352-8-2"
+         style="fill:#000000;stroke:none;stroke-width:0.7"
+         x="-170.255"
+         y="4.248034">time</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.7;-inkscape-stroke:none;stop-color:#000000"
+       x="25.957796"
+       y="159.85199"
+       id="text354-1"
+       transform="rotate(-30)"><tspan
+         sodipodi:role="line"
+         id="tspan352-5"
+         style="fill:#000000;stroke:none;stroke-width:0.7"
+         x="25.957796"
+         y="159.85199">species3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.7;-inkscape-stroke:none;stop-color:#000000"
+       x="-41.545559"
+       y="133.68526"
+       id="text354-1-5"
+       transform="rotate(-30)"><tspan
+         sodipodi:role="line"
+         id="tspan352-5-1"
+         style="fill:#000000;stroke:none;stroke-width:0.7"
+         x="-41.545559"
+         y="133.68526">species4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.7;-inkscape-stroke:none;stop-color:#000000"
+       x="-29.767372"
+       y="152.48624"
+       id="text354-0"
+       transform="rotate(-30)"><tspan
+         sodipodi:role="line"
+         id="tspan352-8"
+         style="fill:#000000;stroke:none;stroke-width:0.7"
+         x="-29.767372"
+         y="152.48624">species2</tspan></text>
+    <rect
+       style="fill:#000000;stroke:none;stroke-width:2;stop-color:#000000"
+       id="rect3250"
+       width="3.8862953"
+       height="53.137817"
+       x="71.11396"
+       y="155.19995" />
+    <rect
+       style="fill:#000000;stroke:none;stroke-width:1.68351;stop-color:#000000"
+       id="rect3250-5"
+       width="3.8862953"
+       height="37.650818"
+       x="47.410122"
+       y="151.51401" />
+    <rect
+       style="fill:#000000;stroke:none;stroke-width:1.42657;stop-color:#000000"
+       id="rect3250-5-7"
+       width="3.8862953"
+       height="27.034904"
+       x="99.374397"
+       y="129.95486" />
+    <rect
+       style="fill:#000000;stroke:none;stroke-width:1.12031;stop-color:#000000"
+       id="rect3250-5-7-4"
+       width="3.8862953"
+       height="16.673161"
+       x="27.828125"
+       y="141.43463" />
+    <path
+       style="fill:#000000;stroke:#666666;stroke-width:2;marker-end:url(#TriangleStart);stop-color:#000000"
+       d="M 7.048717,204.38801 8.275968,141.43463"
+       id="path3464" />
+    <path
+       style="fill:#000000;stroke:#666666;stroke-width:0.600001;stroke-dasharray:none;stop-color:#000000"
+       d="m 99.374395,156.98977 -24.374141,5.22425"
+       id="path4178" />
+  </g>
+</svg>

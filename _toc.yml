@@ -22,7 +22,7 @@ parts:
 
   - caption: Week 1
     chapters:
-    - url: https://q.utoronto.ca/files/29800489/download?download_frd=1 
+    - url: https://q.utoronto.ca/files/35589307/download?download_frd=1 
       title: Prof. Parins-Fukuchi's Slides
     - file: weekly-materials/week01/lecture/Class1_EEB125_KR.ipynb
       title: Prof. Reid's Notebook

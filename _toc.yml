@@ -28,5 +28,9 @@ parts:
       title: Prof. Reid's Notebook
     - file: weekly-materials/week01/homework/Homework_1.ipynb
       title: Week 1 Homework
+  - caption: Week 2
+    chapters:
+    - file: weekly-materials/week02/lecture/lecture_week2.ipynb
+      title: Prof. Parins-Fukuchi's Notebook
 
   

@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EEB125 Homework 2: Reading and manipulating some data &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week02/homework/Homework_2';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="Week 2: Reading a file and handling basic data types" href="../lecture/lecture_week2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 2 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week02/homework/Homework_2.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week02/homework/Homework_2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EEB125 Homework 2: Reading and manipulating some data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-read-in-the-data-file">Task 1: Read in the data file</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1a-open-the-file-pbdb-data-csv-in-python-and-read-in-the-lines">Problem 1a. Open the file <code class="docutils literal notranslate"><span class="pre">pbdb_data.csv</span></code> in Python and read in the lines.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1b-separate-the-header-from-the-rest-of-the-data">Problem 1b. Separate the header from the rest of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1c-interpret-the-data-file">Problem 1c. Interpret the data file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2a-loop-through-the-file-and-split-up-the-data-fields">Problem 2a: Loop through the file and split up the data fields</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2b-interpret-this-step">Problem 2b: Interpret this step</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2c-extract-and-clean-the-taxon-names-from-each-line">Problem 2c: Extract and clean the taxon names from each line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-number-of-fossil-taxa-in-canada">Problem 3: Number of fossil taxa in Canada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4a-the-most-frequent-taxa-in-our-dataset">Problem 4a: The most frequent taxa in our dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4b-find-the-most-common-taxon-in-the-dataset">Problem 4b: Find the most common taxon in the dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5a-interpret-your-results">Problem 5a: Interpret your results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5b-interpret-your-results">Problem 5b: Interpret your results</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eeb125-homework-2-reading-and-manipulating-some-data">
+<h1>EEB125 Homework 2: Reading and manipulating some data<a class="headerlink" href="#eeb125-homework-2-reading-and-manipulating-some-data" title="Permalink to this heading">#</a></h1>
+<section id="logistics">
+<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
+<p><strong>Due date</strong>: The homework is due on Tuesday, January 21 at 11:59pm.</p>
+<p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
+To submit your work:</p>
+<ol class="arabic simple">
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_2.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../../../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>hw2</strong> assignment. (See <a class="reference internal" href="../../../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)</p></li>
+</ol>
+<p>All homeworks will take place in a Jupyter notebook (like this one).</p>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>This week, you will be building on and synthesizing some of the tools that we learned about in lecture this week to answer a data science question: <strong>What is the most common fossil taxon found in Canada?</strong> We will be using data sourced from the Paleobiology Database (<a class="reference external" href="https://paleobiodb.org/#/">https://paleobiodb.org/#/</a>) to answer this question.</p>
+</section>
+<section id="task-1-read-in-the-data-file">
+<h2>Task 1: Read in the data file<a class="headerlink" href="#task-1-read-in-the-data-file" title="Permalink to this heading">#</a></h2>
+<section id="problem-1a-open-the-file-pbdb-data-csv-in-python-and-read-in-the-lines">
+<h3>Problem 1a. Open the file <code class="docutils literal notranslate"><span class="pre">pbdb_data.csv</span></code> in Python and read in the lines.<a class="headerlink" href="#problem-1a-open-the-file-pbdb-data-csv-in-python-and-read-in-the-lines" title="Permalink to this heading">#</a></h3>
+<p>Open the data file we will use this week, <code class="docutils literal notranslate"><span class="pre">pbdb_data.csv</span></code>. Assign the result to a variable named <code class="docutils literal notranslate"><span class="pre">file</span></code>. Next, read in the lines and assign the output to a variable called <code class="docutils literal notranslate"><span class="pre">lines</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-1b-separate-the-header-from-the-rest-of-the-data">
+<h3>Problem 1b. Separate the header from the rest of the data<a class="headerlink" href="#problem-1b-separate-the-header-from-the-rest-of-the-data" title="Permalink to this heading">#</a></h3>
+<p>Create a variable named <code class="docutils literal notranslate"><span class="pre">header</span></code> and assign the first line of the file to it. Create a second variable called <code class="docutils literal notranslate"><span class="pre">data</span></code> and assign the rest of the lines to it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-1c-interpret-the-data-file">
+<h3>Problem 1c. Interpret the data file<a class="headerlink" href="#problem-1c-interpret-the-data-file" title="Permalink to this heading">#</a></h3>
+<p>Please explain what data are contained in this file by examining the contents of the first line (the “header”). What can this header tell us about the data contained within this file? (<em>2pts</em>) Please pick one or two of the entries in this header and explain or speculate about what information they might contain. (<em>2pts</em>)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this cell to print the headers. Do not modify this cell.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+<section id="problem-2a-loop-through-the-file-and-split-up-the-data-fields">
+<h3>Problem 2a: Loop through the file and split up the data fields<a class="headerlink" href="#problem-2a-loop-through-the-file-and-split-up-the-data-fields" title="Permalink to this heading">#</a></h3>
+<p>Create an empty list and assign it to the variable <code class="docutils literal notranslate"><span class="pre">line_lengths</span></code>. Loop through the lines of our data file. Remove any whitespace from the start and end of each line, and split each line using the comma as a delimiter. Find out how long the resulting list is and append the result to <code class="docutils literal notranslate"><span class="pre">line_lengths</span></code>.</p>
+<p>After the loop, find the unique values of <code class="docutils literal notranslate"><span class="pre">line_lengths</span></code> and assign the result to <code class="docutils literal notranslate"><span class="pre">unique_line_lengths</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+
+
+<span class="c1"># Run this code after creating line_lengths to see all the unique line lengths</span>
+<span class="n">unique_line_lengths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">line_lengths</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unique_line_lengths</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-2b-interpret-this-step">
+<h3>Problem 2b: Interpret this step<a class="headerlink" href="#problem-2b-interpret-this-step" title="Permalink to this heading">#</a></h3>
+<p>In the previous step, you found that some of the lines in our data file were split into different lengths. Why do you suppose this might have happened? Could it be a pose a problem for our analyses? In subsequent weeks, we will learn techniques for cleaning up our data a bit more rigorously, but for now we can just move on as-is.(<em>4pts</em>)</p>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+<section id="problem-2c-extract-and-clean-the-taxon-names-from-each-line">
+<h3>Problem 2c: Extract and clean the taxon names from each line<a class="headerlink" href="#problem-2c-extract-and-clean-the-taxon-names-from-each-line" title="Permalink to this heading">#</a></h3>
+<p>Create an empty list and assign it to the variable <code class="docutils literal notranslate"><span class="pre">taxa</span></code>. Modify our loop to extract from each line the entry corresponding to <code class="docutils literal notranslate"><span class="pre">accepted_name</span></code> in the header. Remove any whitespace from the start and end of this string, and convert the string to all caps. Append each of these cleaned names to <code class="docutils literal notranslate"><span class="pre">taxa</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3-number-of-fossil-taxa-in-canada">
+<h3>Problem 3: Number of fossil taxa in Canada<a class="headerlink" href="#problem-3-number-of-fossil-taxa-in-canada" title="Permalink to this heading">#</a></h3>
+<p>Next, find out how many unique fossil taxa have been reported in Canada. First, we will want to find all of the unique values in our list <code class="docutils literal notranslate"><span class="pre">taxa</span></code>. You can do this using the code provided below, which will convert our list, <code class="docutils literal notranslate"><span class="pre">taxa</span></code>, into another Python data type called a ‘set’, which removes duplicates. Assign the results from the provided code to the variable <code class="docutils literal notranslate"><span class="pre">unique</span></code>. Next, <strong>find how many unique taxa there are. Assign the results to the variable <code class="docutils literal notranslate"><span class="pre">num_taxa</span></code>.</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unique</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">taxa</span><span class="p">)</span>  <span class="c1"># this provided instruction will remove duplicates by converting taxa to a set data type.</span>
+
+<span class="c1"># WRITE YOUR CODE HERE</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-4a-the-most-frequent-taxa-in-our-dataset">
+<h3>Problem 4a: The most frequent taxa in our dataset<a class="headerlink" href="#problem-4a-the-most-frequent-taxa-in-our-dataset" title="Permalink to this heading">#</a></h3>
+<p>Create an empty list and assign it to the variable <code class="docutils literal notranslate"><span class="pre">num_occur</span></code>. Loop over the items in <code class="docutils literal notranslate"><span class="pre">unique</span></code> and find the number of times it can be found in <code class="docutils literal notranslate"><span class="pre">taxa</span></code>. For each taxon, print the taxon name and the number of times it occurs in <code class="docutils literal notranslate"><span class="pre">taxa</span></code>. Also, append the number of times it has occurred to the variable <code class="docutils literal notranslate"><span class="pre">num_occur</span></code>. This last step is for autograding, but you will use the printed output to interpret your results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-4b-find-the-most-common-taxon-in-the-dataset">
+<h3>Problem 4b: Find the most common taxon in the dataset<a class="headerlink" href="#problem-4b-find-the-most-common-taxon-in-the-dataset" title="Permalink to this heading">#</a></h3>
+<p>That output was pretty long and hard to sort through. We will learn tools to do this later, but for now, we will achieve our answer using only functionality from base Python. We can use our variable <code class="docutils literal notranslate"><span class="pre">unique</span></code> to easily find the most common taxon in our dataset using the <code class="docutils literal notranslate"><span class="pre">max()</span></code> function built into Python. We just need to use a slightly funky syntax to do so. Run the provided code to find the most common taxon in the Canadian fossil record.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this cell. Do not change the code in this cell.</span>
+
+<span class="n">most_common</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">unique</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">taxa</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">most_common</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-5a-interpret-your-results">
+<h3>Problem 5a: Interpret your results<a class="headerlink" href="#problem-5a-interpret-your-results" title="Permalink to this heading">#</a></h3>
+<p>What is the name of the most common taxon in our dataset? (<em>2pts</em>) Google it. Can you think of any reasons why this taxon is so commonly found in Canada? There are no incorrect answers – feel free to speculate. (<em>2pts</em>)</p>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+<section id="problem-5b-interpret-your-results">
+<h3>Problem 5b: Interpret your results<a class="headerlink" href="#problem-5b-interpret-your-results" title="Permalink to this heading">#</a></h3>
+<p>Scroll through your results from Problem 4a. Google the names of a few of the taxa that have occured many times (let’s say any that occurs more than 30 times). Do you notice anything in common about these lineages? Comment on any patterns you notice. (<em>2pts</em>)</p>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week02/homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lecture/lecture_week2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Week 2: Reading a file and handling basic data types</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-read-in-the-data-file">Task 1: Read in the data file</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1a-open-the-file-pbdb-data-csv-in-python-and-read-in-the-lines">Problem 1a. Open the file <code class="docutils literal notranslate"><span class="pre">pbdb_data.csv</span></code> in Python and read in the lines.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1b-separate-the-header-from-the-rest-of-the-data">Problem 1b. Separate the header from the rest of the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1c-interpret-the-data-file">Problem 1c. Interpret the data file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2a-loop-through-the-file-and-split-up-the-data-fields">Problem 2a: Loop through the file and split up the data fields</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2b-interpret-this-step">Problem 2b: Interpret this step</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2c-extract-and-clean-the-taxon-names-from-each-line">Problem 2c: Extract and clean the taxon names from each line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-number-of-fossil-taxa-in-canada">Problem 3: Number of fossil taxa in Canada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4a-the-most-frequent-taxa-in-our-dataset">Problem 4a: The most frequent taxa in our dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4b-find-the-most-common-taxon-in-the-dataset">Problem 4b: Find the most common taxon in the dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5a-interpret-your-results">Problem 5a: Interpret your results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5b-interpret-your-results">Problem 5b: Interpret your results</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

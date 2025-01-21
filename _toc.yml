@@ -34,5 +34,9 @@ parts:
       title: Prof. Parins-Fukuchi's Notebook
     - file: weekly-materials/week02/homework/Homework_2.ipynb
       title: Week 2 Homework
+  - caption: Week 3
+    chapters:
+    - file: weekly-materials/week03/lecture/lecture3.ipynb
+      title: Prof. Parins-Fukuchi's Notebook
 
   

@@ -38,5 +38,7 @@ parts:
     chapters:
     - file: weekly-materials/week03/lecture/lecture3.ipynb
       title: Prof. Parins-Fukuchi's Notebook
+    - file: weekly-materials/week03/homework/Homework_3.ipynb
+      title: Week 3 Homework
 
   

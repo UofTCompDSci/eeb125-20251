@@ -1,0 +1,608 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EEB125 Homework 3: Reading and manipulating some data &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week03/homework/Homework_3';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="Class 3: Booleans, Dictionaries, and Mammalian Diet" href="../lecture/lecture3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 3 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week03/homework/Homework_3.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week03/homework/Homework_3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EEB125 Homework 3: Reading and manipulating some data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-read-in-the-data-file">Problem 1: Read in the data file</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1a">Problem 1a.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1b-interpret-the-data-file">Problem 1b. Interpret the data file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-iterate-through-the-lines-and-calculate-a-metric-for-relative-forelimb-length">Problem 2: Iterate through the lines and calculate a metric for relative forelimb length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-create-a-dictionary-containing-all-of-the-measurements-for-each-genus">Problem 3: Create a dictionary containing all of the measurements for each <strong>Genus</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3a-initialize-a-dictionary-for-our-genera">Problem 3a: Initialize a dictionary for our genera</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3b-populate-the-dictionary-with-the-relative-forearm-lengths-for-each-genus">Problem 3b: Populate the dictionary with the relative forearm lengths for each genus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3c-find-the-largest-relative-forearm-length-for-each-genus-in-the-dictionary">Problem 3c: Find the largest relative forearm length for each genus in the dictionary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4-interpret-your-results">Problem 4: Interpret your results</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eeb125-homework-3-reading-and-manipulating-some-data">
+<h1>EEB125 Homework 3: Reading and manipulating some data<a class="headerlink" href="#eeb125-homework-3-reading-and-manipulating-some-data" title="Permalink to this heading">#</a></h1>
+<section id="logistics">
+<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
+<p><strong>Due date</strong>: The homework is due 11:59pm on Tuesday, January 28th.</p>
+<p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
+To submit your work:</p>
+<ol class="arabic simple">
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_3.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../../../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>hw3</strong> assignment. (See <a class="reference internal" href="../../../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)</p></li>
+</ol>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>This week, you will be building on and synthesizing some of the tools that we learned about in lecture this week to answer a data science question: Which genus of mammals has the longest forearms relative to their body size? We will study this by using a dataset of forearm lengths and total body length (expressed as head-body length), both measured in millimeters, measured at the level of individual species.</p>
+</section>
+<section id="problem-1-read-in-the-data-file">
+<h2>Problem 1: Read in the data file<a class="headerlink" href="#problem-1-read-in-the-data-file" title="Permalink to this heading">#</a></h2>
+<section id="problem-1a">
+<h3>Problem 1a.<a class="headerlink" href="#problem-1a" title="Permalink to this heading">#</a></h3>
+<p>Open the data file <code class="docutils literal notranslate"><span class="pre">mammal_measurements.csv</span></code>. Assign the result to a variable called <code class="docutils literal notranslate"><span class="pre">file</span></code>. Next, read in the lines and assign the output to a variable called <code class="docutils literal notranslate"><span class="pre">lines</span></code>. Examine the header (the first line of the data).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-1b-interpret-the-data-file">
+<h3>Problem 1b. Interpret the data file<a class="headerlink" href="#problem-1b-interpret-the-data-file" title="Permalink to this heading">#</a></h3>
+<p>Please explain what data is contained in this file by examining the contents of the first line (the “header”). (<em>1pt</em>)</p>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+</section>
+<section id="problem-2-iterate-through-the-lines-and-calculate-a-metric-for-relative-forelimb-length">
+<h2>Problem 2: Iterate through the lines and calculate a metric for relative forelimb length<a class="headerlink" href="#problem-2-iterate-through-the-lines-and-calculate-a-metric-for-relative-forelimb-length" title="Permalink to this heading">#</a></h2>
+<p>The measurements in this data file are forelimb length and body length. How long an animal’s forelimbs are relative to their body can often tell us something about how they move around.</p>
+<p>Create an empty dictionary and assign it to a variable named <code class="docutils literal notranslate"><span class="pre">sp_forearms</span></code>. Loop over the <code class="docutils literal notranslate"><span class="pre">data</span></code> variable using a for loop and populate the dictionary with one entry for each species. The keys should be the species names in each line. The values should be a metric for relative forearm length. We will need to calculate this ourselves from each of the two measurements for each species.</p>
+<p>Use the following formula:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">relative_forearm_len</span> <span class="o">=</span> <span class="n">adultForearmLen_mm</span> <span class="o">/</span> <span class="n">adultHeadBodyLen_mm</span>
+</pre></div>
+</div>
+<p>If we had a dictionary containing only an entry for humans, <em>Homo sapiens</em>, it might look something like this:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{&quot;Homo</span> <span class="pre">sapiens&quot;</span> <span class="pre">:</span> <span class="pre">0.6}</span></code></p>
+<p><strong>Hint</strong>: currently the lines of data are strings. You’ll need to split up the lines (by commas) and then convert the numerical entries into floats by calling <code class="docutils literal notranslate"><span class="pre">float()</span></code> on them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3-create-a-dictionary-containing-all-of-the-measurements-for-each-genus">
+<h2>Problem 3: Create a dictionary containing all of the measurements for each <strong>Genus</strong><a class="headerlink" href="#problem-3-create-a-dictionary-containing-all-of-the-measurements-for-each-genus" title="Permalink to this heading">#</a></h2>
+<p>The species names contained within this datafile are specified using Linnean binomial nomenclature. This means that the first word gives the genus name, while the second gives the species name. For example, the scientific name for humans is “Homo sapiens”. So our genus is “Homo”, and species is “sapiens”. Often, species within the same genus are quite similar. To make our numbers a bit easier to parse through, let’s find the maximum relative forearm length found in each genus. You will want to pick the first word from each species name, and then associate it with a list containing the measurements for each genus</p>
+<p>Hint: You will want to loop through the dictionary we have created to make genus records. You can make use of the <code class="docutils literal notranslate"><span class="pre">max()</span></code> function contained within Python to identify the largest measurement within each genus.</p>
+<section id="problem-3a-initialize-a-dictionary-for-our-genera">
+<h3>Problem 3a: Initialize a dictionary for our genera<a class="headerlink" href="#problem-3a-initialize-a-dictionary-for-our-genera" title="Permalink to this heading">#</a></h3>
+<p>Create an empty dictionary and assign it to the variable <code class="docutils literal notranslate"><span class="pre">genus_measurements</span></code>. Loop through the lines of our data file and add the <strong>genus</strong> from each line to the dictionary as a key, with an empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code> as the associated value.</p>
+<p><em>Question for you to consider (but no need to answer here):</em> The whole reason we are moving up to the level of genera is that our data file often contains multiple species per genus. If we add the genus from each line to the dictionary as a key, will we have duplicate entries in our dictionary? Why or why not?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3b-populate-the-dictionary-with-the-relative-forearm-lengths-for-each-genus">
+<h3>Problem 3b: Populate the dictionary with the relative forearm lengths for each genus<a class="headerlink" href="#problem-3b-populate-the-dictionary-with-the-relative-forearm-lengths-for-each-genus" title="Permalink to this heading">#</a></h3>
+<p>Here, loop over the dictionary of relative forearm lengths that you assigned to the variable <code class="docutils literal notranslate"><span class="pre">sp_forearms</span></code>. Then, extract the <em>genus</em> from each of these and then add the measurements from each line to the dictionary we created in step 3a (<code class="docutils literal notranslate"><span class="pre">genus_measurements</span></code>). Remember that in the dictionary that we created in step 3a (<code class="docutils literal notranslate"><span class="pre">genus_measurements</span></code>), we have as keys the genus, with empty lists as the values. We will want to <strong>append</strong> the measurements for each genus to the empty lists stored as values.</p>
+<p><strong>Warning</strong>: because your code for this problem modifies <code class="docutils literal notranslate"><span class="pre">genus_measurements</span></code>, if you want to re-run this cell, you should <em>first</em> re-run your Problem 3a cell to re-initialize <code class="docutils literal notranslate"><span class="pre">genus_measurements</span></code>. Otherwise you’ll see “strange” behaviour where the code in this cell keeps adding new elements to the lists in <code class="docutils literal notranslate"><span class="pre">genus_measurements</span></code> every time you run the cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3c-find-the-largest-relative-forearm-length-for-each-genus-in-the-dictionary">
+<h3>Problem 3c: Find the largest relative forearm length for each genus in the dictionary<a class="headerlink" href="#problem-3c-find-the-largest-relative-forearm-length-for-each-genus-in-the-dictionary" title="Permalink to this heading">#</a></h3>
+<p>Create an an empty dictionary and assign it to the variable <code class="docutils literal notranslate"><span class="pre">biggest_genus_forearms</span></code>. Last, please loop over <code class="docutils literal notranslate"><span class="pre">genus_measurements</span></code> and find the largest measurement for each genus from the list of measurements that we assigned to each genus in the previous step. Keep in mind that Python has the built-in function <code class="docutils literal notranslate"><span class="pre">max()</span></code>, which will identify the largest value in a list. Add each genus to <code class="docutils literal notranslate"><span class="pre">biggest_genus_forearms</span></code> as the key with the corresponding value as the biggest forearm length.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-4-interpret-your-results">
+<h3>Problem 4: Interpret your results<a class="headerlink" href="#problem-4-interpret-your-results" title="Permalink to this heading">#</a></h3>
+<p>Look through our results. Find the genera with the largest relative forearm lengths. These should be values close to 1.</p>
+<p>Answer the following questions, in your own words:</p>
+<ol class="arabic simple">
+<li><p>Describe what it means to have a relative forearm length close to 1, given how we calculated the metric. (<em>1pt</em>)</p></li>
+<li><p>Do you notice anything in common about the genera with the longest forearms? (<em>2pts</em>) Speculate about why these organisms might have such long forearms. Do they share anything in common with regard to their locomotion (how they move around)? (<em>2pts</em>)</p></li>
+</ol>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week03/homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lecture/lecture3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Class 3: Booleans, Dictionaries, and Mammalian Diet</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-read-in-the-data-file">Problem 1: Read in the data file</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1a">Problem 1a.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1b-interpret-the-data-file">Problem 1b. Interpret the data file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-iterate-through-the-lines-and-calculate-a-metric-for-relative-forelimb-length">Problem 2: Iterate through the lines and calculate a metric for relative forelimb length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-create-a-dictionary-containing-all-of-the-measurements-for-each-genus">Problem 3: Create a dictionary containing all of the measurements for each <strong>Genus</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3a-initialize-a-dictionary-for-our-genera">Problem 3a: Initialize a dictionary for our genera</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3b-populate-the-dictionary-with-the-relative-forearm-lengths-for-each-genus">Problem 3b: Populate the dictionary with the relative forearm lengths for each genus</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3c-find-the-largest-relative-forearm-length-for-each-genus-in-the-dictionary">Problem 3c: Find the largest relative forearm length for each genus in the dictionary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4-interpret-your-results">Problem 4: Interpret your results</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

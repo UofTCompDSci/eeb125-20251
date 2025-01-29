@@ -44,5 +44,7 @@ parts:
     chapters:
     - file: weekly-materials/week04/lecture/lecture4.ipynb
       title: Prof. Parins-Fukuchi's Notebook
+    - file: weekly-materials/week04/homework/Homework_4.ipynb
+      title: Week 4 Homework      
 
   

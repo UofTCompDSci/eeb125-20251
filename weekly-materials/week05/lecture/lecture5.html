@@ -1,0 +1,1248 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Class 5: Statistical variables, distributions, life history and conservation &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week05/lecture/lecture5';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="EEB125 Homework 4: Working with Booleans and Functions" href="../../week04/homework/Homework_4.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Parins-Fukuchi's Notebook</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week05/lecture/lecture5.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week05/lecture/lecture5.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Class 5: Statistical variables, distributions, life history and conservation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eeb-125">EEB 125</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#today-s-data-story">Today’s data story:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#are-mammals-that-take-longer-to-grow-up-at-greater-risk-of-extinction">Are mammals that take longer to grow up at greater risk of extinction?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-in-maturation-data">Read in maturation data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-in-iucn-data">Read in IUCN data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iucn-red-list">IUCN Red List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">IUCN Red List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">IUCN Red List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach">Our approach:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-both-datasets">Setup both datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Setup both datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linking-things-up">Linking things up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-setup">Getting setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-our-two-dictionaries-to-a-third">Link our two dictionaries to a third</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionary-overload">Dictionary overload</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-approach-in-english">The approach (in English)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-means">Calculate means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-categories-should-we-consider-at-risk">What categories should we consider ‘at risk’?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">What categories should we consider ‘at risk’?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mark-species-at-risk-or-not-at-risk">Mark species at risk, or not at risk</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Our approach:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Setup both datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Link our two dictionaries to a third</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Dictionary overload</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">The approach (in English)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Calculate means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Today’s data story:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Are mammals that take longer to grow up at greater risk of extinction?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Today’s data story:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Are mammals that take longer to grow up at greater risk of extinction?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-distributions">Statistical Distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-distribution-of-conservation-risk-across-mammals">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-modules">Importing modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarizing-the-distribution-of-a-continuous-variable">Summarizing the distribution of a continuous variable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-distribution-of-the-time-it-takes-to-grow-up-across-mammals">What is the distribution of the time it takes to grow up across mammals?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variation">Variation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-deviation">Standard Deviation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Calculate means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histograms">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#midterm">Midterm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#format">Format</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="class-5-statistical-variables-distributions-life-history-and-conservation">
+<h1>Class 5: Statistical variables, distributions, life history and conservation<a class="headerlink" href="#class-5-statistical-variables-distributions-life-history-and-conservation" title="Permalink to this heading">#</a></h1>
+<section id="eeb-125">
+<h2>EEB 125<a class="headerlink" href="#eeb-125" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="today-s-data-story">
+<h2>Today’s data story:<a class="headerlink" href="#today-s-data-story" title="Permalink to this heading">#</a></h2>
+<section id="are-mammals-that-take-longer-to-grow-up-at-greater-risk-of-extinction">
+<h3>Are mammals that take longer to grow up at greater risk of extinction?<a class="headerlink" href="#are-mammals-that-take-longer-to-grow-up-at-greater-risk-of-extinction" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="read-in-maturation-data">
+<h2>Read in maturation data<a class="headerlink" href="#read-in-maturation-data" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>How long does each species usually take to grow to maturity?</p></li>
+<li><p>Measured in days</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;maturity.csv&quot;</span><span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="c1">#print(header)</span>
+<span class="c1">#print(data[1:4])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="read-in-iucn-data">
+<h2>Read in IUCN data<a class="headerlink" href="#read-in-iucn-data" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Extinction risk across mammalian speciecs</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get our data read in and prepped</span>
+
+<span class="n">iucn</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;iucn_status.csv&quot;</span><span class="p">)</span>
+<span class="n">iucn_lines</span> <span class="o">=</span> <span class="n">iucn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">iucn_header</span> <span class="o">=</span> <span class="n">iucn_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">iucn_data</span> <span class="o">=</span> <span class="n">iucn_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="iucn-red-list">
+<h2>IUCN Red List<a class="headerlink" href="#iucn-red-list" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>To assess extinction risk, we will use IUCN status</p></li>
+<li><p>IUCN is a conservation organization that manages information on threats to wild animals</p></li>
+<li><p><a class="reference external" href="https://www.iucnredlist.org/">https://www.iucnredlist.org/</a></p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>IUCN Red List<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p><img alt="" src="../../../_images/iucn1.png" /></p>
+</section>
+<section id="id2">
+<h2>IUCN Red List<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We will need to combine information from both datasets to ask our question</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">iucn_header</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="our-approach">
+<h2>Our approach:<a class="headerlink" href="#our-approach" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We will calculate the mean maturation time for all of the mammal species within a given risk category</p></li>
+<li><p>Need to merge the two datasets by linking information for all the species shared between datasets</p></li>
+</ul>
+</section>
+<section id="setup-both-datasets">
+<h2>Setup both datasets<a class="headerlink" href="#setup-both-datasets" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Map the IUCN threat level to each species using a dictionary</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp_iucn</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">iucn_data</span><span class="p">:</span>
+    <span class="n">line_dat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">iucn_risk</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">sp_iucn</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="n">iucn_risk</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>Setup both datasets<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Map maturation time to each species using a dictionary</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp_mat</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">line_dat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mat_time</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">mat_time</span> <span class="o">!=</span> <span class="s2">&quot;NA&quot;</span><span class="p">:</span>
+        <span class="n">sp_mat</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">mat_time</span><span class="p">)</span> <span class="o">/</span> <span class="mi">365</span> <span class="c1"># convert to years</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="linking-things-up">
+<h2>Linking things up<a class="headerlink" href="#linking-things-up" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We will want to calculate the mean maturation time for the species within each risk category</p></li>
+<li><p>First, how can we find what unique risk categories exist in our dataset?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">risk_cat</span> <span class="o">=</span> <span class="n">sp_iucn</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unique_risk_cat</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">risk_cat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unique_risk_cat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="getting-setup">
+<h2>Getting setup<a class="headerlink" href="#getting-setup" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>create our container that links maturation times with IUCN risk level</p></li>
+<li><p>we will want to store the maturation times associated with each level in a list</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iucn_mat</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">unique_risk_cat</span><span class="p">:</span>
+    <span class="n">iucn_mat</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="link-our-two-dictionaries-to-a-third">
+<h2>Link our two dictionaries to a third<a class="headerlink" href="#link-our-two-dictionaries-to-a-third" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Both of our dictionaries, <code class="docutils literal notranslate"><span class="pre">sp_mat</span></code> and <code class="docutils literal notranslate"><span class="pre">sp_iucn</span></code> have species names as the keys</p></li>
+<li><p>We can use the keys of one to look up the values from the other</p></li>
+<li><p>We then need to add values to our third dictionary, <code class="docutils literal notranslate"><span class="pre">iucn_mat</span></code></p></li>
+</ul>
+</section>
+<section id="dictionary-overload">
+<h2>Dictionary overload<a class="headerlink" href="#dictionary-overload" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sp_mat</span></code>: keys = species name, values = maturation time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sp_iucn</span></code>: keys = species name, values = iucn risk level</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iucn_mat</span></code>: keys = iucn risk level, values = empty list (to be populated with maturation times)</p></li>
+</ul>
+</section>
+<section id="the-approach-in-english">
+<h2>The approach (in English)<a class="headerlink" href="#the-approach-in-english" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>iterate through <code class="docutils literal notranslate"><span class="pre">sp_mat</span></code></p>
+<ul>
+<li><p>keys are species, values are maturation time</p></li>
+</ul>
+</li>
+<li><p>look up the IUCN risk level stored in <code class="docutils literal notranslate"><span class="pre">sp_iucn</span></code> using the keys we are iterating over</p></li>
+<li><p>populate the lists associated with each key in <code class="docutils literal notranslate"><span class="pre">iucn_mat</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">sp_mat</span><span class="p">:</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">sp_mat</span><span class="p">[</span><span class="n">sp</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iucn_cat</span> <span class="o">=</span> <span class="n">sp_iucn</span><span class="p">[</span><span class="n">sp</span><span class="p">]</span>           <span class="c1">## </span>
+        <span class="n">iucn_mat</span><span class="p">[</span><span class="n">iucn_cat</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">continue</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculate-means">
+<h2>Calculate means<a class="headerlink" href="#calculate-means" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>loop through iucn_mat and calculate the mean for each risk level</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># let&#39;s calculate a function that does this</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">pop</span><span class="p">):</span>
+    <span class="n">tot</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">:</span>
+        <span class="n">tot</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">tot</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mean</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iucn_means</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">iucn_mat</span><span class="p">:</span>
+    <span class="n">mat_times</span> <span class="o">=</span> <span class="n">iucn_mat</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat_times</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">cat_mean</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">mat_times</span><span class="p">)</span>
+        <span class="n">iucn_means</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="o">=</span> <span class="n">cat_mean</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">iucn_means</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="n">iucn_means</span><span class="p">[</span><span class="n">cat</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="what-categories-should-we-consider-at-risk">
+<h2>What categories should we consider ‘at risk’?<a class="headerlink" href="#what-categories-should-we-consider-at-risk" title="Permalink to this heading">#</a></h2>
+<p><img alt="" src="../../../_images/iucn_list1.png" /></p>
+</section>
+<section id="id4">
+<h2>What categories should we consider ‘at risk’?<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We will say anything above level 2 is “at risk”, while anything below is not.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iucn_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;LC&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;NT&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;VU&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;EN&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;CR&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;EW&#39;</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;EX&#39;</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;DD&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mark-species-at-risk-or-not-at-risk">
+<h2>Mark species at risk, or not at risk<a class="headerlink" href="#mark-species-at-risk-or-not-at-risk" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We will say anything above level 2 is “at risk”, while anything below is not.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp_threat</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">iucn_data</span><span class="p">:</span>
+    <span class="n">line_dat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">iucn_risk</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">risk_numeric</span> <span class="o">=</span> <span class="n">iucn_map</span><span class="p">[</span><span class="n">iucn_risk</span><span class="p">]</span>
+    <span class="n">threat</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">risk_numeric</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">threat</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">risk_numeric</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">sp_threat</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="n">threat</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h2>Our approach:<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We will calculate the mean maturation time for all at risk, vs not at risk mammals</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>Setup both datasets<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Map maturation time to each species using a dictionary</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp_mat</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">line_dat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mat_time</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">mat_time</span> <span class="o">!=</span> <span class="s2">&quot;NA&quot;</span><span class="p">:</span>
+        <span class="n">sp_mat</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">mat_time</span><span class="p">)</span> <span class="o">/</span> <span class="mi">365</span> <span class="c1"># convert to years</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>Link our two dictionaries to a third<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Both of our dictionaries, <code class="docutils literal notranslate"><span class="pre">sp_mat</span></code> and <code class="docutils literal notranslate"><span class="pre">sp_iucn</span></code> have species names as the keys</p></li>
+<li><p>We can use the keys of one to look up the values from the other</p></li>
+<li><p>We then need to add values to a third dictionary, <code class="docutils literal notranslate"><span class="pre">threat_mat</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threat_mat</span><span class="o">=</span><span class="p">{</span><span class="kc">True</span><span class="p">:[],</span><span class="kc">False</span><span class="p">:[]}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h2>Dictionary overload<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sp_mat</span></code>: keys = species name, values = maturation time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sp_iucn</span></code>: keys = species name, values = iucn risk level</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">threat_mat</span></code>: keys = threat, values = empty list (to be populated with maturation times)</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>The approach (in English)<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>iterate through <code class="docutils literal notranslate"><span class="pre">sp_mat</span></code></p>
+<ul>
+<li><p>keys are species, values are maturation time</p></li>
+</ul>
+</li>
+<li><p>look up the IUCN risk level stored in <code class="docutils literal notranslate"><span class="pre">sp_iucn</span></code> using the keys we are iterating over</p></li>
+<li><p>populate the lists associated with each key in <code class="docutils literal notranslate"><span class="pre">threat_mat</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">sp_mat</span><span class="p">:</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">sp_mat</span><span class="p">[</span><span class="n">sp</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">threat</span> <span class="o">=</span> <span class="n">sp_threat</span><span class="p">[</span><span class="n">sp</span><span class="p">]</span>
+        <span class="n">threat_mat</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">continue</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">threat_mat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id10">
+<h2>Calculate means<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>loop through iucn_mat and calculate the mean for threatened vs non-threatened species</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threat_means</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">threat</span> <span class="ow">in</span> <span class="n">threat_mat</span><span class="p">:</span>
+    <span class="n">mat_times</span> <span class="o">=</span> <span class="n">threat_mat</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span>    
+    <span class="n">threat_mean</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">mat_times</span><span class="p">)</span>
+    <span class="n">threat_means</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span> <span class="o">=</span> <span class="n">threat_mean</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">threat_means</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id11">
+<h2>Today’s data story:<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
+<section id="id12">
+<h3>Are mammals that take longer to grow up at greater risk of extinction?<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="id13">
+<h2>Today’s data story:<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
+<section id="id14">
+<h3>Are mammals that take longer to grow up at greater risk of extinction?<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Possibly? We will learn more sophisticated statistical techniques later to examine questions like this more closely</p></li>
+</ul>
+</section>
+</section>
+<section id="statistical-distributions">
+<h2>Statistical Distributions<a class="headerlink" href="#statistical-distributions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>What is a statistical distribution?</p></li>
+<li><p>How can a distribution be summarized?</p></li>
+<li><p>What questions can we answer using a distribution?</p></li>
+</ul>
+</section>
+<section id="what-is-the-distribution-of-conservation-risk-across-mammals">
+<h2>What is the distribution of conservation risk across mammals?<a class="headerlink" href="#what-is-the-distribution-of-conservation-risk-across-mammals" title="Permalink to this heading">#</a></h2>
+<p>How many species belong to each category?</p>
+<p><img alt="" src="../../../_images/iucn_list1.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create two lists, one that will be the keys and another that will be values</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iucn_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">))]</span>   <span class="c1">#  we will tally species counts for each iucn level later</span>
+
+<span class="c1"># wrap the two lists together into a single dictionary </span>
+<span class="n">iucn_counts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span><span class="n">vals</span><span class="p">))</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">iucn_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id15">
+<h2>What is the distribution of conservation risk across mammals?<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">iucn_data</span><span class="p">:</span>
+    <span class="n">line_dat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">iucn_risk</span> <span class="o">=</span> <span class="n">line_dat</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">iucn_counts</span><span class="p">[</span><span class="n">iucn_risk</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id16">
+<h2>What is the distribution of conservation risk across mammals?<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">iucn_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importing-modules">
+<h2>Importing modules<a class="headerlink" href="#importing-modules" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>There are often times where something we want to do is so common that someone has already written code that does it</p></li>
+<li><p>These are packeged in the form of python ‘modules’</p></li>
+<li><p>We need to <strong>import</strong> these modules to use this code</p></li>
+<li><p>We will use one for plotting data called <strong>matplotlib</strong></p>
+<ul>
+<li><p>(you will not need to do this yourself yet– just watch for now)</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id17">
+<h2>What is the distribution of conservation risk across mammals?<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The bars represent the frequency of observations and the labels on the horizontal axis represent the number of species at a conservation risk level.</p></li>
+<li><p>This is called the <strong>frequency distribution</strong> of conservation risk.</p></li>
+</ul>
+</section>
+<section id="id18">
+<h2>What is the distribution of conservation risk across mammals?<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rel_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">iucn_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iucn_counts</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">iucn_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">rel_counts</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If we want to plot proportions instead of counts then we can transform <code class="docutils literal notranslate"><span class="pre">activity_dist</span></code> by dividing by the total number of observations.</p></li>
+<li><p>This is called the <em>relative frequency distribution</em> of activity.</p></li>
+<li><p><strong>Q: About what proportion of mammals is at risk?</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rel_counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">iucn_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">iucn_counts</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">iucn_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">rel_counts</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summarizing-the-distribution-of-a-continuous-variable">
+<h2>Summarizing the distribution of a continuous variable<a class="headerlink" href="#summarizing-the-distribution-of-a-continuous-variable" title="Permalink to this heading">#</a></h2>
+<section id="what-is-the-distribution-of-the-time-it-takes-to-grow-up-across-mammals">
+<h3>What is the distribution of the time it takes to grow up across mammals?<a class="headerlink" href="#what-is-the-distribution-of-the-time-it-takes-to-grow-up-across-mammals" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="variation">
+<h2>Variation<a class="headerlink" href="#variation" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>One of the most important concepts in statistics and biology</p></li>
+<li><p>Standard deviation is average deviation from the mean</p>
+<ul>
+<li><p><strong>Large</strong> values mean lots of variation and <strong>small</strong> values mean less variation.</p></li>
+</ul>
+</li>
+<li><p>Other measures of variation also exist (e.g., the range– max - min)</p></li>
+</ul>
+</section>
+<section id="variance">
+<h2>Variance<a class="headerlink" href="#variance" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>How far from the mean are the data, on average?</p></li>
+<li><p>Calculate the difference between each data point and the mean</p></li>
+<li><p>Calculate the mean of these differences</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">variance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">mean_val</span><span class="p">):</span>
+    <span class="n">diffs</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">mean_val</span>
+        <span class="n">sq_diff</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sq_diff</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">var</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="standard-deviation">
+<h2>Standard Deviation<a class="headerlink" href="#standard-deviation" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Square root of the variance</p></li>
+<li><p>Descibes the variation in values, expressed in the same units as the data</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">st_dev</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">mean_val</span><span class="p">):</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">mean_val</span><span class="p">)</span>
+    <span class="n">sd</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sd</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id19">
+<h2>Calculate means<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>loop through iucn_mat and calculate the mean for each risk level</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threat_sds</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">threat</span> <span class="ow">in</span> <span class="n">threat_mat</span><span class="p">:</span>
+    <span class="n">mat_times</span> <span class="o">=</span> <span class="n">threat_mat</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span>  
+    <span class="n">threat_mean</span> <span class="o">=</span> <span class="n">threat_means</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span>
+    <span class="n">threat_sd</span> <span class="o">=</span> <span class="n">st_dev</span><span class="p">(</span><span class="n">mat_times</span><span class="p">,</span><span class="n">threat_mean</span><span class="p">)</span>
+    <span class="n">threat_sds</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span> <span class="o">=</span> <span class="n">threat_sd</span>
+<span class="n">threat_sds</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">threat</span> <span class="ow">in</span> <span class="n">threat_means</span><span class="p">:</span>
+    <span class="n">threat_mean</span> <span class="o">=</span> <span class="n">threat_means</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span>
+    <span class="n">threat_sd</span> <span class="o">=</span> <span class="n">threat_sds</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">threat</span><span class="p">,</span><span class="n">threat_mean</span><span class="p">,</span><span class="n">threat_sd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="histograms">
+<h2>Histograms<a class="headerlink" href="#histograms" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We can also visualize central tendency and variation using a type of plot called a <strong>histogram</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sp_mat</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id20">
+<h2>Histograms<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We can also visualize the <em>relative</em> frequency, or proportion of individuals with each maturation time</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sp_mat</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id21">
+<h2>Histograms<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Histograms can be useful to visualize differences in how data are distributed</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">threat_mat</span><span class="p">[</span><span class="kc">False</span><span class="p">],</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;not at risk&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">threat_mat</span><span class="p">[</span><span class="kc">True</span><span class="p">],</span><span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;at risk&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;maturation time (years)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="midterm">
+<h2>Midterm<a class="headerlink" href="#midterm" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Computer-based</p></li>
+<li><p>Will take place in this classroom at our normal lecture time</p>
+<ul>
+<li><p>Feb. 12, 1pm-3pm</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="format">
+<h2>Format<a class="headerlink" href="#format" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Mix of:</p>
+<ul>
+<li><p>(simple) programming exercises (i.e., produce your own code)</p></li>
+<li><p>code reading/interpretation (i.e., explain some pre-written code)</p></li>
+<li><p>data interpretation (i.e., look at some data summaries and interpret them)</p></li>
+</ul>
+</li>
+<li><p>Will be largely similar to the structure of a homework assignment</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week05/lecture"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../week04/homework/Homework_4.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EEB125 Homework 4: Working with Booleans and Functions</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eeb-125">EEB 125</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#today-s-data-story">Today’s data story:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#are-mammals-that-take-longer-to-grow-up-at-greater-risk-of-extinction">Are mammals that take longer to grow up at greater risk of extinction?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-in-maturation-data">Read in maturation data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-in-iucn-data">Read in IUCN data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iucn-red-list">IUCN Red List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">IUCN Red List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">IUCN Red List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach">Our approach:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-both-datasets">Setup both datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Setup both datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linking-things-up">Linking things up</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-setup">Getting setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-our-two-dictionaries-to-a-third">Link our two dictionaries to a third</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dictionary-overload">Dictionary overload</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-approach-in-english">The approach (in English)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-means">Calculate means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-categories-should-we-consider-at-risk">What categories should we consider ‘at risk’?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">What categories should we consider ‘at risk’?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mark-species-at-risk-or-not-at-risk">Mark species at risk, or not at risk</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Our approach:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Setup both datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Link our two dictionaries to a third</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Dictionary overload</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">The approach (in English)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Calculate means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Today’s data story:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Are mammals that take longer to grow up at greater risk of extinction?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Today’s data story:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Are mammals that take longer to grow up at greater risk of extinction?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-distributions">Statistical Distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-distribution-of-conservation-risk-across-mammals">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-modules">Importing modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">What is the distribution of conservation risk across mammals?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarizing-the-distribution-of-a-continuous-variable">Summarizing the distribution of a continuous variable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-distribution-of-the-time-it-takes-to-grow-up-across-mammals">What is the distribution of the time it takes to grow up across mammals?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variation">Variation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance">Variance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-deviation">Standard Deviation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Calculate means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histograms">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#midterm">Midterm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#format">Format</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

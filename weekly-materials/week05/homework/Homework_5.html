@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Homework 5 - Investigating Mammalian Fecundity and Conservation &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week05/homework/Homework_5';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="Class 5: Statistical variables, distributions, life history and conservation" href="../lecture/lecture5.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 5 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week05/homework/Homework_5.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week05/homework/Homework_5.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Homework 5 - Investigating Mammalian Fecundity and Conservation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-question-for-the-week">Data science question for the week:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-calculate-maximum-lifetime-fecundity-across-mammals">Problem 1. Calculate maximum lifetime fecundity across mammals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1a-read-in-mammalian-life-history-data">Problem 1a. Read in Mammalian life history data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1b-calculate-our-lifetime-fecundity-metric">Problem 1b. Calculate our lifetime fecundity metric</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions">Instructions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-units-important">A note on units (important!!!)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1c-interpret">Problem 1c. Interpret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-iucn-conservation-risk">Problem 2. IUCN Conservation Risk</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2a-read-in-iucn-data">Problem 2a. Read in IUCN Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2b-define-iucn-risk-levels">Problem 2b. Define IUCN Risk Levels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-put-everything-together">Problem 3. Put everything together</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3a-partition-data-according-to-threatened-status">Problem 3a. Partition data according to threatened status</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3b-compare-mean-lifetime-fecundity-between-threatened-and-unthreatened-species">Problem 3b. Compare mean lifetime fecundity between threatened and unthreatened species</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3c-interpret">Problem 3c. Interpret</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-5-investigating-mammalian-fecundity-and-conservation">
+<h1>Homework 5 - Investigating Mammalian Fecundity and Conservation<a class="headerlink" href="#homework-5-investigating-mammalian-fecundity-and-conservation" title="Permalink to this heading">#</a></h1>
+<section id="logistics">
+<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
+<p><strong>Due date</strong>: The homework is due 11:59pm on Tuesday, February 11.</p>
+<p>You will submit your work on <a class="reference external" href="https://markus-ds.teach.cs.toronto.edu">MarkUs</a>.
+To submit your work:</p>
+<ol class="arabic simple">
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_5.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../../../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>hw5</strong> assignment. (See <a class="reference internal" href="../../../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)
+All homeworks will take place in a Jupyter notebook (like this one). When you are done, you will download this notebook and submit it to MarkUs.
+We’ve incuded submission instructions at the end of this notebook.</p></li>
+</ol>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>In this assignment, we will ask a question about how mammalian reproductive strategies relate to their conservation risk. We will combine information from two different datasets to investigate this question.</p>
+<section id="data-science-question-for-the-week">
+<h3>Data science question for the week:<a class="headerlink" href="#data-science-question-for-the-week" title="Permalink to this heading">#</a></h3>
+<p>This week, we will be combining data on mammalian ecology to compute a metric that we will call “maximum lifetime fecundity”. This value estimates a species’ <strong>reproductive potential</strong>. That is, <em>how prodigious is each species at producing new offspring</em>?</p>
+<p>As biologists, we may have an intuition that species that are more capable at reproducing quickly maybe more resilient to extinction as the environment changes. We will see how this metric relates to extinction risk, as calclated from IUCN data to ask a targeted question about mammalian conservation:</p>
+<p><strong><em>Is there a difference in extinction risk between species with higher reproductive potential (greater maximum lifetime fecundity) vs. species with lower reproductive potential smaller maximum lifetime fecundity)?</em></strong></p>
+</section>
+</section>
+<section id="problem-1-calculate-maximum-lifetime-fecundity-across-mammals">
+<h2>Problem 1. Calculate maximum lifetime fecundity across mammals<a class="headerlink" href="#problem-1-calculate-maximum-lifetime-fecundity-across-mammals" title="Permalink to this heading">#</a></h2>
+<section id="problem-1a-read-in-mammalian-life-history-data">
+<h3>Problem 1a. Read in Mammalian life history data<a class="headerlink" href="#problem-1a-read-in-mammalian-life-history-data" title="Permalink to this heading">#</a></h3>
+<p>Please open the file <code class="docutils literal notranslate"><span class="pre">fecundity.csv</span></code> and read all the lines into Python’s memory. Assign the header to the variable <code class="docutils literal notranslate"><span class="pre">lh_header</span></code> and the rest of the data to <code class="docutils literal notranslate"><span class="pre">lh_data</span></code>. You may wish to examine the header and first couple lines of the data file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-1b-calculate-our-lifetime-fecundity-metric">
+<h3>Problem 1b. Calculate our lifetime fecundity metric<a class="headerlink" href="#problem-1b-calculate-our-lifetime-fecundity-metric" title="Permalink to this heading">#</a></h3>
+<p>We will now estimate a new measurement that we will call <code class="docutils literal notranslate"><span class="pre">max_lifetime_fecundity</span></code>. Use the following formula to calculate this metric:</p>
+<div class="math notranslate nohighlight">
+\[ \frac{longevity - maturity}{interbirth} * litter\_size \]</div>
+<p>This will be computed using the following columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">maturity_d</span></code>: How long it takes for the average individual to grow to sexual maturity. This is the earliest age at which an individual can reproduce. This is measured in <em>days</em> as the interval between birth and the time when the individual first reproduces.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">longevity_m</span></code>: The maximum observed lifespan of an individual within each species, expressed in <em>months</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">interbirth_d</span></code>: How long adult females wait, on average, between giving birth and becoming pregnant again, expressed in <em>days</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">litter_size_ind</span></code>: How many babies females within each species have at one time, on average. The units are individuals, or number of offspring.</p></li>
+</ul>
+<section id="instructions">
+<h4>Instructions<a class="headerlink" href="#instructions" title="Permalink to this heading">#</a></h4>
+<p>Create an empty dictionary and assign it to a variable called <code class="docutils literal notranslate"><span class="pre">max_fecund</span></code>.</p>
+<p>Loop over the lines of data and split up the columns using a comma delimiter and apply the above formula to the data across each column. Keep in mind that you will need to mind missing data, which is expressed in this datafile as an empty string, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>. Since you will not be able to calculate the metric unless all four measurements are present, use exception handling to skip over any line that is missing any one or more of these.</p>
+<p>Once you calcuate the metric for each line, store the name of the species represented on that line as the key in <code class="docutils literal notranslate"><span class="pre">max_fecund</span></code> with the metric you calculate as the value.</p>
+</section>
+<section id="a-note-on-units-important">
+<h4>A note on units (important!!!)<a class="headerlink" href="#a-note-on-units-important" title="Permalink to this heading">#</a></h4>
+<p>The three measurements relating to time (<code class="docutils literal notranslate"><span class="pre">'maturity_d'</span></code>, <code class="docutils literal notranslate"><span class="pre">'longevity_m'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'interbirth_d'</span></code>) are expressed in two different units. As you loop over the lines and calculate this metric from the values in each column, convert each of these columns so that they are expressed in years.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-1c-interpret">
+<h3>Problem 1c. Interpret<a class="headerlink" href="#problem-1c-interpret" title="Permalink to this heading">#</a></h3>
+<p>Please explain what our maximum fecundity metric is measuring <strong>(2pts)</strong>. In what units is it expressed <strong>(2pts)</strong>? Can you think of any reasons the metric might be inaccurate <strong>(optional)</strong>?</p>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+</section>
+<section id="problem-2-iucn-conservation-risk">
+<h2>Problem 2. IUCN Conservation Risk<a class="headerlink" href="#problem-2-iucn-conservation-risk" title="Permalink to this heading">#</a></h2>
+<p>Next, we will read in the IUCN conservation risk data and use it to classify whether species are or are not at risk.</p>
+<section id="problem-2a-read-in-iucn-data">
+<h3>Problem 2a. Read in IUCN Data<a class="headerlink" href="#problem-2a-read-in-iucn-data" title="Permalink to this heading">#</a></h3>
+<p>Read in the IUCN data. Assign the header (first line) to the variable <code class="docutils literal notranslate"><span class="pre">iucn_header</span></code>. Assign the rest of the data to <code class="docutils literal notranslate"><span class="pre">iucn_data</span></code>. You may wish to examine the header and first few lines to familiarize yourself with how the dataset is structured.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-2b-define-iucn-risk-levels">
+<h3>Problem 2b. Define IUCN Risk Levels<a class="headerlink" href="#problem-2b-define-iucn-risk-levels" title="Permalink to this heading">#</a></h3>
+<p>Next, we will want to order the IUCN risk levels according to their severity. We will use the following numbering scheme (defined in lecture):</p>
+<p><img alt="" src="../../../_images/iucn.svg" /></p>
+<p>First, run the code below to create a dictionary, assigned to the variable <code class="docutils literal notranslate"><span class="pre">iucn_map</span></code>, mapping each IUCN level with a numbered level, expressed as a python integer.</p>
+<p>Next, create an empty dictionary and assign it to the variable <code class="docutils literal notranslate"><span class="pre">at_risk</span></code>. Loop over the lines of the file, splitting them using a comma (the delimiting character for this dataset). Next, we will want to know if the species for each row is at significant conservation risk. <strong>We will consider any species at IUCN level “VU” or above (numerically, level 3 or above) to be at risk</strong>. Look up the numeric expression of the IUCN level using <code class="docutils literal notranslate"><span class="pre">iucn_map</span></code>. Add the species name for each line to <code class="docutils literal notranslate"><span class="pre">at_risk</span></code> as the key. If the IUCN level is at or above 3, set the value as <code class="docutils literal notranslate"><span class="pre">True</span></code>. If it is below 3, set it to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>As an example of how things should look, let’s consider humans, Homo sapiens. Homo sapiens are at IUCN level “LC”, or 1 in our numeric mapping scheme. Humans would be stored in <code class="docutils literal notranslate"><span class="pre">at_risk</span></code> as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;Homo_sapiens&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>On the other hand, the bat species <em>Acerodon jubatus</em> is at level “EN”, or 4 in our numbered scheme, and so would be assigned the value <code class="docutils literal notranslate"><span class="pre">True</span></code> when added to the dictionary. Our dictionary with both species would appear as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;Homo_sapiens&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Acerodon_jubatus&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this cell to define iucn_map</span>
+
+<span class="n">iucn_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;LC&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s1">&#39;NT&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span><span class="s1">&#39;VU&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span><span class="s1">&#39;EN&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span><span class="s1">&#39;CR&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span><span class="s1">&#39;EW&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span><span class="s1">&#39;EX&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span><span class="s1">&#39;DD&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3-put-everything-together">
+<h3>Problem 3. Put everything together<a class="headerlink" href="#problem-3-put-everything-together" title="Permalink to this heading">#</a></h3>
+<p>Here, we will want to calculate whether species that are at risk tend to have more or fewer offspring throughout their lifespan. To do this, we can calculate the mean maximum lifetime fecundity separately for species that are and are not at risk. First, copy the <code class="docutils literal notranslate"><span class="pre">calc_mean()</span></code> function that you defined in last week’s homework and paste it below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3a-partition-data-according-to-threatened-status">
+<h3>Problem 3a. Partition data according to threatened status<a class="headerlink" href="#problem-3a-partition-data-according-to-threatened-status" title="Permalink to this heading">#</a></h3>
+<p>In this problem, you will follow a similar procedure to last week’s homework, where you compared risk between democrat and republican-controlled states. Create two empty lists and assign them, respectively, to the variables <code class="docutils literal notranslate"><span class="pre">threat_fecund</span></code> and <code class="docutils literal notranslate"><span class="pre">unthreat_fecund</span></code>. Next, loop over <code class="docutils literal notranslate"><span class="pre">max_fecund</span></code>. Look up whether each species is threatened by checking <code class="docutils literal notranslate"><span class="pre">at_risk</span></code>. If it is, append its maximum lifetime fecundity stored as the value in <code class="docutils literal notranslate"><span class="pre">max_fecund</span></code> to <code class="docutils literal notranslate"><span class="pre">threat_fecund</span></code>, and if not, append it to <code class="docutils literal notranslate"><span class="pre">unthreat_fecund</span></code>.</p>
+<p>HINT: one new hiccup this week is that some of the species in <code class="docutils literal notranslate"><span class="pre">max_fecund</span></code> do not have entries in <code class="docutils literal notranslate"><span class="pre">at_risk</span></code>. This is because they were not present in the original IUCN data. As a result, you will want to use exception handling to skip over any instances where looking up a species from <code class="docutils literal notranslate"><span class="pre">max_fecund</span></code> in <code class="docutils literal notranslate"><span class="pre">at_risk</span></code> fails.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3b-compare-mean-lifetime-fecundity-between-threatened-and-unthreatened-species">
+<h3>Problem 3b. Compare mean lifetime fecundity between threatened and unthreatened species<a class="headerlink" href="#problem-3b-compare-mean-lifetime-fecundity-between-threatened-and-unthreatened-species" title="Permalink to this heading">#</a></h3>
+<p>Calculate the mean lifetime fecundity in each of the lists populated in the previous question. Assign each to <code class="docutils literal notranslate"><span class="pre">mean_threat_fecund</span></code> and <code class="docutils literal notranslate"><span class="pre">mean_unthreat_fecund</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mean_threat_fecund</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_unthreat_fecund</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3c-interpret">
+<h3>Problem 3c. Interpret<a class="headerlink" href="#problem-3c-interpret" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Do threatened species or non-threatened species tend to have more potential offspring over their lifespan <strong>(1 pt)</strong>?</p></li>
+<li><p>Please speculate on why this might be the case <strong>(2pt)</strong>.</p></li>
+</ol>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week05/homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lecture/lecture5.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Class 5: Statistical variables, distributions, life history and conservation</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-question-for-the-week">Data science question for the week:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-calculate-maximum-lifetime-fecundity-across-mammals">Problem 1. Calculate maximum lifetime fecundity across mammals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1a-read-in-mammalian-life-history-data">Problem 1a. Read in Mammalian life history data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1b-calculate-our-lifetime-fecundity-metric">Problem 1b. Calculate our lifetime fecundity metric</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions">Instructions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-units-important">A note on units (important!!!)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1c-interpret">Problem 1c. Interpret</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-iucn-conservation-risk">Problem 2. IUCN Conservation Risk</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2a-read-in-iucn-data">Problem 2a. Read in IUCN Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2b-define-iucn-risk-levels">Problem 2b. Define IUCN Risk Levels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-put-everything-together">Problem 3. Put everything together</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3a-partition-data-according-to-threatened-status">Problem 3a. Partition data according to threatened status</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3b-compare-mean-lifetime-fecundity-between-threatened-and-unthreatened-species">Problem 3b. Compare mean lifetime fecundity between threatened and unthreatened species</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3c-interpret">Problem 3c. Interpret</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

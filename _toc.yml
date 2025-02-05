@@ -50,5 +50,6 @@ parts:
     chapters:
     - file: weekly-materials/week05/lecture/lecture5.ipynb
       title: Prof. Parins-Fukuchi's Notebook
-
+    - file: weekly-materials/week05/homework/Homework_5.ipynb
+      title: Week 5 Homework 
   

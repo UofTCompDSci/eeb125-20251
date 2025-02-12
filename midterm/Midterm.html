@@ -1,0 +1,910 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EEB125 Midterm - Wednesday February 12 2025 &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'midterm/Midterm';</script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EEB125 Week 1: Computation, Python, and JupyterHub" href="../weekly-materials/week01/lecture/Class1_EEB125_KR.html" />
+    <link rel="prev" title="Guide to Using MarkUs" href="../guides/markus_guide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/midterm/Midterm.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/midterm/Midterm.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EEB125 Midterm - Wednesday February 12 2025</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-instructions">Test Instructions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marking-rubric">Marking Rubric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aids-allowed-and-academic-integrity">Aids Allowed and Academic Integrity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-allowed">Time Allowed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-ask-a-question-during-the-test">How do I ask a question during the test?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission-instructions">Submission Instructions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-coding-exercises-10-points">Part 1: Coding Exercises (10 points)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-question-1-3-points">Part 1, Question 1 (3 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-question-2-3-points">Part 1, Question 2 (3 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-question-3-4-points">Part 1, Question 3 (4 points)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-mammalian-reproductive-strategies-15-points">Part 2: Mammalian Reproductive Strategies (15 points)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-1-2-points">Part 2, Question 1 (2 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-2-3-points">Part 2, Question 2 (3 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-3-2-points">Part 2, Question 3 (2 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-4-8-points">Part 2, Question 4 (8 points)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-gestation-time-and-conservation-risk-10-points">Part 3. Gestation time and Conservation Risk (10 points)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-question-1-4-points-total">Part 3, Question 1 (4 points total)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-question-2-6-points">Part 3, Question 2 (6 points)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eeb125-midterm-wednesday-february-12-2025">
+<h1>EEB125 Midterm - Wednesday February 12 2025<a class="headerlink" href="#eeb125-midterm-wednesday-february-12-2025" title="Permalink to this heading">#</a></h1>
+<p><mark> <strong>Read this section before starting the test</strong> </mark></p>
+<section id="test-instructions">
+<h2>Test Instructions<a class="headerlink" href="#test-instructions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>This test has 3 parts each with multiple questions.</p></li>
+<li><p>Complete all questions (of all parts) below.</p></li>
+<li><p>The answers to the questions will be submitted on MarkUs using a similar workflow to the homework assignments, except that MarkUs will <em>not</em> give you feedback on passing or failing the autotests.</p></li>
+<li><p>Answers where you are asked to write Python code will be autograded, and written answers will be graded manually by the teaching team.</p></li>
+</ul>
+</section>
+<section id="marking-rubric">
+<h2>Marking Rubric<a class="headerlink" href="#marking-rubric" title="Permalink to this heading">#</a></h2>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Part 1 (10 points total)</p></th>
+<th class="head"><p>Q1 (3 points)</p></th>
+<th class="head"><p>Q2 (3 points)</p></th>
+<th class="head"><p>Q3 (4 points)</p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Part 2 (15 points total)</p></td>
+<td><p>Q1 (2 points)</p></td>
+<td><p>Q2 (3 points)</p></td>
+<td><p>Q3 (2 points)</p></td>
+<td><p>Q4 (8 points)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Part 3 (10 points total)</p></td>
+<td><p>Q1 (4 points)</p></td>
+<td><p>Q2 (6 points)</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The total number of marks for this test is 35 points.</strong></p>
+</section>
+<section id="aids-allowed-and-academic-integrity">
+<h2>Aids Allowed and Academic Integrity<a class="headerlink" href="#aids-allowed-and-academic-integrity" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>You are allowed to use any materials from the course or any other written sources (e.g., books, websites).</p></li>
+<li><p>You are not allowed to directly receive or give help during the test period.  In other words, all work must be your own, and you must not discuss or post any information about this test with anyone during the test period. You may not use AI assistants for the test.</p></li>
+<li><p>As a student, you are responsible for ensuring the integrity of your work and for understanding what <a class="reference external" href="https://www.artsci.utoronto.ca/current/academic-advising-and-support/student-academic-integrity/academic-misconduct">constitutes an academic offense</a>.</p></li>
+</ul>
+</section>
+<section id="time-allowed">
+<h2>Time Allowed<a class="headerlink" href="#time-allowed" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The test will be available at 1:10 PM and must be submitted on MarkUs (see Submission Instructions) by 3:00 PM. MarkUs has been set up to allow tests to be submitted up to 3:05 PM without penalty to allow for minor technical difficulties.</p></li>
+<li><p>Late tests will receive a grade of zero unless you have an approved accommodation from your instructor.</p></li>
+</ul>
+</section>
+<section id="how-do-i-ask-a-question-during-the-test">
+<h2>How do I ask a question during the test?<a class="headerlink" href="#how-do-i-ask-a-question-during-the-test" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The teaching team will be available in the lecture room during the test (WI 1017) in case you have any questions during the midterm.</p></li>
+<li><p>Please check Quercus announcements for a zoom link to ask questions if you are taking the test remotely.</p></li>
+<li><p>You are responsible for checking Quercus announcments during the test, since that is where we will post any announcements that affect everyone writing the test.</p></li>
+<li><p>The class discussion forum on Piazza will be disabled during the test period.</p></li>
+</ul>
+</section>
+<section id="submission-instructions">
+<h2>Submission Instructions<a class="headerlink" href="#submission-instructions" title="Permalink to this heading">#</a></h2>
+<p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
+To submit your work:</p>
+<ol class="arabic simple">
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Midterm.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>midterm</strong> assignment. (See <a class="reference internal" href="../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)
+All homeworks will take place in a Jupyter notebook (like this one). When you are done, you will download this notebook and submit it to MarkUs.</p></li>
+</ol>
+<p><strong>Note</strong>: unlike the homeworks, there is no autograding preview for this midterm.</p>
+</section>
+<section id="part-1-coding-exercises-10-points">
+<h2>Part 1: Coding Exercises (10 points)<a class="headerlink" href="#part-1-coding-exercises-10-points" title="Permalink to this heading">#</a></h2>
+<section id="part-1-question-1-3-points">
+<h3>Part 1, Question 1 (3 points)<a class="headerlink" href="#part-1-question-1-3-points" title="Permalink to this heading">#</a></h3>
+<p><strong>Create the following three variables:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: a <em>string</em> containing your full name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">no_space_name</span></code>: a <em>string</em> in which the <code class="docutils literal notranslate"><span class="pre">replace()</span></code> method is used to replace each space in <code class="docutils literal notranslate"><span class="pre">name</span></code> with an underscore ‘_’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name_len</span></code>: an <em>integer</em> that is the length of <code class="docutils literal notranslate"><span class="pre">name</span></code></p></li>
+</ul>
+<p>You may wish to verify your work by running <code class="docutils literal notranslate"><span class="pre">print()</span></code> on each of your newly created variables, and using <code class="docutils literal notranslate"><span class="pre">type()</span></code> to verify the type of each.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code in this cell</span>
+
+
+
+<span class="c1"># This code is provided to help check your work</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your name is </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your name with dashes instead of spaces is </span><span class="si">{</span><span class="n">no_space_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The length of your name is </span><span class="si">{</span><span class="n">name_len</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-1-question-2-3-points">
+<h3>Part 1, Question 2 (3 points)<a class="headerlink" href="#part-1-question-2-3-points" title="Permalink to this heading">#</a></h3>
+<p>Given a list of floating point numbers in <code class="docutils literal notranslate"><span class="pre">values</span></code>:</p>
+<ol class="arabic simple">
+<li><p>Compute the number of values in the list that are less than 0, and store that in a variable named <code class="docutils literal notranslate"><span class="pre">below_zero</span></code>.</p></li>
+<li><p>Store the smallest value in a variable named <code class="docutils literal notranslate"><span class="pre">smallest_value</span></code>.</p></li>
+</ol>
+<p>Your solution should still work if we changed the list stored in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># These variables are provided for you (to avoid copy-and-paste errors)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">22.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">42.3</span><span class="p">,</span>  <span class="mf">23.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">,</span>  <span class="o">-</span><span class="mf">2.8</span><span class="p">]</span>
+
+<span class="c1"># Write your code below</span>
+
+
+
+<span class="c1"># This code is provided to help you check your work</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Count: </span><span class="si">{</span><span class="n">below_zero</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Smallest: </span><span class="si">{</span><span class="n">smallest_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-1-question-3-4-points">
+<h3>Part 1, Question 3 (4 points)<a class="headerlink" href="#part-1-question-3-4-points" title="Permalink to this heading">#</a></h3>
+<p>We have given you a long string in the cell below.
+You have 3 tasks:</p>
+<ol class="arabic simple">
+<li><p>First, <strong>split</strong> the string into sentences using the <code class="docutils literal notranslate"><span class="pre">split()</span></code> method, and store the resulting list in a variable called <code class="docutils literal notranslate"><span class="pre">sentences</span></code>.</p></li>
+<li><p>Then create an empty list called <code class="docutils literal notranslate"><span class="pre">lengths</span></code>.  Using a loop, iterate over <code class="docutils literal notranslate"><span class="pre">sentences</span></code>, appending the number of words in each sentence to <code class="docutils literal notranslate"><span class="pre">lengths</span></code>.  (Hint: you will need to use <code class="docutils literal notranslate"><span class="pre">split()</span></code> again)</p></li>
+<li><p>Store the sentence with the largest number of words in a variable named <code class="docutils literal notranslate"><span class="pre">longest</span></code>.</p></li>
+</ol>
+<p>Do not hard-code your answers, we are looking for your use of Python methods, functions, and loops.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This variable is given to you: do not change it!</span>
+<span class="n">winter</span> <span class="o">=</span> <span class="s2">&quot;Snow blankets the ground. Ice glazes the windows. Fire crackles warmly in the hearth. Boots crunch in the snow. Scarves wrap tightly. Stars shine brightly.&quot;</span>
+
+<span class="c1"># Write your code here</span>
+
+
+
+
+<span class="c1"># This code is provided to help you check your work</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">longest</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-2-mammalian-reproductive-strategies-15-points">
+<h2>Part 2: Mammalian Reproductive Strategies (15 points)<a class="headerlink" href="#part-2-mammalian-reproductive-strategies-15-points" title="Permalink to this heading">#</a></h2>
+<p>Part two of this test will examine the average length of the gestation period for mammalian species. This is expressed in units of days. For example, a human fetus may spend approximately 270 days, on average, in utero.</p>
+<p>To begin, run the following code cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The code in this cell is provided to get you started on this part.</span>
+<span class="c1"># RUN THIS CELL, but do NOT modify the code.</span>
+<span class="n">gest_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;gestation.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">gest_lines</span> <span class="o">=</span> <span class="n">gest_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">gest_header</span> <span class="o">=</span> <span class="n">gest_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">gest_data</span> <span class="o">=</span> <span class="n">gest_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="part-2-question-1-2-points">
+<h3>Part 2, Question 1 (2 points)<a class="headerlink" href="#part-2-question-1-2-points" title="Permalink to this heading">#</a></h3>
+<p>a) What does the <code class="docutils literal notranslate"><span class="pre">open()</span></code> function do? Please explain what information each argument given (<code class="docutils literal notranslate"><span class="pre">&quot;gestation.csv&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code>) is communicating to Python. <em>(1pt)</em></p>
+<p><strong>WRITE YOUR ANSWER HERE</strong></p>
+<p>b) Please explain what the Python function <code class="docutils literal notranslate"><span class="pre">readlines()</span></code> does. <em>(1pt)</em></p>
+<p><strong>WRITE YOUR ANSWER HERE</strong></p>
+</section>
+<section id="part-2-question-2-3-points">
+<h3>Part 2, Question 2 (3 points)<a class="headerlink" href="#part-2-question-2-3-points" title="Permalink to this heading">#</a></h3>
+<p>To start, run the following code cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following code is provided for you.</span>
+<span class="c1"># Run the cell, but do NOT change any of the code.</span>
+<span class="n">gest_times</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">gest_data</span><span class="p">:</span>
+    <span class="n">line_data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="n">line_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">gest_time</span> <span class="o">=</span> <span class="n">line_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">gest_time</span> <span class="o">!=</span> <span class="s2">&quot;NA&quot;</span><span class="p">:</span>
+        <span class="n">gest_times</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">gest_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Q2. Describe the line of code: <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">gest_time</span> <span class="pre">!=</span> <span class="pre">'NA'</span></code>. What does <code class="docutils literal notranslate"><span class="pre">'NA'</span></code> mean in this context? What is this <code class="docutils literal notranslate"><span class="pre">if</span></code> statement accomplishing? <em>(3pts)</em></p>
+<p><strong>WRITE YOUR ANSWER HERE</strong></p>
+</section>
+<section id="part-2-question-3-2-points">
+<h3>Part 2, Question 3 (2 points)<a class="headerlink" href="#part-2-question-3-2-points" title="Permalink to this heading">#</a></h3>
+<p>In the code cell below, complete the function <code class="docutils literal notranslate"><span class="pre">mean</span></code> to calculate the statistical average of its argument <code class="docutils literal notranslate"><span class="pre">pop</span></code>. You may assume that <code class="docutils literal notranslate"><span class="pre">pop</span></code> is not empty. The provided code below assumes that you will store the computed average in a variable named <code class="docutils literal notranslate"><span class="pre">average</span></code> before returning it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">pop</span><span class="p">):</span>
+    <span class="c1"># Return the average of the values in the list pop.</span>
+    <span class="c1"># Complete this function.</span>
+    
+
+
+    <span class="k">return</span> <span class="n">average</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-2-question-4-8-points">
+<h3>Part 2, Question 4 (8 points)<a class="headerlink" href="#part-2-question-4-8-points" title="Permalink to this heading">#</a></h3>
+<p><em>a)</em> Please use your newly-defined function to calculate how long mammalian species take to gestate, on average. You will want to use as input <code class="docutils literal notranslate"><span class="pre">gest_times.values()</span></code>. Store the result in a variable called <code class="docutils literal notranslate"><span class="pre">mean_gestation_time</span></code>. <em>(1pt)</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+
+
+<span class="c1"># This code is provided to help you check your work</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average gestation time is </span><span class="si">{</span><span class="n">mean_gestation_time</span><span class="si">}</span><span class="s2"> days.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Run the code below to create a dictionary that links the name of each species in the dataset to its order.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp_ord</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">gest_data</span><span class="p">:</span>
+    <span class="n">line_data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">line_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="n">line_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">sp_ord</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="n">order</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>b)</em> In the code cell below, please create a list with all of the unique orders represented in the dataset. Assign it to the variable <code class="docutils literal notranslate"><span class="pre">unique_orders</span></code>. <em>(2pts)</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+
+
+
+<span class="c1"># This code is provided to help you check your work</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unique_orders</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>c)</em> Please combine the information from the dictionaries <code class="docutils literal notranslate"><span class="pre">gest_times</span></code> and <code class="docutils literal notranslate"><span class="pre">sp_ord</span></code> to find the gestation times of all species from the order “Primates”. Calculate the average gestation time for all Primate species and assign the result to the variable <code class="docutils literal notranslate"><span class="pre">primate_mean_gestation</span></code>. <em>(5pts)</em></p>
+<p>(This question does not depend on <code class="docutils literal notranslate"><span class="pre">unique_orders</span></code>)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+
+
+
+<span class="c1"># This code is provided to help you check your work</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">primate_mean_gestation</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-3-gestation-time-and-conservation-risk-10-points">
+<h2>Part 3. Gestation time and Conservation Risk (10 points)<a class="headerlink" href="#part-3-gestation-time-and-conservation-risk-10-points" title="Permalink to this heading">#</a></h2>
+<p>Next, we are going to examine what impact gestation time seems to have on a species’ conservation risk. Our underlying question is: <strong>Do at-risk species tend to take a shorter or longer amount of time in utero?</strong></p>
+<p>To start, run the following code cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following code is provided for you.</span>
+<span class="c1"># Run the cell, but do NOT change any of the code.</span>
+<span class="n">iucn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;iucn_status.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">iucn_lines</span> <span class="o">=</span> <span class="n">iucn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">iucn_header</span> <span class="o">=</span> <span class="n">iucn_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">iucn_data</span> <span class="o">=</span> <span class="n">iucn_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">iucn_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;LC&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;NT&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;VU&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;EN&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;CR&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;EW&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;EX&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;DD&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+
+<span class="n">sp_threat</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">iucn_data</span><span class="p">:</span>
+    <span class="n">line_data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="n">species</span> <span class="o">=</span> <span class="n">line_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">iucn_risk</span> <span class="o">=</span> <span class="n">line_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">risk_numeric</span> <span class="o">=</span> <span class="n">iucn_map</span><span class="p">[</span><span class="n">iucn_risk</span><span class="p">]</span>
+    <span class="n">threat</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">risk_numeric</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span> 
+        <span class="n">threat</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">risk_numeric</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Skip over any lines that are level DD (&#39;data deficient&#39;)</span>
+        <span class="k">continue</span>
+    <span class="n">sp_threat</span><span class="p">[</span><span class="n">species</span><span class="p">]</span> <span class="o">=</span> <span class="n">threat</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sp_threat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="part-3-question-1-4-points-total">
+<h3>Part 3, Question 1 (4 points total)<a class="headerlink" href="#part-3-question-1-4-points-total" title="Permalink to this heading">#</a></h3>
+<p>a) Please describe the contents of the dictionary <code class="docutils literal notranslate"><span class="pre">sp_threat</span></code> after running the block of code above. What python data types are the keys and values? What do these mean, biologically? <em>(2pts)</em></p>
+<p><strong>WRITE YOUR ANSWER HERE</strong></p>
+<p>b) Please explain why we included the conditional statement <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">risk_numeric</span> <span class="pre">&gt;=</span> <span class="pre">3:</span></code> <em>(2pts)</em></p>
+<p><strong>WRITE YOUR ANSWER HERE</strong></p>
+</section>
+<section id="part-3-question-2-6-points">
+<h3>Part 3, Question 2 (6 points)<a class="headerlink" href="#part-3-question-2-6-points" title="Permalink to this heading">#</a></h3>
+<p>Start by running the code block below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following code is provided for you.</span>
+<span class="c1"># Run the cell, but do NOT change any of the code.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">variance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">):</span>
+    <span class="n">diffs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">mean_val</span>
+        <span class="n">sq_diff</span> <span class="o">=</span> <span class="n">diff</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sq_diff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mean</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">st_dev</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">):</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean_val</span><span class="p">)</span>
+    <span class="n">sd</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sd</span>
+
+<span class="n">risk_gest</span> <span class="o">=</span> <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="p">[],</span> <span class="kc">False</span><span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">sp_threat</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">gest_time</span> <span class="o">=</span> <span class="n">gest_times</span><span class="p">[</span><span class="n">sp</span><span class="p">]</span>
+        <span class="n">threat</span> <span class="o">=</span> <span class="n">sp_threat</span><span class="p">[</span><span class="n">sp</span><span class="p">]</span>
+        <span class="n">risk_gest</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gest_time</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+<span class="k">for</span> <span class="n">threat</span> <span class="ow">in</span> <span class="n">risk_gest</span><span class="p">:</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="n">risk_gest</span><span class="p">[</span><span class="n">threat</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">mean_size</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span>
+    <span class="n">sd_size</span> <span class="o">=</span> <span class="n">st_dev</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">mean_size</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">threat</span><span class="si">}</span><span class="s2">: mean size </span><span class="si">{</span><span class="n">mean_size</span><span class="si">}</span><span class="s2">, standard deviation </span><span class="si">{</span><span class="n">sd_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>a)</em> The code block above uses exception handling (<code class="docutils literal notranslate"><span class="pre">try:</span></code> and <code class="docutils literal notranslate"><span class="pre">except:</span></code>). Please explain why we needed to use exception handling to link the two dictionaries <code class="docutils literal notranslate"><span class="pre">gest_times</span></code> and <code class="docutils literal notranslate"><span class="pre">sp_threat</span></code> by their keys. <em>(3pts)</em></p>
+<p><strong>WRITE YOUR ANSWER HERE</strong></p>
+<p><em>b)</em> The code above calculates the mean gestation time among species within each threatened category, as well as its standard deviation. <code class="docutils literal notranslate"><span class="pre">True</span></code> represents species that ARE at risk. <code class="docutils literal notranslate"><span class="pre">False</span></code> represents species that are NOT at risk.</p>
+<p>Do species that are at risk tend to have shorter gestation times than those that are not at risk? Create an argument based on both the mean and standard deviation. <em>(3pts)</em></p>
+<p><strong>WRITE YOUR ANSWER HERE</strong></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./midterm"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../guides/markus_guide.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Guide to Using MarkUs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../weekly-materials/week01/lecture/Class1_EEB125_KR.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EEB125 Week 1: Computation, Python, and JupyterHub</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-instructions">Test Instructions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marking-rubric">Marking Rubric</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aids-allowed-and-academic-integrity">Aids Allowed and Academic Integrity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-allowed">Time Allowed</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-i-ask-a-question-during-the-test">How do I ask a question during the test?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission-instructions">Submission Instructions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-coding-exercises-10-points">Part 1: Coding Exercises (10 points)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-question-1-3-points">Part 1, Question 1 (3 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-question-2-3-points">Part 1, Question 2 (3 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-question-3-4-points">Part 1, Question 3 (4 points)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-mammalian-reproductive-strategies-15-points">Part 2: Mammalian Reproductive Strategies (15 points)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-1-2-points">Part 2, Question 1 (2 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-2-3-points">Part 2, Question 2 (3 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-3-2-points">Part 2, Question 3 (2 points)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-question-4-8-points">Part 2, Question 4 (8 points)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-gestation-time-and-conservation-risk-10-points">Part 3. Gestation time and Conservation Risk (10 points)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-question-1-4-points-total">Part 3, Question 1 (4 points total)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-question-2-6-points">Part 3, Question 2 (6 points)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

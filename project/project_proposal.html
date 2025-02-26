@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EEB125 Final Project Proposal &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'project/project_proposal';</script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EEB125H1 Data Science Conference" href="project_instructions.html" />
+    <link rel="prev" title="Homework 7: Data Wrangling – Understanding U.S. Covid Statistics" href="../weekly-materials/week07/homework/Homework_7.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../weekly-materials/week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_instructions.html">Final Project Instructions</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/project/project_proposal.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/project/project_proposal.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EEB125 Final Project Proposal</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#due-date-march-10-23-59">Due date: March 10, 23:59</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics">Basics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-proposal">The Proposal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grading">Grading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-project-expecations">Final Project Expecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data">The Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iucn-red-list">IUCN Red List</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-biodiversity-information-facility-gbif">Global Biodiversity Information Facility (GBIF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amniote-life-history">Amniote life history</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-questions">Sample Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-should-the-proposal-contain">What should the proposal contain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markus-instructions">MarkUs Instructions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forming-a-group-on-markus">Forming a Group on MarkUs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#submitting-files">Submitting Files</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eeb125-final-project-proposal">
+<h1>EEB125 Final Project Proposal<a class="headerlink" href="#eeb125-final-project-proposal" title="Permalink to this heading">#</a></h1>
+<section id="due-date-march-10-23-59">
+<h2>Due date: March 10, 23:59<a class="headerlink" href="#due-date-march-10-23-59" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>You will work in a group comprised of either 3 or 4 students <strong>in the same tutorial</strong>.</p></li>
+<li><p>All team members are expected to contribute equally to the completion of the proposal and the final project.  All team members must present part of the final oral video presentation.</p></li>
+<li><p>Your group may not work with members of another group.  You may not discuss the project with anyone except for your team, professors, and the course TAs.</p></li>
+<li><p>If you are concerned about any issues with your team, contact a member of the teaching team as soon as possible.</p></li>
+</ul>
+</section>
+<section id="the-proposal">
+<h2>The Proposal<a class="headerlink" href="#the-proposal" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Each group must submit a project proposal. Your TA is aiming to give your group feedback within one week of submission. Submission instructions are at the end of this notebook.</p></li>
+<li><p>The proposal must be submitted as a jupyter (<code class="docutils literal notranslate"><span class="pre">project_proposal.ipynb</span></code>) notebook. There are six sections that should be filled in, described further below.</p></li>
+<li><p>The goal of the proposal is not to work out every detail around your group’s presentation plans and analysis, but to ensure that the question is feasible and that each group has a work plan.</p></li>
+<li><p>Another goal is for the teaching team to be able to give your group feedback with enough time to incorporate the feedback.  Although, we view this as the start of the conversation between your group and your TA.</p></li>
+<li><p>Further details about the Final Project Submission (due April 10) deliverables found here: <a class="reference internal" href="project_instructions.html"><span class="doc std std-doc">instructions for the final project</span></a>.</p></li>
+</ul>
+</section>
+<section id="grading">
+<h2>Grading<a class="headerlink" href="#grading" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Each group member will recieve the same grade.</p></li>
+<li><p>The six sections below will be graded as:</p></li>
+</ul>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Section</p></th>
+<th class="head"><p>0</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>All sections</p></td>
+<td><p>It’s not clear how this section of the project will proceed</p></td>
+<td><p>It’s somewhat clear how this section will proceed, although there are several obvious items missing from the description</p></td>
+<td><p>It’s clear how this section will proceed.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="final-project-expecations">
+<h2>Final Project Expecations<a class="headerlink" href="#final-project-expecations" title="Permalink to this heading">#</a></h2>
+<p>You will have the opportunity to tell your own data science story about conservation risk and organismal biology by combining evidence from several sources. Note that you do NOT have to use every possible data source in your project. However, successful projects will likely often combine at least two of the sources described below. Feel free to get in touch with one of the teaching team if you have an idea but aren’t sure if it makes sufficient use of the data.</p>
+<p>We expect that your analysis will require data wrangling, exploratory data analysis (plots and summary statistics), statistical tests and modeling.  Your project does not need to include all of these statistical methods nor does it need to include all of the variables in the data set.  You might also choose not to include all observations, or to make new variables from the data that may be more suitable for answering your questions of interest.</p>
+<p>The goal is not to carry out an exhaustive analysis, nor to apply everything you have learned in the course.  The goal is to demonstrate that you have learned how to use Python, that you can appropriately apply the methods we have covered in class to address a question, and that you can effectively interpret and present the results.</p>
+</section>
+<section id="the-data">
+<h2>The Data<a class="headerlink" href="#the-data" title="Permalink to this heading">#</a></h2>
+<p>We have provided data files from each of the sources explained below. These data files are available at: <a class="reference external" href="https://www.dropbox.com/sh/gg03gepzp7r5w78/AAANz3mCiEf8LxBG_auGlAxCa?dl=0">https://www.dropbox.com/sh/gg03gepzp7r5w78/AAANz3mCiEf8LxBG_auGlAxCa?dl=0</a>.</p>
+<section id="iucn-red-list">
+<h3>IUCN Red List<a class="headerlink" href="#iucn-red-list" title="Permalink to this heading">#</a></h3>
+<p>A major focus of conservation research involves determining which geographic areas and political jurisdictions are in most need of conservation management. At the same time, many major questions in ecology and evolutionary biology surround discovering how ecological communities of organisms vary across space and time. Working in groups, you will combine several sources of data to evaluate conservation risk within an organismal group of your choice across a set of geographic regions of your choice.</p>
+<p>To examine the conservation risks across groups of species and regions, you may use data gathered from the IUCN Red List, which we have discussed in class. In the data folder, you will find two files that we have downloaded from the IUCN database: one encompassing animal species and one encompassing plants. You can find descriptions of the data included within the columns on the IUCN website (<a class="reference external" href="https://www.iucnredlist.org/">https://www.iucnredlist.org/</a>). You will likely want to perform your own subset of these data to extract the groups of organisms with which you are most interested.</p>
+</section>
+</section>
+<section id="global-biodiversity-information-facility-gbif">
+<h2>Global Biodiversity Information Facility (GBIF)<a class="headerlink" href="#global-biodiversity-information-facility-gbif" title="Permalink to this heading">#</a></h2>
+<p>You can use the Global Biodiversity Information Facility (GBIF) database to gather information on geographic locality (<a class="reference external" href="https://www.gbif.org/occurrence/search?occurrence_status=present&amp;amp;q=">https://www.gbif.org/occurrence/search?occurrence_status=present&amp;q=</a>). We have provided species lists for several general geographic regions in the data folder. Each of these contain full lists of the species that have been documented within each region.</p>
+<p><strong>NOTE</strong>: GBIF has sort of complicated download process. If you are interested in tackling a question using a geographic region not provided, please contact your TA or Prof. Parins-Fukuchi).</p>
+</section>
+<section id="amniote-life-history">
+<h2>Amniote life history<a class="headerlink" href="#amniote-life-history" title="Permalink to this heading">#</a></h2>
+<p>You might also be interested in examining how extinction risk correlates to certain life history variables, similar to what we have examined in class. We will use the “amniote life history database” contained within the data folder. This dataset compiles information like body size, lifespan, gestation time, across all amniotes (mammals, birds, amphibians, and reptiles). You can find metadata here:</p>
+<p><a class="reference external" href="https://figshare.com/collections/An_amniote_life-history_database_to_perform_comparative_analyses_with_birds_mammals_and_reptiles/3308127">https://figshare.com/collections/An_amniote_life-history_database_to_perform_comparative_analyses_with_birds_mammals_and_reptiles/3308127</a></p>
+</section>
+<section id="sample-questions">
+<h2>Sample Questions<a class="headerlink" href="#sample-questions" title="Permalink to this heading">#</a></h2>
+<p>Below are some general questions that your group can choose to answer in your project. These general questions will require you and your group to decide which data to use to answer these questions. Your group should select one question.</p>
+<ol class="arabic simple">
+<li><p>Some geographic regions often face differing severities of biodiversity risk, as measured by IUCN threat level. Pick two or more geographic regions and undertake a broad comparative survey of their overall risk. This will likely involve merging (by species) one or two of the provided regional species lists with one of the provided IUCN datasets (animal or plant) and then comparing the distribution of threats within each region.</p>
+<ul class="simple">
+<li><p>Do your chosen regions display a difference in what kinds of organisms are most at risk? For example, are mammals more at risk in one, while flowering plants are more at risk in another?</p></li>
+</ul>
+</li>
+<li><p>Sometimes, geographic regions have substantially more similar biological diversity than one might expect. For example, East Asia (Japan, Korea, Taiwan, and Eastern China) has more overlap in plant species with the Appalachian mountain range in North America than one might expect given their distance. Use the GBIF data to examine the overlap in species (i.e., how many species do different regions share?) across three or more geographic regions, using the provided regional species lists. For example, using the provided GBIF data, you may compare the number of shared species or genera within North America and East Asia, and then identify whether those two regions are more similar to each other than to western Europe or eastern Africa.</p>
+<ul class="simple">
+<li><p>Which regions are most similar to one another (has the greatest overlap in resident species)? Is this the set of regions that you expected to be most similar from your sample?</p></li>
+<li><p>Do you notice a change in species diversity according to latitude? In other words, are regions distant from the equator more or less species rich than regions near the equator? You do not need to perform this comparison quantitatively– just use your existing geographic knowledge to compare regions (e.g., you may already know that tropical South America is closer to the equator than northern Europe).</p></li>
+</ul>
+</li>
+<li><p>How do biological attributes correspond to extinction risk? Do species with certain biological properties tend to be at greater risk of extinction?</p>
+<ul class="simple">
+<li><p>How does litter/clutch size (as measured in the provided ‘amniote’ dataset) correspond to IUCN extinction risk? Do species that birth more offspring at once have a lower risk of going extinct, on average?</p></li>
+<li><p>Are communities of animals from different regions different in their biology, on average? For example, do species in region X tend to be larger than those in region Y? To perform this comparison you may join the provided species lists with the ‘amniote’ dataset (merging on species) and compare the distribution of measurements for each region. For example, you may wish to ask whether North American mammals tend to be longer or shorter lived than animals in tropical South America. Try speculating on any differences you find.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="what-should-the-proposal-contain">
+<h2>What should the proposal contain?<a class="headerlink" href="#what-should-the-proposal-contain" title="Permalink to this heading">#</a></h2>
+<p>The proposal should be written in a Jupyter notebook (named <code class="docutils literal notranslate"><span class="pre">project_proposal.ipynb</span></code>) and contain the following section headers as below.  You can use the following sections of this notebook (Questions 0-5) as a template for the proposal.</p>
+<ol class="arabic simple" start="0">
+<li><p><strong>Division of labour:</strong> How will each member contribute to completing this project? Make sure to list each member with a brief description of what they will do.  How will your group coordinate and work on the project?</p></li>
+</ol>
+<p><strong>–Description here–</strong></p>
+<ol class="arabic simple">
+<li><p><strong>State the question:</strong> What question(s) will your group answer?</p></li>
+</ol>
+<p><strong>–Write here–</strong></p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Data sources:</strong> What data will your group use?  State specific data sets, and columns within the data sets that you will use to answer your question(s).</p></li>
+</ol>
+<p><strong>–Write here–</strong></p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Methods:</strong> How will your group wrangle the data?  Will new variables be created?  What statistical methods will be used?</p></li>
+</ol>
+<p><strong>–Write here–</strong></p>
+<ol class="arabic simple" start="4">
+<li><p><strong>Results:</strong> How will the results be presented?  Tables, graphs?</p></li>
+</ol>
+<p><strong>–Write here–</strong></p>
+<ol class="arabic simple" start="5">
+<li><p><strong>Conclusions:</strong> What types of conclusions does your group hope to make?  What do you hope to learn from this project?</p></li>
+</ol>
+<p><strong>–Write here–</strong></p>
+</section>
+<section id="markus-instructions">
+<h2>MarkUs Instructions<a class="headerlink" href="#markus-instructions" title="Permalink to this heading">#</a></h2>
+<section id="forming-a-group-on-markus">
+<h3>Forming a Group on MarkUs<a class="headerlink" href="#forming-a-group-on-markus" title="Permalink to this heading">#</a></h3>
+<p>First, select one student in the group to create the group. That student should:</p>
+<ol class="arabic simple">
+<li><p>Login to <a class="reference external" href="https://markus-ds.teach.cs.toronto.edu/">MarkUs</a>.</p></li>
+<li><p>Go to <em>Proj_01: Course Project Phase 1 (Proposal)</em>, and the <code class="docutils literal notranslate"><span class="pre">Submissions</span></code> tab.</p></li>
+<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">Group</span></code>.</p></li>
+<li><p>Then after your group is created, click on Invite student(s).</p></li>
+<li><p>Enter the <strong>UTORids</strong> of each other group member (you’ll need to ask them for this information).</p></li>
+</ol>
+<p>Then, every <em>other</em> student should:</p>
+<ol class="arabic simple">
+<li><p>Login to <a class="reference external" href="https://markus-ds.teach.cs.toronto.edu/">MarkUs</a>.</p></li>
+<li><p>Go to <em>Proj_01: Course Project Phase 1 (Proposal)</em>, and the <code class="docutils literal notranslate"><span class="pre">Submissions</span></code> tab.</p></li>
+<li><p>Look for the group invitation and click on <code class="docutils literal notranslate"><span class="pre">Join</span> <span class="pre">Group</span></code>. <strong>Warning</strong>: this must be done before the due date!!</p></li>
+</ol>
+</section>
+<section id="submitting-files">
+<h3>Submitting Files<a class="headerlink" href="#submitting-files" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Submitting your group’s files works the same way as other assignments, except <em>only one person from the group needs to submit the files</em>.</p></li>
+<li><p>Upload your <code class="docutils literal notranslate"><span class="pre">project_proposal.ipynb</span></code> notebook as the submission.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./project"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../weekly-materials/week07/homework/Homework_7.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 7: Data Wrangling – Understanding U.S. Covid Statistics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="project_instructions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EEB125H1 Data Science Conference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#due-date-march-10-23-59">Due date: March 10, 23:59</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics">Basics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-proposal">The Proposal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grading">Grading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-project-expecations">Final Project Expecations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data">The Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iucn-red-list">IUCN Red List</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-biodiversity-information-facility-gbif">Global Biodiversity Information Facility (GBIF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#amniote-life-history">Amniote life history</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-questions">Sample Questions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-should-the-proposal-contain">What should the proposal contain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markus-instructions">MarkUs Instructions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forming-a-group-on-markus">Forming a Group on MarkUs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#submitting-files">Submitting Files</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

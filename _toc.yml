@@ -63,4 +63,7 @@ parts:
       title: Prof. Reid's Notebook
     - file: weekly-materials/week07/homework/Homework_7.ipynb
       title: Week 7 Homework 
-  
+    - file: project/project_proposal.ipynb
+      title: Final Project Proposal Instructions
+    - file: project/project_instructions.ipynb
+      title: Final Project Instructions

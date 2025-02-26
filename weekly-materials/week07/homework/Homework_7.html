@@ -1,0 +1,733 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Homework 7: Data Wrangling – Understanding U.S. Covid Statistics &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week07/homework/Homework_7';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="EEB125 Lecture 7: Introduction to Pandas" href="../lecture/lecture7.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 7 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week07/homework/Homework_7.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week07/homework/Homework_7.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Homework 7: Data Wrangling – Understanding U.S. Covid Statistics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-read-in-the-data-file">Problem 1: Read in the data file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-cleaning-the-data">Problem 2: Cleaning the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-calculating-on-a-series">Problem 3: Calculating on a <code class="docutils literal notranslate"><span class="pre">Series</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3a-extracting-a-series">Problem 3a: Extracting a <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3b-calculating-a-summary-statistic">Problem 3b: Calculating a summary statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3c-interpret">Problem 3c: Interpret</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4-data-transformation">Problem 4: Data Transformation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4a-creating-a-new-series">Problem 4a: Creating a new <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4b-add-the-column-to-the-dataset">Problem 4b: Add the column to the dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5-large-and-small-state-analysis">Problem 5: Large and Small State Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5a-filtering-the-data">Problem 5a: Filtering the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5b-computing-average-rates">Problem 5b: Computing average rates</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-6-analysis">Problem 6: Analysis</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-7-data-wrangling-understanding-u-s-covid-statistics">
+<h1>Homework 7: Data Wrangling – Understanding U.S. Covid Statistics<a class="headerlink" href="#homework-7-data-wrangling-understanding-u-s-covid-statistics" title="Permalink to this heading">#</a></h1>
+<section id="logistics">
+<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
+<p><strong>Due date</strong>: The homework is due 11:59pm on Tuesday, March 4.</p>
+<p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
+To submit your work:</p>
+<ol class="arabic simple">
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_7.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../../../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>hw7</strong> assignment. (See <a class="reference internal" href="../../../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)</p></li>
+</ol>
+<p>All homeworks will take place in a Jupyter notebook (like this one). When you are done, you will download this notebook and submit it to MarkUs.</p>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>The <a class="reference external" href="https://www.genderscilab.org">GenderSci Lab</a> is “dedicated to generating feminist concepts, methods and theories for scientific research on sex and gender.”</p>
+<p>One of their research projects explores the impact of COVID-19 on women and men.
+In this lab, we are using a set of data that is based on the information in their <a class="reference external" href="https://genderscilab.org/gender-and-sex-in-covid19/#DataTable">US Gender/Sex COVID-19 Data Tracker</a>. (You may need to search for “US Gender/Sex COVID-19 Data Tables”.)</p>
+<p>The table shows various pieces of information about US state COVID-19 cases and deaths counted by sex, including the total case count, male case count, and female case counts, as well as the death counts and percentages. Here’s a snippet:</p>
+<p><img alt="US Gender/Sex COVID-19 Data Tables" src="../../../_images/tableclip.png" /></p>
+<p>We have added one more column of data to this, the state population. You’ll find out more about this data below.</p>
+</section>
+<section id="question">
+<h2>Question<a class="headerlink" href="#question" title="Permalink to this heading">#</a></h2>
+<p>The question you’re answering in this homework:</p>
+<blockquote>
+<div><p><strong>Do states with large populations have a higher COVID-19 rate than states with low populations?</strong></p>
+</div></blockquote>
+</section>
+<section id="problem-1-read-in-the-data-file">
+<h2>Problem 1: Read in the data file<a class="headerlink" href="#problem-1-read-in-the-data-file" title="Permalink to this heading">#</a></h2>
+<p>The dataset we’ll work with on this homework is a modified version of a dataset called <code class="docutils literal notranslate"><span class="pre">covid_raw.csv</span></code> you’ve seen earlier in the course.</p>
+<p>To begin, read in the dataset using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, storing the result as a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> called <code class="docutils literal notranslate"><span class="pre">covid_raw_data</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This import statement is provided to you; do not change it.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-2-cleaning-the-data">
+<h2>Problem 2: Cleaning the data<a class="headerlink" href="#problem-2-cleaning-the-data" title="Permalink to this heading">#</a></h2>
+<p>You’ll now perform three different data cleaning operations.
+At each step, we’ve specified a variable to store the result in, so that all of your work can be autograded.
+Note that as we saw in lecture, all of these steps create a new <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, rather than modifying an existing <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. (That makes it easier for you to check your work at each step.)</p>
+<ol class="arabic simple">
+<li><p>Extract just the <code class="docutils literal notranslate"><span class="pre">'State'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Total_cases'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'pop'</span></code> columns from <code class="docutils literal notranslate"><span class="pre">covid_raw_data</span></code>, storing the resulting <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> in a variable called <code class="docutils literal notranslate"><span class="pre">covid_pop_data</span></code>.
+The columns must appear in the order listed in this question.
+You are encouraged, but not required, to create a new list variable to store the column names, just like we did in lecture.</p></li>
+<li><p>Take <code class="docutils literal notranslate"><span class="pre">covid_pop_data</span></code> and rename the <code class="docutils literal notranslate"><span class="pre">Total_cases</span></code> column to <code class="docutils literal notranslate"><span class="pre">'Total</span> <span class="pre">Cases'</span></code> and <code class="docutils literal notranslate"><span class="pre">'pop'</span></code> column to <code class="docutils literal notranslate"><span class="pre">'Population'</span></code>, storing the resulting <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> in a variable called <code class="docutils literal notranslate"><span class="pre">covid_renamed_data</span></code>.</p></li>
+<li><p>Finally, take <code class="docutils literal notranslate"><span class="pre">covid_renamed_data</span></code> and use the <code class="docutils literal notranslate"><span class="pre">DataFrame.convert_dtypes()</span></code> method to automatically convert each column into its most appropriate type, storing the resulting <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> in a variable called <code class="docutils literal notranslate"><span class="pre">covid_final_data</span></code>. You will use <code class="docutils literal notranslate"><span class="pre">covid_final_data</span></code> for the rest of this notebook.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3-calculating-on-a-series">
+<h2>Problem 3: Calculating on a <code class="docutils literal notranslate"><span class="pre">Series</span></code><a class="headerlink" href="#problem-3-calculating-on-a-series" title="Permalink to this heading">#</a></h2>
+<section id="problem-3a-extracting-a-series">
+<h3>Problem 3a: Extracting a <code class="docutils literal notranslate"><span class="pre">Series</span></code><a class="headerlink" href="#problem-3a-extracting-a-series" title="Permalink to this heading">#</a></h3>
+<p>Extract the <code class="docutils literal notranslate"><span class="pre">'Total</span> <span class="pre">Cases'</span></code> column from <code class="docutils literal notranslate"><span class="pre">covid_final_data</span></code> as a <code class="docutils literal notranslate"><span class="pre">Series</span></code>, and store it in a variable called <code class="docutils literal notranslate"><span class="pre">total_cases</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-3b-calculating-a-summary-statistic">
+<h2>Problem 3b: Calculating a summary statistic<a class="headerlink" href="#problem-3b-calculating-a-summary-statistic" title="Permalink to this heading">#</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">total_cases</span></code> to calculate the <em>average</em> number of cases per state, and store the result in a variable called <code class="docutils literal notranslate"><span class="pre">average_cases_per_state</span></code>.</p>
+<p><strong>Note</strong>: you shouldn’t need to calculate the sum and count separately; there’s a <code class="docutils literal notranslate"><span class="pre">Series</span></code> method that will calculate the average of a numerical <code class="docutils literal notranslate"><span class="pre">Series</span></code> for you in one step!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-3c-interpret">
+<h2>Problem 3c: Interpret<a class="headerlink" href="#problem-3c-interpret" title="Permalink to this heading">#</a></h2>
+<p>Why is the average number of cases per state not a particularly useful statistic when analysing COVID cases? (<strong>1 pt</strong>)</p>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+<section id="problem-4-data-transformation">
+<h2>Problem 4: Data Transformation<a class="headerlink" href="#problem-4-data-transformation" title="Permalink to this heading">#</a></h2>
+<section id="problem-4a-creating-a-new-series">
+<h3>Problem 4a: Creating a new <code class="docutils literal notranslate"><span class="pre">Series</span></code><a class="headerlink" href="#problem-4a-creating-a-new-series" title="Permalink to this heading">#</a></h3>
+<p>Create a new <code class="docutils literal notranslate"><span class="pre">Series</span></code> called <code class="docutils literal notranslate"><span class="pre">case_rates</span></code> that contains the percentage of COVID cases within each state relative to that state’s population, rounded to two decimal places.</p>
+<blockquote>
+<div><p>For example, Alaska has 132645 cases and a population of 731545, and so its “case rate” would be</p>
+<div class="math notranslate nohighlight">
+\[
+&gt; \frac{132645}{731545} \times 100 = 18.13217232022637
+&gt; \]</div>
+<p>rounded to two decimal places, or 18.13.</p>
+</div></blockquote>
+<p>To perform this data transformation, you’ll need to extract the two relevant columns from <code class="docutils literal notranslate"><span class="pre">covid_data_final</span></code> and them combine them appropriately.
+As we did in lecture, take advantage of operations like <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">*</span></code> and <code class="docutils literal notranslate"><span class="pre">Series</span></code> methods like <code class="docutils literal notranslate"><span class="pre">.round()</span></code> to operate on and combine numerical <code class="docutils literal notranslate"><span class="pre">Series</span></code>, rather than using for loops.</p>
+<p>You <em>may</em>, but are not required to, create additional variables to store intermediate steps in this calculation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-4b-add-the-column-to-the-dataset">
+<h3>Problem 4b: Add the column to the dataset<a class="headerlink" href="#problem-4b-add-the-column-to-the-dataset" title="Permalink to this heading">#</a></h3>
+<p>Once you’re confident you’ve computed the <code class="docutils literal notranslate"><span class="pre">case_rates</span></code> <code class="docutils literal notranslate"><span class="pre">Series</span></code> correctly, add it to <code class="docutils literal notranslate"><span class="pre">covid_final_data</span></code> with the name <code class="docutils literal notranslate"><span class="pre">&quot;Case</span> <span class="pre">Rate</span> <span class="pre">(%)&quot;</span></code>.</p>
+<p><strong>Warning</strong>: unlike all of the previous steps, this will modify <code class="docutils literal notranslate"><span class="pre">covid_final_data</span></code>, rather than creating a new <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.
+If you do it incorrectly or fix a problem in Problem 4a and want to restart, you should <em>re-run all above cells</em> to get a fresh version of <code class="docutils literal notranslate"><span class="pre">covid_final_data</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-5-large-and-small-state-analysis">
+<h2>Problem 5: Large and Small State Analysis<a class="headerlink" href="#problem-5-large-and-small-state-analysis" title="Permalink to this heading">#</a></h2>
+<p>Now we can do some work to compare large and small states.
+For the purposes of this homework, we define a <strong>large state</strong> to be a state whose population is <strong>greater than 10,000,000</strong>, and a <strong>small state</strong> to be a state whose population is <strong>less than 1,000,000</strong>.</p>
+<section id="problem-5a-filtering-the-data">
+<h3>Problem 5a: Filtering the data<a class="headerlink" href="#problem-5a-filtering-the-data" title="Permalink to this heading">#</a></h3>
+<p>We’ll now filter our dataset in two different ways to obtain just the large states and small states (separately).
+To do this:</p>
+<ol class="arabic simple">
+<li><p>Create a boolean <code class="docutils literal notranslate"><span class="pre">Series</span></code> called <code class="docutils literal notranslate"><span class="pre">is_large</span></code> that contains one boolean entry per state, which is <code class="docutils literal notranslate"><span class="pre">True</span></code> if the state’s population is greater than 10,000,000, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">is_large</span></code> to filter <code class="docutils literal notranslate"><span class="pre">covid_final_data</span></code> to obtain a new <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> called <code class="docutils literal notranslate"><span class="pre">covid_large_state_data</span></code> which contains only the rows for the large states.</p></li>
+<li><p>Repeat Step 1, but to create a <code class="docutils literal notranslate"><span class="pre">Series</span></code> called <code class="docutils literal notranslate"><span class="pre">is_small</span></code> that contains <code class="docutils literal notranslate"><span class="pre">True</span></code> when the state’s population is less than 1,000,000, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p></li>
+<li><p>Repeat Step 2, but to create a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> called <code class="docutils literal notranslate"><span class="pre">covid_small_state_data</span></code> which contains only the rows for the small states.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ve provided these variables for you to use (so that you don&#39;t need to manually count the 0&#39;s!)</span>
+<span class="n">large_threshold</span> <span class="o">=</span> <span class="mi">10000000</span>
+<span class="n">small_threshold</span> <span class="o">=</span> <span class="mi">1000000</span>
+
+<span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-5b-computing-average-rates">
+<h3>Problem 5b: Computing average rates<a class="headerlink" href="#problem-5b-computing-average-rates" title="Permalink to this heading">#</a></h3>
+<p>Finally, compute the <em>average case rate</em> for the large states (store in a variable called <code class="docutils literal notranslate"><span class="pre">large_state_avg_rate</span></code>) and the <em>average case rate</em> for the small states (store in a variable called <code class="docutils literal notranslate"><span class="pre">small_state_avg_rate</span></code>).</p>
+<p>Do not perform any rounding.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-6-analysis">
+<h2>Problem 6: Analysis<a class="headerlink" href="#problem-6-analysis" title="Permalink to this heading">#</a></h2>
+<p>Recall the central research question introduced at the top of this notebook:</p>
+<blockquote>
+<div><p><strong>Do states with large populations have a higher COVID-19 rate than states with low populations?</strong></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the following cells</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Large state min: </span><span class="si">{}</span><span class="s2"> / Large state max: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">covid_large_state_data</span><span class="p">[</span><span class="s2">&quot;Case Rate (%)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">covid_large_state_data</span><span class="p">[</span><span class="s2">&quot;Case Rate (%)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Small state min: </span><span class="si">{}</span><span class="s2"> / Small state max: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">covid_small_state_data</span><span class="p">[</span><span class="s2">&quot;Case Rate (%)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">covid_small_state_data</span><span class="p">[</span><span class="s2">&quot;Case Rate (%)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on your work on this homework, write 1-2 paragraphs answering each of the following questions:</p>
+<ol class="arabic simple">
+<li><p>Can you conclude whether states with large populations have a higher or lower COVID-19 rate than states with small populations? How confident are you in this conclusion? <strong>(2 pt)</strong></p></li>
+<li><p>What other data would you want to collect to help answer the original research question? What other analyses would you want to perform? <strong>(2 pt)</strong></p></li>
+</ol>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week07/homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lecture/lecture7.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EEB125 Lecture 7: Introduction to Pandas</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-read-in-the-data-file">Problem 1: Read in the data file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-cleaning-the-data">Problem 2: Cleaning the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3-calculating-on-a-series">Problem 3: Calculating on a <code class="docutils literal notranslate"><span class="pre">Series</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3a-extracting-a-series">Problem 3a: Extracting a <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3b-calculating-a-summary-statistic">Problem 3b: Calculating a summary statistic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-3c-interpret">Problem 3c: Interpret</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4-data-transformation">Problem 4: Data Transformation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4a-creating-a-new-series">Problem 4a: Creating a new <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-4b-add-the-column-to-the-dataset">Problem 4b: Add the column to the dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5-large-and-small-state-analysis">Problem 5: Large and Small State Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5a-filtering-the-data">Problem 5a: Filtering the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-5b-computing-average-rates">Problem 5b: Computing average rates</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-6-analysis">Problem 6: Analysis</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,3197 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EEB125 Lecture 7: Introduction to Pandas &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week07/lecture/lecture7';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Homework 7: Data Wrangling – Understanding U.S. Covid Statistics" href="../homework/Homework_7.html" />
+    <link rel="prev" title="Homework 5 - Investigating Mammalian Fecundity and Conservation" href="../../week05/homework/Homework_5.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/Homework_7.html">Week 7 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week07/lecture/lecture7.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week07/lecture/lecture7.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EEB125 Lecture 7: Introduction to Pandas</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feb-26-2025">Feb 26, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#karen-reid">Karen Reid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introducing-pandas">Introducing <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-pandas">What is <code class="docutils literal notranslate"><span class="pre">pandas</span></code>?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-pandas">Importing <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-data-from-a-csv-file">Reading in data from a CSV file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-dataframes">Exploring <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe-columns-properties"><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> columns properties</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-wrangling-columns">Data Wrangling: Columns</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-column-types">Converting column types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identifying-and-replacing-missing-values">Identifying and replacing “missing” values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-a-subset-of-columns">Extracting a subset of columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Extracting a subset of columns</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-transformation-computing-on-columns">Data Transformation: computing on columns</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-a-column-by-name">Retrieving a column by name</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-transform-a-single-series">Example: transform a single Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-combine-two-series">Example: combine two <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-new-column-to-a-dataframe">Adding a new column to a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#warning">WARNING!</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-series-and-filtering-rows">Boolean <code class="docutils literal notranslate"><span class="pre">Series</span></code> and filtering rows</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#note-lots-of-square-brackets">Note: lots of square brackets!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-operators-and">Logical operators: <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> and <code class="docutils literal notranslate"><span class="pre">|</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-analysis-sorting-and-basic-descriptive-statistics">Exploratory analysis: sorting and basic descriptive statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting">Sorting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-statistics">Descriptive statistics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eeb125-lecture-7-introduction-to-pandas">
+<h1>EEB125 Lecture 7: Introduction to Pandas<a class="headerlink" href="#eeb125-lecture-7-introduction-to-pandas" title="Permalink to this heading">#</a></h1>
+<section id="feb-26-2025">
+<h2>Feb 26, 2025<a class="headerlink" href="#feb-26-2025" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="karen-reid">
+<h2>Karen Reid<a class="headerlink" href="#karen-reid" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="introducing-pandas">
+<h2>Introducing <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#introducing-pandas" title="Permalink to this heading">#</a></h2>
+<p>So far this semester, you’ve worked in <em>base Python</em>, using only types of data, functions, and methods that are built into Python.</p>
+<p>For the next few weeks, we’ll learn how to use one of the most common <strong>libraries</strong> for doing data science in Python: <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
+</section>
+<section id="what-is-pandas">
+<h2>What is <code class="docutils literal notranslate"><span class="pre">pandas</span></code>?<a class="headerlink" href="#what-is-pandas" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://pandas.pydata.org/"><code class="docutils literal notranslate"><span class="pre">pandas</span></code></a> “is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
+built on top of the Python programming language.”</p>
+<a class="reference internal image-reference" href="https://cdn.britannica.com/80/150980-050-84B9202C/Giant-panda-cub-branch.jpg"><img alt="Image of a panda" src="https://cdn.britannica.com/80/150980-050-84B9202C/Giant-panda-cub-branch.jpg" style="width: 400px;" /></a>
+<p>Today, we’ll learn how to use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to:</p>
+<ul class="simple">
+<li><p>Read in a dataset from a CSV file</p></li>
+<li><p>Identify, use, and differentiate two new Pandas data types, <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> and <code class="docutils literal notranslate"><span class="pre">Series</span></code></p></li>
+<li><p>Describe the properties of a dataset representation in Pandas</p></li>
+<li><p>Inspect parts of a large dataset</p></li>
+<li><p>Perform simple <em>data cleaning</em> and <em>data transformation</em> operations on a dataset</p></li>
+<li><p>Compute some summary statistics on a dataset</p></li>
+</ul>
+</section>
+<section id="importing-pandas">
+<h2>Importing <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#importing-pandas" title="Permalink to this heading">#</a></h2>
+<p>Because <code class="docutils literal notranslate"><span class="pre">pandas</span></code> doesn’t come built-in with Python, we need to <strong>import it</strong> to be able to use it in our code.</p>
+<p>This is done with a Python statement called an <strong>import statement</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Common alternate: import with a renaming (“nickname”):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reading-in-data-from-a-csv-file">
+<h2>Reading in data from a CSV file<a class="headerlink" href="#reading-in-data-from-a-csv-file" title="Permalink to this heading">#</a></h2>
+<p>Using pandas, we can read in data from a csv file using the <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;PanTHERIA_WR05_Aug2008.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s explore: what is <code class="docutils literal notranslate"><span class="pre">species_data</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MSW05_Order</th>
+      <th>MSW05_Family</th>
+      <th>MSW05_Genus</th>
+      <th>MSW05_Species</th>
+      <th>MSW05_Binomial</th>
+      <th>1-1_ActivityCycle</th>
+      <th>5-1_AdultBodyMass_g</th>
+      <th>8-1_AdultForearmLen_mm</th>
+      <th>13-1_AdultHeadBodyLen_mm</th>
+      <th>2-1_AgeatEyeOpening_d</th>
+      <th>...</th>
+      <th>26-6_GR_MinLong_dd</th>
+      <th>26-7_GR_MidRangeLong_dd</th>
+      <th>27-1_HuPopDen_Min_n/km2</th>
+      <th>27-2_HuPopDen_Mean_n/km2</th>
+      <th>27-3_HuPopDen_5p_n/km2</th>
+      <th>27-4_HuPopDen_Change</th>
+      <th>28-1_Precip_Mean_mm</th>
+      <th>28-2_Temp_Mean_01degC</th>
+      <th>30-1_AET_Mean_mm</th>
+      <th>30-2_PET_Mean_mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Artiodactyla</td>
+      <td>Camelidae</td>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>Camelus dromedarius</td>
+      <td>3</td>
+      <td>492714.47</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999</td>
+      <td>-999.00</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>adustus</td>
+      <td>Canis adustus</td>
+      <td>1</td>
+      <td>10392.49</td>
+      <td>-999.0</td>
+      <td>745.32</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>-17.53</td>
+      <td>13.00</td>
+      <td>0</td>
+      <td>35.20</td>
+      <td>1.0</td>
+      <td>0.14</td>
+      <td>90.75</td>
+      <td>236.51</td>
+      <td>922.90</td>
+      <td>1534.40</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>aureus</td>
+      <td>Canis aureus</td>
+      <td>2</td>
+      <td>9658.70</td>
+      <td>-999.0</td>
+      <td>827.53</td>
+      <td>7.50</td>
+      <td>...</td>
+      <td>-17.05</td>
+      <td>45.74</td>
+      <td>0</td>
+      <td>79.29</td>
+      <td>0.0</td>
+      <td>0.10</td>
+      <td>44.61</td>
+      <td>217.23</td>
+      <td>438.02</td>
+      <td>1358.98</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>latrans</td>
+      <td>Canis latrans</td>
+      <td>2</td>
+      <td>11989.10</td>
+      <td>-999.0</td>
+      <td>872.39</td>
+      <td>11.94</td>
+      <td>...</td>
+      <td>-168.12</td>
+      <td>-117.60</td>
+      <td>0</td>
+      <td>27.27</td>
+      <td>0.0</td>
+      <td>0.06</td>
+      <td>53.03</td>
+      <td>58.18</td>
+      <td>503.02</td>
+      <td>728.37</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>lupus</td>
+      <td>Canis lupus</td>
+      <td>2</td>
+      <td>31756.51</td>
+      <td>-999.0</td>
+      <td>1055.00</td>
+      <td>14.01</td>
+      <td>...</td>
+      <td>-171.84</td>
+      <td>3.90</td>
+      <td>0</td>
+      <td>37.87</td>
+      <td>0.0</td>
+      <td>0.04</td>
+      <td>34.79</td>
+      <td>4.82</td>
+      <td>313.33</td>
+      <td>561.11</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5411</th>
+      <td>Rodentia</td>
+      <td>Muridae</td>
+      <td>Zyzomys</td>
+      <td>argurus</td>
+      <td>Zyzomys argurus</td>
+      <td>-999</td>
+      <td>40.42</td>
+      <td>-999.0</td>
+      <td>107.83</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>114.33</td>
+      <td>131.09</td>
+      <td>0</td>
+      <td>1.10</td>
+      <td>0.0</td>
+      <td>0.02</td>
+      <td>62.33</td>
+      <td>256.75</td>
+      <td>692.93</td>
+      <td>1704.98</td>
+    </tr>
+    <tr>
+      <th>5412</th>
+      <td>Rodentia</td>
+      <td>Muridae</td>
+      <td>Zyzomys</td>
+      <td>maini</td>
+      <td>Zyzomys maini</td>
+      <td>-999</td>
+      <td>93.99</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>131.45</td>
+      <td>132.66</td>
+      <td>0</td>
+      <td>0.17</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>90.76</td>
+      <td>265.30</td>
+      <td>877.90</td>
+      <td>1755.73</td>
+    </tr>
+    <tr>
+      <th>5413</th>
+      <td>Rodentia</td>
+      <td>Muridae</td>
+      <td>Zyzomys</td>
+      <td>palatilis</td>
+      <td>Zyzomys palatilis</td>
+      <td>-999</td>
+      <td>123.00</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>136.72</td>
+      <td>137.08</td>
+      <td>0</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>-999.00</td>
+      <td>49.00</td>
+      <td>247.16</td>
+      <td>637.90</td>
+      <td>1638.67</td>
+    </tr>
+    <tr>
+      <th>5414</th>
+      <td>Rodentia</td>
+      <td>Muridae</td>
+      <td>Zyzomys</td>
+      <td>pedunculatus</td>
+      <td>Zyzomys pedunculatus</td>
+      <td>-999</td>
+      <td>100.00</td>
+      <td>-999.0</td>
+      <td>126.79</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>130.16</td>
+      <td>132.97</td>
+      <td>0</td>
+      <td>0.09</td>
+      <td>0.0</td>
+      <td>0.25</td>
+      <td>21.64</td>
+      <td>215.72</td>
+      <td>291.82</td>
+      <td>1405.85</td>
+    </tr>
+    <tr>
+      <th>5415</th>
+      <td>Rodentia</td>
+      <td>Muridae</td>
+      <td>Zyzomys</td>
+      <td>woodwardi</td>
+      <td>Zyzomys woodwardi</td>
+      <td>-999</td>
+      <td>95.02</td>
+      <td>-999.0</td>
+      <td>146.07</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>123.42</td>
+      <td>125.55</td>
+      <td>0</td>
+      <td>0.00</td>
+      <td>0.0</td>
+      <td>-999.00</td>
+      <td>79.45</td>
+      <td>280.41</td>
+      <td>798.86</td>
+      <td>1765.19</td>
+    </tr>
+  </tbody>
+</table>
+<p>5416 rows × 55 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">species_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.frame.DataFrame
+</pre></div>
+</div>
+</div>
+</div>
+<p>Formally, <code class="docutils literal notranslate"><span class="pre">species_data</span></code> is a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, which is a custom data type defined by <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to represent <strong>tabular data</strong>.</p>
+</section>
+<section id="exploring-dataframes">
+<h2>Exploring <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s<a class="headerlink" href="#exploring-dataframes" title="Permalink to this heading">#</a></h2>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">DataFrame.head()</span></code> method to quickly see the first few rows.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MSW05_Order</th>
+      <th>MSW05_Family</th>
+      <th>MSW05_Genus</th>
+      <th>MSW05_Species</th>
+      <th>MSW05_Binomial</th>
+      <th>1-1_ActivityCycle</th>
+      <th>5-1_AdultBodyMass_g</th>
+      <th>8-1_AdultForearmLen_mm</th>
+      <th>13-1_AdultHeadBodyLen_mm</th>
+      <th>2-1_AgeatEyeOpening_d</th>
+      <th>...</th>
+      <th>26-6_GR_MinLong_dd</th>
+      <th>26-7_GR_MidRangeLong_dd</th>
+      <th>27-1_HuPopDen_Min_n/km2</th>
+      <th>27-2_HuPopDen_Mean_n/km2</th>
+      <th>27-3_HuPopDen_5p_n/km2</th>
+      <th>27-4_HuPopDen_Change</th>
+      <th>28-1_Precip_Mean_mm</th>
+      <th>28-2_Temp_Mean_01degC</th>
+      <th>30-1_AET_Mean_mm</th>
+      <th>30-2_PET_Mean_mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Artiodactyla</td>
+      <td>Camelidae</td>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>Camelus dromedarius</td>
+      <td>3</td>
+      <td>492714.47</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999</td>
+      <td>-999.00</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>adustus</td>
+      <td>Canis adustus</td>
+      <td>1</td>
+      <td>10392.49</td>
+      <td>-999.0</td>
+      <td>745.32</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>-17.53</td>
+      <td>13.00</td>
+      <td>0</td>
+      <td>35.20</td>
+      <td>1.0</td>
+      <td>0.14</td>
+      <td>90.75</td>
+      <td>236.51</td>
+      <td>922.90</td>
+      <td>1534.40</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>aureus</td>
+      <td>Canis aureus</td>
+      <td>2</td>
+      <td>9658.70</td>
+      <td>-999.0</td>
+      <td>827.53</td>
+      <td>7.50</td>
+      <td>...</td>
+      <td>-17.05</td>
+      <td>45.74</td>
+      <td>0</td>
+      <td>79.29</td>
+      <td>0.0</td>
+      <td>0.10</td>
+      <td>44.61</td>
+      <td>217.23</td>
+      <td>438.02</td>
+      <td>1358.98</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>latrans</td>
+      <td>Canis latrans</td>
+      <td>2</td>
+      <td>11989.10</td>
+      <td>-999.0</td>
+      <td>872.39</td>
+      <td>11.94</td>
+      <td>...</td>
+      <td>-168.12</td>
+      <td>-117.60</td>
+      <td>0</td>
+      <td>27.27</td>
+      <td>0.0</td>
+      <td>0.06</td>
+      <td>53.03</td>
+      <td>58.18</td>
+      <td>503.02</td>
+      <td>728.37</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>lupus</td>
+      <td>Canis lupus</td>
+      <td>2</td>
+      <td>31756.51</td>
+      <td>-999.0</td>
+      <td>1055.00</td>
+      <td>14.01</td>
+      <td>...</td>
+      <td>-171.84</td>
+      <td>3.90</td>
+      <td>0</td>
+      <td>37.87</td>
+      <td>0.0</td>
+      <td>0.04</td>
+      <td>34.79</td>
+      <td>4.82</td>
+      <td>313.33</td>
+      <td>561.11</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 55 columns</p>
+</div></div></div>
+</div>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> <strong>attribute</strong> to obtain the number of rows and columns of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+<ul class="simple">
+<li><p>An <strong>attribute</strong> is like a method, but it just stores a piece of data, and is not a function.</p></li>
+<li><p>You do <em>not</em> write parentheses after an attribute name.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5416, 55)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can access just the number of rows or columns by using indexing on <code class="docutils literal notranslate"><span class="pre">.shape</span></code> (with square brackets), just like with lists.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_rows</span> <span class="o">=</span> <span class="n">species_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">num_cols</span> <span class="o">=</span> <span class="n">species_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="n">num_rows</span><span class="si">}</span><span class="s2"> rows and </span><span class="si">{</span><span class="n">num_cols</span><span class="si">}</span><span class="s2"> columns in the dataset.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>There are 5416 rows and 55 columns in the dataset.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dataframe-columns-properties">
+<h2><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> columns properties<a class="headerlink" href="#dataframe-columns-properties" title="Permalink to this heading">#</a></h2>
+<p>One of the most important properties of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> are its <strong>columns</strong>.
+Each column has two important pieces of “metadata”:</p>
+<ul class="simple">
+<li><p>the column’s name</p></li>
+<li><p>the column’s type (i.e., the type of data stored in that column)</p></li>
+</ul>
+<p>We can see the <strong>column names</strong> by accessing the <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute of a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;MSW05_Order&#39;, &#39;MSW05_Family&#39;, &#39;MSW05_Genus&#39;, &#39;MSW05_Species&#39;,
+       &#39;MSW05_Binomial&#39;, &#39;1-1_ActivityCycle&#39;, &#39;5-1_AdultBodyMass_g&#39;,
+       &#39;8-1_AdultForearmLen_mm&#39;, &#39;13-1_AdultHeadBodyLen_mm&#39;,
+       &#39;2-1_AgeatEyeOpening_d&#39;, &#39;3-1_AgeatFirstBirth_d&#39;,
+       &#39;18-1_BasalMetRate_mLO2hr&#39;, &#39;5-2_BasalMetRateMass_g&#39;, &#39;6-1_DietBreadth&#39;,
+       &#39;7-1_DispersalAge_d&#39;, &#39;9-1_GestationLen_d&#39;, &#39;12-1_HabitatBreadth&#39;,
+       &#39;22-1_HomeRange_km2&#39;, &#39;22-2_HomeRange_Indiv_km2&#39;,
+       &#39;14-1_InterbirthInterval_d&#39;, &#39;15-1_LitterSize&#39;, &#39;16-1_LittersPerYear&#39;,
+       &#39;17-1_MaxLongevity_m&#39;, &#39;5-3_NeonateBodyMass_g&#39;,
+       &#39;13-2_NeonateHeadBodyLen_mm&#39;, &#39;21-1_PopulationDensity_n/km2&#39;,
+       &#39;10-1_PopulationGrpSize&#39;, &#39;23-1_SexualMaturityAge_d&#39;,
+       &#39;10-2_SocialGrpSize&#39;, &#39;24-1_TeatNumber&#39;, &#39;12-2_Terrestriality&#39;,
+       &#39;6-2_TrophicLevel&#39;, &#39;25-1_WeaningAge_d&#39;, &#39;5-4_WeaningBodyMass_g&#39;,
+       &#39;13-3_WeaningHeadBodyLen_mm&#39;, &#39;References&#39;, &#39;5-5_AdultBodyMass_g_EXT&#39;,
+       &#39;16-2_LittersPerYear_EXT&#39;, &#39;5-6_NeonateBodyMass_g_EXT&#39;,
+       &#39;5-7_WeaningBodyMass_g_EXT&#39;, &#39;26-1_GR_Area_km2&#39;, &#39;26-2_GR_MaxLat_dd&#39;,
+       &#39;26-3_GR_MinLat_dd&#39;, &#39;26-4_GR_MidRangeLat_dd&#39;, &#39;26-5_GR_MaxLong_dd&#39;,
+       &#39;26-6_GR_MinLong_dd&#39;, &#39;26-7_GR_MidRangeLong_dd&#39;,
+       &#39;27-1_HuPopDen_Min_n/km2&#39;, &#39;27-2_HuPopDen_Mean_n/km2&#39;,
+       &#39;27-3_HuPopDen_5p_n/km2&#39;, &#39;27-4_HuPopDen_Change&#39;, &#39;28-1_Precip_Mean_mm&#39;,
+       &#39;28-2_Temp_Mean_01degC&#39;, &#39;30-1_AET_Mean_mm&#39;, &#39;30-2_PET_Mean_mm&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute has a special type called <code class="docutils literal notranslate"><span class="pre">Index</span></code>, which is like a <code class="docutils literal notranslate"><span class="pre">list</span></code>.</p>
+<p>You don’t need to worry about what <code class="docutils literal notranslate"><span class="pre">Index</span></code> is exactly, but if you want you can convert it into a <code class="docutils literal notranslate"><span class="pre">list</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">species_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;MSW05_Order&#39;,
+ &#39;MSW05_Family&#39;,
+ &#39;MSW05_Genus&#39;,
+ &#39;MSW05_Species&#39;,
+ &#39;MSW05_Binomial&#39;,
+ &#39;1-1_ActivityCycle&#39;,
+ &#39;5-1_AdultBodyMass_g&#39;,
+ &#39;8-1_AdultForearmLen_mm&#39;,
+ &#39;13-1_AdultHeadBodyLen_mm&#39;,
+ &#39;2-1_AgeatEyeOpening_d&#39;,
+ &#39;3-1_AgeatFirstBirth_d&#39;,
+ &#39;18-1_BasalMetRate_mLO2hr&#39;,
+ &#39;5-2_BasalMetRateMass_g&#39;,
+ &#39;6-1_DietBreadth&#39;,
+ &#39;7-1_DispersalAge_d&#39;,
+ &#39;9-1_GestationLen_d&#39;,
+ &#39;12-1_HabitatBreadth&#39;,
+ &#39;22-1_HomeRange_km2&#39;,
+ &#39;22-2_HomeRange_Indiv_km2&#39;,
+ &#39;14-1_InterbirthInterval_d&#39;,
+ &#39;15-1_LitterSize&#39;,
+ &#39;16-1_LittersPerYear&#39;,
+ &#39;17-1_MaxLongevity_m&#39;,
+ &#39;5-3_NeonateBodyMass_g&#39;,
+ &#39;13-2_NeonateHeadBodyLen_mm&#39;,
+ &#39;21-1_PopulationDensity_n/km2&#39;,
+ &#39;10-1_PopulationGrpSize&#39;,
+ &#39;23-1_SexualMaturityAge_d&#39;,
+ &#39;10-2_SocialGrpSize&#39;,
+ &#39;24-1_TeatNumber&#39;,
+ &#39;12-2_Terrestriality&#39;,
+ &#39;6-2_TrophicLevel&#39;,
+ &#39;25-1_WeaningAge_d&#39;,
+ &#39;5-4_WeaningBodyMass_g&#39;,
+ &#39;13-3_WeaningHeadBodyLen_mm&#39;,
+ &#39;References&#39;,
+ &#39;5-5_AdultBodyMass_g_EXT&#39;,
+ &#39;16-2_LittersPerYear_EXT&#39;,
+ &#39;5-6_NeonateBodyMass_g_EXT&#39;,
+ &#39;5-7_WeaningBodyMass_g_EXT&#39;,
+ &#39;26-1_GR_Area_km2&#39;,
+ &#39;26-2_GR_MaxLat_dd&#39;,
+ &#39;26-3_GR_MinLat_dd&#39;,
+ &#39;26-4_GR_MidRangeLat_dd&#39;,
+ &#39;26-5_GR_MaxLong_dd&#39;,
+ &#39;26-6_GR_MinLong_dd&#39;,
+ &#39;26-7_GR_MidRangeLong_dd&#39;,
+ &#39;27-1_HuPopDen_Min_n/km2&#39;,
+ &#39;27-2_HuPopDen_Mean_n/km2&#39;,
+ &#39;27-3_HuPopDen_5p_n/km2&#39;,
+ &#39;27-4_HuPopDen_Change&#39;,
+ &#39;28-1_Precip_Mean_mm&#39;,
+ &#39;28-2_Temp_Mean_01degC&#39;,
+ &#39;30-1_AET_Mean_mm&#39;,
+ &#39;30-2_PET_Mean_mm&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can access <em>column types</em> by using the <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSW05_Order                      object
+MSW05_Family                     object
+MSW05_Genus                      object
+MSW05_Species                    object
+MSW05_Binomial                   object
+1-1_ActivityCycle                 int64
+5-1_AdultBodyMass_g             float64
+8-1_AdultForearmLen_mm          float64
+13-1_AdultHeadBodyLen_mm        float64
+2-1_AgeatEyeOpening_d           float64
+3-1_AgeatFirstBirth_d           float64
+18-1_BasalMetRate_mLO2hr        float64
+5-2_BasalMetRateMass_g          float64
+6-1_DietBreadth                   int64
+7-1_DispersalAge_d              float64
+9-1_GestationLen_d              float64
+12-1_HabitatBreadth               int64
+22-1_HomeRange_km2              float64
+22-2_HomeRange_Indiv_km2        float64
+14-1_InterbirthInterval_d       float64
+15-1_LitterSize                 float64
+16-1_LittersPerYear             float64
+17-1_MaxLongevity_m             float64
+5-3_NeonateBodyMass_g           float64
+13-2_NeonateHeadBodyLen_mm      float64
+21-1_PopulationDensity_n/km2    float64
+10-1_PopulationGrpSize          float64
+23-1_SexualMaturityAge_d        float64
+10-2_SocialGrpSize              float64
+24-1_TeatNumber                   int64
+12-2_Terrestriality               int64
+6-2_TrophicLevel                  int64
+25-1_WeaningAge_d               float64
+5-4_WeaningBodyMass_g           float64
+13-3_WeaningHeadBodyLen_mm        int64
+References                       object
+5-5_AdultBodyMass_g_EXT         float64
+16-2_LittersPerYear_EXT         float64
+5-6_NeonateBodyMass_g_EXT       float64
+5-7_WeaningBodyMass_g_EXT       float64
+26-1_GR_Area_km2                float64
+26-2_GR_MaxLat_dd               float64
+26-3_GR_MinLat_dd               float64
+26-4_GR_MidRangeLat_dd          float64
+26-5_GR_MaxLong_dd              float64
+26-6_GR_MinLong_dd              float64
+26-7_GR_MidRangeLong_dd         float64
+27-1_HuPopDen_Min_n/km2           int64
+27-2_HuPopDen_Mean_n/km2        float64
+27-3_HuPopDen_5p_n/km2          float64
+27-4_HuPopDen_Change            float64
+28-1_Precip_Mean_mm             float64
+28-2_Temp_Mean_01degC           float64
+30-1_AET_Mean_mm                float64
+30-2_PET_Mean_mm                float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pandas uses its own custom data types to represent large datasets efficiently.
+They typically correspond to Python’s built-in data types.</p>
+<p>For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span></code> corresponds to a Python <code class="docutils literal notranslate"><span class="pre">float</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">object</span></code> is a special <code class="docutils literal notranslate"><span class="pre">dtype</span></code> that means “any value”</p></li>
+</ul>
+<p><strong>Note</strong>: by default, Pandas reads in text column data as <code class="docutils literal notranslate"><span class="pre">object</span></code>, not <code class="docutils literal notranslate"><span class="pre">string</span></code>.</p>
+<p>We’ll see how to improve this later this lecture.</p>
+<p>Finally, we can use the <code class="docutils literal notranslate"><span class="pre">DataFrame.info()</span></code> <strong>method</strong> to display all of the previous information and more:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 5416 entries, 0 to 5415
+Data columns (total 55 columns):
+ #   Column                        Non-Null Count  Dtype  
+---  ------                        --------------  -----  
+ 0   MSW05_Order                   5416 non-null   object 
+ 1   MSW05_Family                  5416 non-null   object 
+ 2   MSW05_Genus                   5416 non-null   object 
+ 3   MSW05_Species                 5416 non-null   object 
+ 4   MSW05_Binomial                5416 non-null   object 
+ 5   1-1_ActivityCycle             5416 non-null   int64  
+ 6   5-1_AdultBodyMass_g           5416 non-null   float64
+ 7   8-1_AdultForearmLen_mm        5416 non-null   float64
+ 8   13-1_AdultHeadBodyLen_mm      5416 non-null   float64
+ 9   2-1_AgeatEyeOpening_d         5416 non-null   float64
+ 10  3-1_AgeatFirstBirth_d         5416 non-null   float64
+ 11  18-1_BasalMetRate_mLO2hr      5416 non-null   float64
+ 12  5-2_BasalMetRateMass_g        5416 non-null   float64
+ 13  6-1_DietBreadth               5416 non-null   int64  
+ 14  7-1_DispersalAge_d            5416 non-null   float64
+ 15  9-1_GestationLen_d            5416 non-null   float64
+ 16  12-1_HabitatBreadth           5416 non-null   int64  
+ 17  22-1_HomeRange_km2            5416 non-null   float64
+ 18  22-2_HomeRange_Indiv_km2      5416 non-null   float64
+ 19  14-1_InterbirthInterval_d     5416 non-null   float64
+ 20  15-1_LitterSize               5416 non-null   float64
+ 21  16-1_LittersPerYear           5416 non-null   float64
+ 22  17-1_MaxLongevity_m           5416 non-null   float64
+ 23  5-3_NeonateBodyMass_g         5416 non-null   float64
+ 24  13-2_NeonateHeadBodyLen_mm    5416 non-null   float64
+ 25  21-1_PopulationDensity_n/km2  5416 non-null   float64
+ 26  10-1_PopulationGrpSize        5416 non-null   float64
+ 27  23-1_SexualMaturityAge_d      5416 non-null   float64
+ 28  10-2_SocialGrpSize            5416 non-null   float64
+ 29  24-1_TeatNumber               5416 non-null   int64  
+ 30  12-2_Terrestriality           5416 non-null   int64  
+ 31  6-2_TrophicLevel              5416 non-null   int64  
+ 32  25-1_WeaningAge_d             5416 non-null   float64
+ 33  5-4_WeaningBodyMass_g         5416 non-null   float64
+ 34  13-3_WeaningHeadBodyLen_mm    5416 non-null   int64  
+ 35  References                    5416 non-null   object 
+ 36  5-5_AdultBodyMass_g_EXT       5416 non-null   float64
+ 37  16-2_LittersPerYear_EXT       5416 non-null   float64
+ 38  5-6_NeonateBodyMass_g_EXT     5416 non-null   float64
+ 39  5-7_WeaningBodyMass_g_EXT     5416 non-null   float64
+ 40  26-1_GR_Area_km2              5416 non-null   float64
+ 41  26-2_GR_MaxLat_dd             5416 non-null   float64
+ 42  26-3_GR_MinLat_dd             5416 non-null   float64
+ 43  26-4_GR_MidRangeLat_dd        5416 non-null   float64
+ 44  26-5_GR_MaxLong_dd            5416 non-null   float64
+ 45  26-6_GR_MinLong_dd            5416 non-null   float64
+ 46  26-7_GR_MidRangeLong_dd       5416 non-null   float64
+ 47  27-1_HuPopDen_Min_n/km2       5416 non-null   int64  
+ 48  27-2_HuPopDen_Mean_n/km2      5416 non-null   float64
+ 49  27-3_HuPopDen_5p_n/km2        5416 non-null   float64
+ 50  27-4_HuPopDen_Change          5416 non-null   float64
+ 51  28-1_Precip_Mean_mm           5416 non-null   float64
+ 52  28-2_Temp_Mean_01degC         5416 non-null   float64
+ 53  30-1_AET_Mean_mm              5416 non-null   float64
+ 54  30-2_PET_Mean_mm              5416 non-null   float64
+dtypes: float64(41), int64(8), object(6)
+memory usage: 2.3+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h3>
+<p>Given a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we can access the following attributes/methods to obtain information about it.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute/Method</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.shape</span></code></p></td>
+<td><p>(number of rows, number of columns)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.columns</span></code></p></td>
+<td><p>column names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.dtypes</span></code></p></td>
+<td><p>column names and types</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">.info()</span></code></p></td>
+<td><p>all of the above, and more (e.g. non-null counts)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.head()</span></code></p></td>
+<td><p>display the first few rows of the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="data-wrangling-columns">
+<h2>Data Wrangling: Columns<a class="headerlink" href="#data-wrangling-columns" title="Permalink to this heading">#</a></h2>
+<p>In data science, <strong>data wrangling</strong> is the process of turning raw data into a format more suitable for subsequent computation, analysis, and visualization.  This might be more properly called Data Cleaning.</p>
+<p>There are many different types of data wrangling, but for now we’ll look at three techniques centred on <em>columns</em>:</p>
+<ul class="simple">
+<li><p>renaming columns</p></li>
+<li><p>converting column types</p></li>
+<li><p>identifying and replacing “invalid” values</p></li>
+<li><p>extracting a subset of columns to work with</p></li>
+</ul>
+<section id="renaming-columns">
+<h3>Renaming columns<a class="headerlink" href="#renaming-columns" title="Permalink to this heading">#</a></h3>
+<p>We rename columns by using the <code class="docutils literal notranslate"><span class="pre">DataFrame.rename(columns=...)</span></code> method, where we pass in a <strong>dictionary</strong> mapping “original column name” to “new column name”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">old_to_new</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;MSW05_Genus&#39;</span><span class="p">:</span> <span class="s1">&#39;Genus&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;MSW05_Species&#39;</span><span class="p">:</span> <span class="s1">&#39;Species&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;1-1_ActivityCycle&#39;</span><span class="p">:</span> <span class="s1">&#39;Activity Cycle&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;5-1_AdultBodyMass_g&#39;</span><span class="p">:</span> <span class="s1">&#39;Adult Body Mass (g)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2-1_AgeatEyeOpening_d&#39;</span><span class="p">:</span> <span class="s1">&#39;Age at Eye Opening (days)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;17-1_MaxLongevity_m&#39;</span><span class="p">:</span> <span class="s1">&#39;Max Longevity (months)&#39;</span>
+<span class="p">}</span>
+
+<span class="n">species_data_renamed</span> <span class="o">=</span> <span class="n">species_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">old_to_new</span><span class="p">)</span>
+<span class="n">species_data_renamed</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MSW05_Order</th>
+      <th>MSW05_Family</th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>MSW05_Binomial</th>
+      <th>Activity Cycle</th>
+      <th>Adult Body Mass (g)</th>
+      <th>8-1_AdultForearmLen_mm</th>
+      <th>13-1_AdultHeadBodyLen_mm</th>
+      <th>Age at Eye Opening (days)</th>
+      <th>...</th>
+      <th>26-6_GR_MinLong_dd</th>
+      <th>26-7_GR_MidRangeLong_dd</th>
+      <th>27-1_HuPopDen_Min_n/km2</th>
+      <th>27-2_HuPopDen_Mean_n/km2</th>
+      <th>27-3_HuPopDen_5p_n/km2</th>
+      <th>27-4_HuPopDen_Change</th>
+      <th>28-1_Precip_Mean_mm</th>
+      <th>28-2_Temp_Mean_01degC</th>
+      <th>30-1_AET_Mean_mm</th>
+      <th>30-2_PET_Mean_mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Artiodactyla</td>
+      <td>Camelidae</td>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>Camelus dromedarius</td>
+      <td>3</td>
+      <td>492714.47</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999</td>
+      <td>-999.00</td>
+      <td>-999.0</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+      <td>-999.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>adustus</td>
+      <td>Canis adustus</td>
+      <td>1</td>
+      <td>10392.49</td>
+      <td>-999.0</td>
+      <td>745.32</td>
+      <td>-999.00</td>
+      <td>...</td>
+      <td>-17.53</td>
+      <td>13.00</td>
+      <td>0</td>
+      <td>35.20</td>
+      <td>1.0</td>
+      <td>0.14</td>
+      <td>90.75</td>
+      <td>236.51</td>
+      <td>922.90</td>
+      <td>1534.40</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>aureus</td>
+      <td>Canis aureus</td>
+      <td>2</td>
+      <td>9658.70</td>
+      <td>-999.0</td>
+      <td>827.53</td>
+      <td>7.50</td>
+      <td>...</td>
+      <td>-17.05</td>
+      <td>45.74</td>
+      <td>0</td>
+      <td>79.29</td>
+      <td>0.0</td>
+      <td>0.10</td>
+      <td>44.61</td>
+      <td>217.23</td>
+      <td>438.02</td>
+      <td>1358.98</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>latrans</td>
+      <td>Canis latrans</td>
+      <td>2</td>
+      <td>11989.10</td>
+      <td>-999.0</td>
+      <td>872.39</td>
+      <td>11.94</td>
+      <td>...</td>
+      <td>-168.12</td>
+      <td>-117.60</td>
+      <td>0</td>
+      <td>27.27</td>
+      <td>0.0</td>
+      <td>0.06</td>
+      <td>53.03</td>
+      <td>58.18</td>
+      <td>503.02</td>
+      <td>728.37</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>lupus</td>
+      <td>Canis lupus</td>
+      <td>2</td>
+      <td>31756.51</td>
+      <td>-999.0</td>
+      <td>1055.00</td>
+      <td>14.01</td>
+      <td>...</td>
+      <td>-171.84</td>
+      <td>3.90</td>
+      <td>0</td>
+      <td>37.87</td>
+      <td>0.0</td>
+      <td>0.04</td>
+      <td>34.79</td>
+      <td>4.82</td>
+      <td>313.33</td>
+      <td>561.11</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 55 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="converting-column-types">
+<h3>Converting column types<a class="headerlink" href="#converting-column-types" title="Permalink to this heading">#</a></h3>
+<p>We can also ask Pandas to <em>automatically choose</em> the best column types for an existing <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.
+This is done with the <code class="docutils literal notranslate"><span class="pre">DataFrame.convert_dtypes()</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data_converted</span> <span class="o">=</span> <span class="n">species_data_renamed</span><span class="o">.</span><span class="n">convert_dtypes</span><span class="p">()</span>
+
+<span class="n">species_data_converted</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSW05_Order                     string[python]
+MSW05_Family                    string[python]
+Genus                           string[python]
+Species                         string[python]
+MSW05_Binomial                  string[python]
+Activity Cycle                           Int64
+Adult Body Mass (g)                    Float64
+8-1_AdultForearmLen_mm                 Float64
+13-1_AdultHeadBodyLen_mm               Float64
+Age at Eye Opening (days)              Float64
+3-1_AgeatFirstBirth_d                  Float64
+18-1_BasalMetRate_mLO2hr               Float64
+5-2_BasalMetRateMass_g                 Float64
+6-1_DietBreadth                          Int64
+7-1_DispersalAge_d                     Float64
+9-1_GestationLen_d                     Float64
+12-1_HabitatBreadth                      Int64
+22-1_HomeRange_km2                     Float64
+22-2_HomeRange_Indiv_km2               Float64
+14-1_InterbirthInterval_d              Float64
+15-1_LitterSize                        Float64
+16-1_LittersPerYear                    Float64
+Max Longevity (months)                 Float64
+5-3_NeonateBodyMass_g                  Float64
+13-2_NeonateHeadBodyLen_mm             Float64
+21-1_PopulationDensity_n/km2           Float64
+10-1_PopulationGrpSize                 Float64
+23-1_SexualMaturityAge_d               Float64
+10-2_SocialGrpSize                     Float64
+24-1_TeatNumber                          Int64
+12-2_Terrestriality                      Int64
+6-2_TrophicLevel                         Int64
+25-1_WeaningAge_d                      Float64
+5-4_WeaningBodyMass_g                  Float64
+13-3_WeaningHeadBodyLen_mm               Int64
+References                      string[python]
+5-5_AdultBodyMass_g_EXT                Float64
+16-2_LittersPerYear_EXT                Float64
+5-6_NeonateBodyMass_g_EXT              Float64
+5-7_WeaningBodyMass_g_EXT              Float64
+26-1_GR_Area_km2                       Float64
+26-2_GR_MaxLat_dd                      Float64
+26-3_GR_MinLat_dd                      Float64
+26-4_GR_MidRangeLat_dd                 Float64
+26-5_GR_MaxLong_dd                     Float64
+26-6_GR_MinLong_dd                     Float64
+26-7_GR_MidRangeLong_dd                Float64
+27-1_HuPopDen_Min_n/km2                  Int64
+27-2_HuPopDen_Mean_n/km2               Float64
+27-3_HuPopDen_5p_n/km2                 Float64
+27-4_HuPopDen_Change                   Float64
+28-1_Precip_Mean_mm                    Float64
+28-2_Temp_Mean_01degC                  Float64
+30-1_AET_Mean_mm                       Float64
+30-2_PET_Mean_mm                       Float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="identifying-and-replacing-missing-values">
+<h3>Identifying and replacing “missing” values<a class="headerlink" href="#identifying-and-replacing-missing-values" title="Permalink to this heading">#</a></h3>
+<p>The PanTHERIA dataset uses a special value, <code class="docutils literal notranslate"><span class="pre">-999</span></code>, to represent missing or unknown data.</p>
+<p>Instead of leaving these values in our <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we’ll <strong>replace</strong> them with a special <code class="docutils literal notranslate"><span class="pre">pandas</span></code> value called <code class="docutils literal notranslate"><span class="pre">NA</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data_with_na</span> <span class="o">=</span> <span class="n">species_data_converted</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">-</span><span class="mi">999</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">)</span>
+<span class="n">species_data_with_na</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MSW05_Order</th>
+      <th>MSW05_Family</th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>MSW05_Binomial</th>
+      <th>Activity Cycle</th>
+      <th>Adult Body Mass (g)</th>
+      <th>8-1_AdultForearmLen_mm</th>
+      <th>13-1_AdultHeadBodyLen_mm</th>
+      <th>Age at Eye Opening (days)</th>
+      <th>...</th>
+      <th>26-6_GR_MinLong_dd</th>
+      <th>26-7_GR_MidRangeLong_dd</th>
+      <th>27-1_HuPopDen_Min_n/km2</th>
+      <th>27-2_HuPopDen_Mean_n/km2</th>
+      <th>27-3_HuPopDen_5p_n/km2</th>
+      <th>27-4_HuPopDen_Change</th>
+      <th>28-1_Precip_Mean_mm</th>
+      <th>28-2_Temp_Mean_01degC</th>
+      <th>30-1_AET_Mean_mm</th>
+      <th>30-2_PET_Mean_mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Artiodactyla</td>
+      <td>Camelidae</td>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>Camelus dromedarius</td>
+      <td>3</td>
+      <td>492714.47</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>...</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>adustus</td>
+      <td>Canis adustus</td>
+      <td>1</td>
+      <td>10392.49</td>
+      <td>&lt;NA&gt;</td>
+      <td>745.32</td>
+      <td>&lt;NA&gt;</td>
+      <td>...</td>
+      <td>-17.53</td>
+      <td>13.0</td>
+      <td>0</td>
+      <td>35.2</td>
+      <td>1.0</td>
+      <td>0.14</td>
+      <td>90.75</td>
+      <td>236.51</td>
+      <td>922.9</td>
+      <td>1534.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>aureus</td>
+      <td>Canis aureus</td>
+      <td>2</td>
+      <td>9658.7</td>
+      <td>&lt;NA&gt;</td>
+      <td>827.53</td>
+      <td>7.5</td>
+      <td>...</td>
+      <td>-17.05</td>
+      <td>45.74</td>
+      <td>0</td>
+      <td>79.29</td>
+      <td>0.0</td>
+      <td>0.1</td>
+      <td>44.61</td>
+      <td>217.23</td>
+      <td>438.02</td>
+      <td>1358.98</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>latrans</td>
+      <td>Canis latrans</td>
+      <td>2</td>
+      <td>11989.1</td>
+      <td>&lt;NA&gt;</td>
+      <td>872.39</td>
+      <td>11.94</td>
+      <td>...</td>
+      <td>-168.12</td>
+      <td>-117.6</td>
+      <td>0</td>
+      <td>27.27</td>
+      <td>0.0</td>
+      <td>0.06</td>
+      <td>53.03</td>
+      <td>58.18</td>
+      <td>503.02</td>
+      <td>728.37</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Carnivora</td>
+      <td>Canidae</td>
+      <td>Canis</td>
+      <td>lupus</td>
+      <td>Canis lupus</td>
+      <td>2</td>
+      <td>31756.51</td>
+      <td>&lt;NA&gt;</td>
+      <td>1055.0</td>
+      <td>14.01</td>
+      <td>...</td>
+      <td>-171.84</td>
+      <td>3.9</td>
+      <td>0</td>
+      <td>37.87</td>
+      <td>0.0</td>
+      <td>0.04</td>
+      <td>34.79</td>
+      <td>4.82</td>
+      <td>313.33</td>
+      <td>561.11</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 55 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="extracting-a-subset-of-columns">
+<h3>Extracting a subset of columns<a class="headerlink" href="#extracting-a-subset-of-columns" title="Permalink to this heading">#</a></h3>
+<p>Sometimes our full dataset contains <em>too much information</em>, and we only care about a subset of the data.</p>
+<p>One common occurrence is when we only want a <em>subset of the columns</em> in a dataset.</p>
+<p>For example, suppose we only care about the <em>genus</em>, <em>species</em>, <em>body mass</em>, and <em>longevity</em> of each species in our dataset.</p>
+</section>
+<section id="id1">
+<h3>Extracting a subset of columns<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>We select a subset of columns in two steps:</p>
+<ol class="arabic simple">
+<li><p>Define a <em>list</em> containing the <em>column names</em> that we want to select.</p></li>
+<li><p>Use <em>square bracket “lookup” syntax</em> on a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, with the list inside the square brackets.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns_to_keep</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Genus&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Species&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Adult Body Mass (g)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Max Longevity (months)&#39;</span>
+<span class="p">]</span>
+
+<span class="n">species_data_final</span> <span class="o">=</span> <span class="n">species_data_with_na</span><span class="p">[</span><span class="n">columns_to_keep</span><span class="p">]</span>
+<span class="n">species_data_final</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Adult Body Mass (g)</th>
+      <th>Max Longevity (months)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>492714.47</td>
+      <td>480.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Canis</td>
+      <td>adustus</td>
+      <td>10392.49</td>
+      <td>137.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Canis</td>
+      <td>aureus</td>
+      <td>9658.7</td>
+      <td>192.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Canis</td>
+      <td>latrans</td>
+      <td>11989.1</td>
+      <td>262.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Canis</td>
+      <td>lupus</td>
+      <td>31756.51</td>
+      <td>354.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="data-transformation-computing-on-columns">
+<h2>Data Transformation: computing on columns<a class="headerlink" href="#data-transformation-computing-on-columns" title="Permalink to this heading">#</a></h2>
+<p>A typical step in analysis of a dataset is to perform computations on invididual columns, or operations that combine columns in some way.</p>
+<p>For example:</p>
+<ul class="simple">
+<li><p>Add 1 to each value in a column</p></li>
+<li><p>Multiply the values in two columns together</p></li>
+<li><p>“Find and Replace” values in a column</p></li>
+</ul>
+<section id="retrieving-a-column-by-name">
+<h3>Retrieving a column by name<a class="headerlink" href="#retrieving-a-column-by-name" title="Permalink to this heading">#</a></h3>
+<p>We can extract a <em>single</em> column from a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> using square brackets with a <em>single string</em> instead of a list of strings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masses</span> <span class="o">=</span> <span class="n">species_data_final</span><span class="p">[</span><span class="s1">&#39;Adult Body Mass (g)&#39;</span><span class="p">]</span>
+
+<span class="n">masses</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       492714.47
+1        10392.49
+2          9658.7
+3         11989.1
+4        31756.51
+          ...    
+5411        40.42
+5412        93.99
+5413        123.0
+5414        100.0
+5415        95.02
+Name: Adult Body Mass (g), Length: 5416, dtype: Float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>But what exactly is <code class="docutils literal notranslate"><span class="pre">totals</span></code>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">masses</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.series.Series
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">masses</span></code> is a <code class="docutils literal notranslate"><span class="pre">Series</span></code>, which is a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> data type that represents a single column of data.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Series</span></code> is similar to a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, but it can only hold one “series” of data, rather than storing a whole table.</p>
+<p>But most of the descriptive attributes/methods we learned for <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s can be applied to <code class="docutils literal notranslate"><span class="pre">Series</span></code> as well:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masses</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5416,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masses</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Float64Dtype()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masses</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.series.Series&#39;&gt;
+RangeIndex: 5416 entries, 0 to 5415
+Series name: Adult Body Mass (g)
+Non-Null Count  Dtype  
+--------------  -----  
+3542 non-null   Float64
+dtypes: Float64(1)
+memory usage: 47.7 KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can even obtain the original column name from the Series</span>
+<span class="n">masses</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Adult Body Mass (g)&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>But if <code class="docutils literal notranslate"><span class="pre">Series</span></code> are a simplified version of <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s, why bother with them?</p>
+<p>Because we can perform computations on <code class="docutils literal notranslate"><span class="pre">Series</span></code> “one element at a time”, without needing to use for loops!</p>
+</section>
+<section id="example-transform-a-single-series">
+<h3>Example: transform a single Series<a class="headerlink" href="#example-transform-a-single-series" title="Permalink to this heading">#</a></h3>
+<p><strong>Goal</strong>: Given the species masses, convert to kg by dividing each one by 1000 and rounding to one decimal place.</p>
+<p>Example: for a single mass like <code class="docutils literal notranslate"><span class="pre">492714.47</span></code>, we’d compute</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">round</span><span class="p">(</span><span class="mf">492714.47</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 492.7</span>
+</pre></div>
+</div>
+<p>But we want to do this for every mass!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masses_kg</span> <span class="o">=</span> <span class="n">masses</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="n">masses_kg_rounded</span> <span class="o">=</span> <span class="n">masses_kg</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">masses_kg_rounded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       492.7
+1        10.4
+2         9.7
+3        12.0
+4        31.8
+        ...  
+5411      0.0
+5412      0.1
+5413      0.1
+5414      0.1
+5415      0.1
+Name: Adult Body Mass (g), Length: 5416, dtype: Float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-combine-two-series">
+<h3>Example: combine two <code class="docutils literal notranslate"><span class="pre">Series</span></code><a class="headerlink" href="#example-combine-two-series" title="Permalink to this heading">#</a></h3>
+<p>Now let’s consider another problem: we’ll calculate the ratio between the longevity and mass of each species.</p>
+<p>Example: for <em>Camelus dromedarius</em>, we’ll compute</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mf">480.0</span> <span class="o">/</span> <span class="mf">492714.47</span>
+</pre></div>
+</div>
+<p>But again, we want to do ths for each species!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masses</span> <span class="o">=</span> <span class="n">species_data_final</span><span class="p">[</span><span class="s2">&quot;Adult Body Mass (g)&quot;</span><span class="p">]</span>
+<span class="n">longevities</span> <span class="o">=</span> <span class="n">species_data_final</span><span class="p">[</span><span class="s2">&quot;Max Longevity (months)&quot;</span><span class="p">]</span>
+
+
+<span class="n">longevities</span> <span class="o">/</span> <span class="n">masses</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       0.000974
+1       0.013183
+2       0.019878
+3       0.021853
+4       0.011147
+          ...   
+5411        &lt;NA&gt;
+5412        &lt;NA&gt;
+5413        &lt;NA&gt;
+5414        &lt;NA&gt;
+5415        &lt;NA&gt;
+Length: 5416, dtype: Float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-a-new-column-to-a-dataframe">
+<h3>Adding a new column to a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code><a class="headerlink" href="#adding-a-new-column-to-a-dataframe" title="Permalink to this heading">#</a></h3>
+<p>In addition to creating new variables to store computed <code class="docutils literal notranslate"><span class="pre">Series</span></code>, it is common to modify existing <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> by adding a computed <code class="docutils literal notranslate"><span class="pre">Series</span></code> as a new column.</p>
+<p>We can do this using square bracket notation again, this time on the left-hand side of an assignment statement.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># You don&#39;t need to worry about the following line.</span>
+<span class="c1"># It just hides a warning message that&#39;s beyond the scope of this course.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.chained_assignment&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="n">species_data_final</span><span class="p">[</span><span class="s2">&quot;Longevity-to-Mass Ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">longevities</span> <span class="o">/</span> <span class="n">masses</span>
+
+<span class="n">species_data_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Adult Body Mass (g)</th>
+      <th>Max Longevity (months)</th>
+      <th>Longevity-to-Mass Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>492714.47</td>
+      <td>480.0</td>
+      <td>0.000974</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Canis</td>
+      <td>adustus</td>
+      <td>10392.49</td>
+      <td>137.0</td>
+      <td>0.013183</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Canis</td>
+      <td>aureus</td>
+      <td>9658.7</td>
+      <td>192.0</td>
+      <td>0.019878</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Canis</td>
+      <td>latrans</td>
+      <td>11989.1</td>
+      <td>262.0</td>
+      <td>0.021853</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Canis</td>
+      <td>lupus</td>
+      <td>31756.51</td>
+      <td>354.0</td>
+      <td>0.011147</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5411</th>
+      <td>Zyzomys</td>
+      <td>argurus</td>
+      <td>40.42</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5412</th>
+      <td>Zyzomys</td>
+      <td>maini</td>
+      <td>93.99</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5413</th>
+      <td>Zyzomys</td>
+      <td>palatilis</td>
+      <td>123.0</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5414</th>
+      <td>Zyzomys</td>
+      <td>pedunculatus</td>
+      <td>100.0</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5415</th>
+      <td>Zyzomys</td>
+      <td>woodwardi</td>
+      <td>95.02</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+  </tbody>
+</table>
+<p>5416 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="warning">
+<h3>WARNING!<a class="headerlink" href="#warning" title="Permalink to this heading">#</a></h3>
+<p><strong>Warning</strong>: the previous code cell <em>changes</em> the existing data frame <code class="docutils literal notranslate"><span class="pre">species_data_final</span></code>, rather than creating a new <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+</section>
+</section>
+<section id="boolean-series-and-filtering-rows">
+<h2>Boolean <code class="docutils literal notranslate"><span class="pre">Series</span></code> and filtering rows<a class="headerlink" href="#boolean-series-and-filtering-rows" title="Permalink to this heading">#</a></h2>
+<p>Another common type of data transformation is to <strong>filter</strong> for specific rows in a dataset based on one or more conditions.</p>
+<p><strong>Goal</strong>: filter the rows of the dataset to keep the species with a mass <em>greater than or equal to 100 kg</em>.</p>
+<p>As a first step, we create a <em>boolean <code class="docutils literal notranslate"><span class="pre">Series</span></code></em> that stores <code class="docutils literal notranslate"><span class="pre">True</span></code> for the rows we want to keep, and <code class="docutils literal notranslate"><span class="pre">False</span></code> for the other rows.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_large</span> <span class="o">=</span> <span class="n">species_data_final</span><span class="p">[</span><span class="s2">&quot;Adult Body Mass (g)&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">100000</span>
+<span class="n">is_large</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0        True
+1       False
+2       False
+3       False
+4       False
+        ...  
+5411    False
+5412    False
+5413    False
+5414    False
+5415    False
+Name: Adult Body Mass (g), Length: 5416, dtype: boolean
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we use this <code class="docutils literal notranslate"><span class="pre">Series</span></code> to index <code class="docutils literal notranslate"><span class="pre">species_data_final</span></code> by using square bracket notation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data_final</span><span class="p">[</span><span class="n">is_large</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Adult Body Mass (g)</th>
+      <th>Max Longevity (months)</th>
+      <th>Longevity-to-Mass Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>492714.47</td>
+      <td>480.0</td>
+      <td>0.000974</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bos</td>
+      <td>frontalis</td>
+      <td>800143.05</td>
+      <td>314.4</td>
+      <td>0.000393</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Bos</td>
+      <td>grunniens</td>
+      <td>500000.0</td>
+      <td>267.0</td>
+      <td>0.000534</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Bos</td>
+      <td>javanicus</td>
+      <td>635974.34</td>
+      <td>318.96</td>
+      <td>0.000502</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Camelus</td>
+      <td>bactrianus</td>
+      <td>554515.91</td>
+      <td>480.0</td>
+      <td>0.000866</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5331</th>
+      <td>Ursus</td>
+      <td>americanus</td>
+      <td>110500.0</td>
+      <td>384.0</td>
+      <td>0.003475</td>
+    </tr>
+    <tr>
+      <th>5332</th>
+      <td>Ursus</td>
+      <td>arctos</td>
+      <td>196287.5</td>
+      <td>600.0</td>
+      <td>0.003057</td>
+    </tr>
+    <tr>
+      <th>5333</th>
+      <td>Ursus</td>
+      <td>maritimus</td>
+      <td>371703.81</td>
+      <td>458.4</td>
+      <td>0.001233</td>
+    </tr>
+    <tr>
+      <th>5398</th>
+      <td>Zalophus</td>
+      <td>californianus</td>
+      <td>137194.86</td>
+      <td>360.0</td>
+      <td>0.002624</td>
+    </tr>
+    <tr>
+      <th>5407</th>
+      <td>Ziphius</td>
+      <td>cavirostris</td>
+      <td>4774999.99</td>
+      <td>432.0</td>
+      <td>0.00009</td>
+    </tr>
+  </tbody>
+</table>
+<p>173 rows × 5 columns</p>
+</div></div></div>
+</div>
+<section id="note-lots-of-square-brackets">
+<h3>Note: lots of square brackets!<a class="headerlink" href="#note-lots-of-square-brackets" title="Permalink to this heading">#</a></h3>
+<p>One of the tricky things about <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s is that there are different ways of obtaining subsets of the dataset that all have very similar code syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">species_data_final</span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The key principle is that <strong>the type of the value inside the square brackets determines what kind of “subsetting” operation is being performed</strong>.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type inside <code class="docutils literal notranslate"><span class="pre">[...]</span></code></p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Return type</p></th>
+<th class="head"><p>Which columns?</p></th>
+<th class="head"><p>Which rows?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">species_data_final[&quot;Adult</span> <span class="pre">Body</span> <span class="pre">Mass</span> <span class="pre">(g)&quot;]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Series</span></code></p></td>
+<td><p>The one specified</p></td>
+<td><p>All rows</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">species_data_final[[&quot;Genus&quot;,</span> <span class="pre">&quot;Species&quot;]]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></p></td>
+<td><p>The ones specified</p></td>
+<td><p>All rows</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Series</span></code> of <code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">species_data_final[is_large]</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></p></td>
+<td><p>All columns</p></td>
+<td><p>The ones specified</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="logical-operators-and">
+<h3>Logical operators: <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> and <code class="docutils literal notranslate"><span class="pre">|</span></code><a class="headerlink" href="#logical-operators-and" title="Permalink to this heading">#</a></h3>
+<p>Sometimes we want to filter on two conditions.
+To start, suppose we have these two boolean <code class="docutils literal notranslate"><span class="pre">Series</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_large</span> <span class="o">=</span> <span class="n">species_data_final</span><span class="p">[</span><span class="s2">&quot;Adult Body Mass (g)&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">100000</span>
+<span class="n">is_long_lived</span> <span class="o">=</span> <span class="n">species_data_final</span><span class="p">[</span><span class="s2">&quot;Max Longevity (months)&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">240</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are two common ways to filter based on a combination of these two conditions.</p>
+<p><strong>Filter 1</strong>: find rows where the species is large <strong>and</strong> is long-lived.</p>
+<p>To do this, we use the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator to combine the two <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filter1</span> <span class="o">=</span> <span class="n">is_large</span> <span class="o">&amp;</span> <span class="n">is_long_lived</span>
+
+<span class="n">species_data_final</span><span class="p">[</span><span class="n">filter1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Adult Body Mass (g)</th>
+      <th>Max Longevity (months)</th>
+      <th>Longevity-to-Mass Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>492714.47</td>
+      <td>480.0</td>
+      <td>0.000974</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bos</td>
+      <td>frontalis</td>
+      <td>800143.05</td>
+      <td>314.4</td>
+      <td>0.000393</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Bos</td>
+      <td>grunniens</td>
+      <td>500000.0</td>
+      <td>267.0</td>
+      <td>0.000534</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Bos</td>
+      <td>javanicus</td>
+      <td>635974.34</td>
+      <td>318.96</td>
+      <td>0.000502</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Camelus</td>
+      <td>bactrianus</td>
+      <td>554515.91</td>
+      <td>480.0</td>
+      <td>0.000866</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5331</th>
+      <td>Ursus</td>
+      <td>americanus</td>
+      <td>110500.0</td>
+      <td>384.0</td>
+      <td>0.003475</td>
+    </tr>
+    <tr>
+      <th>5332</th>
+      <td>Ursus</td>
+      <td>arctos</td>
+      <td>196287.5</td>
+      <td>600.0</td>
+      <td>0.003057</td>
+    </tr>
+    <tr>
+      <th>5333</th>
+      <td>Ursus</td>
+      <td>maritimus</td>
+      <td>371703.81</td>
+      <td>458.4</td>
+      <td>0.001233</td>
+    </tr>
+    <tr>
+      <th>5398</th>
+      <td>Zalophus</td>
+      <td>californianus</td>
+      <td>137194.86</td>
+      <td>360.0</td>
+      <td>0.002624</td>
+    </tr>
+    <tr>
+      <th>5407</th>
+      <td>Ziphius</td>
+      <td>cavirostris</td>
+      <td>4774999.99</td>
+      <td>432.0</td>
+      <td>0.00009</td>
+    </tr>
+  </tbody>
+</table>
+<p>110 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p><strong>Filter 2</strong>: find rows where the species is large <strong>or</strong> is long-lived.</p>
+<p>To do this, we use the <code class="docutils literal notranslate"><span class="pre">|</span></code> operator to combine the two <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filter2</span> <span class="o">=</span> <span class="n">is_large</span> <span class="o">|</span> <span class="n">is_long_lived</span>
+
+<span class="n">species_data_final</span><span class="p">[</span><span class="n">filter2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Adult Body Mass (g)</th>
+      <th>Max Longevity (months)</th>
+      <th>Longevity-to-Mass Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Camelus</td>
+      <td>dromedarius</td>
+      <td>492714.47</td>
+      <td>480.0</td>
+      <td>0.000974</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Canis</td>
+      <td>latrans</td>
+      <td>11989.1</td>
+      <td>262.0</td>
+      <td>0.021853</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Canis</td>
+      <td>lupus</td>
+      <td>31756.51</td>
+      <td>354.0</td>
+      <td>0.011147</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Bos</td>
+      <td>frontalis</td>
+      <td>800143.05</td>
+      <td>314.4</td>
+      <td>0.000393</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Bos</td>
+      <td>grunniens</td>
+      <td>500000.0</td>
+      <td>267.0</td>
+      <td>0.000534</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5377</th>
+      <td>Vulpes</td>
+      <td>macrotis</td>
+      <td>4499.97</td>
+      <td>240.0</td>
+      <td>0.053334</td>
+    </tr>
+    <tr>
+      <th>5380</th>
+      <td>Vulpes</td>
+      <td>velox</td>
+      <td>2088.0</td>
+      <td>240.0</td>
+      <td>0.114943</td>
+    </tr>
+    <tr>
+      <th>5397</th>
+      <td>Zaglossus</td>
+      <td>bruijni</td>
+      <td>8951.71</td>
+      <td>372.0</td>
+      <td>0.041556</td>
+    </tr>
+    <tr>
+      <th>5398</th>
+      <td>Zalophus</td>
+      <td>californianus</td>
+      <td>137194.86</td>
+      <td>360.0</td>
+      <td>0.002624</td>
+    </tr>
+    <tr>
+      <th>5407</th>
+      <td>Ziphius</td>
+      <td>cavirostris</td>
+      <td>4774999.99</td>
+      <td>432.0</td>
+      <td>0.00009</td>
+    </tr>
+  </tbody>
+</table>
+<p>387 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="exploratory-analysis-sorting-and-basic-descriptive-statistics">
+<h2>Exploratory analysis: sorting and basic descriptive statistics<a class="headerlink" href="#exploratory-analysis-sorting-and-basic-descriptive-statistics" title="Permalink to this heading">#</a></h2>
+<section id="sorting">
+<h3>Sorting<a class="headerlink" href="#sorting" title="Permalink to this heading">#</a></h3>
+<p>Suppose we want to take our <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> and sort it by the <code class="docutils literal notranslate"><span class="pre">&quot;Adult</span> <span class="pre">Body</span> <span class="pre">Mass</span> <span class="pre">(g)&quot;</span></code> column to see which species have the largest mass.</p>
+<p>We do this by using the <code class="docutils literal notranslate"><span class="pre">DataFrame.sort_values(by=...)</span></code> method, where we pass in a <code class="docutils literal notranslate"><span class="pre">str</span></code> that names the column to sort by.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data_final</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;Adult Body Mass (g)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Adult Body Mass (g)</th>
+      <th>Max Longevity (months)</th>
+      <th>Longevity-to-Mass Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>965</th>
+      <td>Craseonycteris</td>
+      <td>thonglongyai</td>
+      <td>1.96</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>1866</th>
+      <td>Kerivoula</td>
+      <td>minuta</td>
+      <td>2.03</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>4630</th>
+      <td>Suncus</td>
+      <td>etruscus</td>
+      <td>2.26</td>
+      <td>32.4</td>
+      <td>14.336283</td>
+    </tr>
+    <tr>
+      <th>4505</th>
+      <td>Sorex</td>
+      <td>minutissimus</td>
+      <td>2.46</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>4635</th>
+      <td>Suncus</td>
+      <td>madagascariensis</td>
+      <td>2.47</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5368</th>
+      <td>Volemys</td>
+      <td>musseri</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5395</th>
+      <td>Zaglossus</td>
+      <td>attenboroughi</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5396</th>
+      <td>Zaglossus</td>
+      <td>bartoni</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5399</th>
+      <td>Zalophus</td>
+      <td>japonicus</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5400</th>
+      <td>Zalophus</td>
+      <td>wollebaeki</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+  </tbody>
+</table>
+<p>5416 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>By default, the column values are sorted in <em>ascending</em> (low-to-high) order.</p>
+<p>If we want to sort in <em>descending</em> (high-to-low) order, we can pass in an <em>optional</em> argument <code class="docutils literal notranslate"><span class="pre">ascending=False</span></code> to <code class="docutils literal notranslate"><span class="pre">DataFrame.sort_values</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_data_final</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;Adult Body Mass (g)&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Adult Body Mass (g)</th>
+      <th>Max Longevity (months)</th>
+      <th>Longevity-to-Mass Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>136</th>
+      <td>Balaenoptera</td>
+      <td>musculus</td>
+      <td>154321304.5</td>
+      <td>1320.0</td>
+      <td>0.000009</td>
+    </tr>
+    <tr>
+      <th>391</th>
+      <td>Balaena</td>
+      <td>mysticetus</td>
+      <td>79691178.99</td>
+      <td>480.0</td>
+      <td>0.000006</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>Balaenoptera</td>
+      <td>physalus</td>
+      <td>47506008.23</td>
+      <td>1392.0</td>
+      <td>0.000029</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Caperea</td>
+      <td>marginata</td>
+      <td>31999999.98</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>1951</th>
+      <td>Megaptera</td>
+      <td>novaeangliae</td>
+      <td>30000000.01</td>
+      <td>1140.0</td>
+      <td>0.000038</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5368</th>
+      <td>Volemys</td>
+      <td>musseri</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5395</th>
+      <td>Zaglossus</td>
+      <td>attenboroughi</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5396</th>
+      <td>Zaglossus</td>
+      <td>bartoni</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5399</th>
+      <td>Zalophus</td>
+      <td>japonicus</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>5400</th>
+      <td>Zalophus</td>
+      <td>wollebaeki</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+  </tbody>
+</table>
+<p>5416 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="descriptive-statistics">
+<h3>Descriptive statistics<a class="headerlink" href="#descriptive-statistics" title="Permalink to this heading">#</a></h3>
+<p>Here are five simple <em>descriptive statistics</em> that we can use to describe a collection of numbers:</p>
+<ul class="simple">
+<li><p>sum</p></li>
+<li><p>count (i.e., size; number of elements)</p></li>
+<li><p>mean (average)</p></li>
+<li><p>min</p></li>
+<li><p>max</p></li>
+</ul>
+<p>Unsurprisingly, we can compute all of these on any Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> containing numeric data by calling a corresponding <code class="docutils literal notranslate"><span class="pre">Series</span></code> method.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Statistic</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">Series</span></code> method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>sum</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Series.sum()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>count</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Series.count()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>mean</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Series.mean()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>min</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Series.min()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>max</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Series.max()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: all five of these methods <em>ignore</em> <code class="docutils literal notranslate"><span class="pre">NA</span></code> values.</p>
+<p>Let’s start by extracting the body mass column (again).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totals</span> <span class="o">=</span> <span class="n">species_data_final</span><span class="p">[</span><span class="s2">&quot;Adult Body Mass (g)&quot;</span><span class="p">]</span>
+<span class="n">totals</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    492714.47
+1     10392.49
+2       9658.7
+3      11989.1
+4     31756.51
+Name: Adult Body Mass (g), dtype: Float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totals</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>629803664.9200003
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totals</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3542
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totals</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>177810.18207792216
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totals</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.96
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">totals</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>154321304.5
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> is the most complex part of Python we’ve studied so far in this course, and so we expect you’ll need to review and practice more as we dive deeper into this library.</p>
+<p>The official Pandas website has some great introductory materials, including:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/user_guide/10min.html">10 minutes to pandas</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/getting_started/intro_tutorials/index.html"><em>Getting Started</em> tutorials</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week07/lecture"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../week05/homework/Homework_5.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 5 - Investigating Mammalian Fecundity and Conservation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../homework/Homework_7.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Homework 7: Data Wrangling – Understanding U.S. Covid Statistics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feb-26-2025">Feb 26, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#karen-reid">Karen Reid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introducing-pandas">Introducing <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-pandas">What is <code class="docutils literal notranslate"><span class="pre">pandas</span></code>?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-pandas">Importing <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-data-from-a-csv-file">Reading in data from a CSV file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-dataframes">Exploring <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataframe-columns-properties"><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> columns properties</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-wrangling-columns">Data Wrangling: Columns</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#renaming-columns">Renaming columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-column-types">Converting column types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identifying-and-replacing-missing-values">Identifying and replacing “missing” values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-a-subset-of-columns">Extracting a subset of columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Extracting a subset of columns</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-transformation-computing-on-columns">Data Transformation: computing on columns</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-a-column-by-name">Retrieving a column by name</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-transform-a-single-series">Example: transform a single Series</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-combine-two-series">Example: combine two <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-new-column-to-a-dataframe">Adding a new column to a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#warning">WARNING!</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boolean-series-and-filtering-rows">Boolean <code class="docutils literal notranslate"><span class="pre">Series</span></code> and filtering rows</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#note-lots-of-square-brackets">Note: lots of square brackets!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-operators-and">Logical operators: <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> and <code class="docutils literal notranslate"><span class="pre">|</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-analysis-sorting-and-basic-descriptive-statistics">Exploratory analysis: sorting and basic descriptive statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting">Sorting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-statistics">Descriptive statistics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

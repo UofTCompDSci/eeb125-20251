@@ -1,0 +1,1020 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EEB125 Lecture 8: Merging, Grouping, and Plotting &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week08/lecture/lecture8';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Homework 8: Investigating Mammalian Fecundity and Conservation using Filtering, Joins, and Arithmetic" href="../homework/Homework_8.html" />
+    <link rel="prev" title="EEB125H1 Data Science Conference" href="../../../project/project_instructions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_proposal.html">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_instructions.html">Final Project Instructions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/Homework_8.html">Week 8 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week08/lecture/lecture8.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week08/lecture/lecture8.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EEB125 Lecture 8: Merging, Grouping, and Plotting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">Recap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-maturity-age-vs-endangered-level">Exploring Maturity Age vs. Endangered Level</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-text-columns">Working with text columns</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-dataframes">Merging <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping">Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-a-group">Retrieving a group</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-a-dataframegroupby">Displaying a DataFrameGroupBy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-descriptive-statistics-per-group">Computing descriptive statistics per group (!)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization">Data Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-a-series">Plotting a <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-columns-from-a-dataframe">Plotting (columns from) a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="eeb125-lecture-8-merging-grouping-and-plotting">
+<h1>EEB125 Lecture 8: Merging, Grouping, and Plotting<a class="headerlink" href="#eeb125-lecture-8-merging-grouping-and-plotting" title="Permalink to this heading">#</a></h1>
+<p><strong>March 5, 2025</strong></p>
+<p><strong>Karen Reid</strong></p>
+<section id="recap">
+<h2>Recap<a class="headerlink" href="#recap" title="Permalink to this heading">#</a></h2>
+<p>Last class, we began learning how to use the Python library <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, which provides lots of helpful data types and functions for performing data science.</p>
+<p>We talked about a few different ways to extract data from a DataFrame.  Fill in the table below:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type inside <code class="docutils literal notranslate"><span class="pre">[...]</span></code></p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Return type</p></th>
+<th class="head"><p>Which columns?</p></th>
+<th class="head"><p>Which rows?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>str`</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">species_data_final[&quot;Adult</span> <span class="pre">Body</span> <span class="pre">Mass</span> <span class="pre">(g)&quot;]</span></code></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">species_data_final[[&quot;Genus&quot;,</span> <span class="pre">&quot;Species&quot;]]</span></code></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">species_data_final[is_large]</span></code></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>Let’s start by reading in the same PanTHERIA dataset as last week, from the file called <strong>PanTHERIA_WR05_Aug2008.csv</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">species_raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;PanTHERIA_WR05_Aug2008.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let’s review some of the basic data cleaning operations from last class.</p>
+<ol class="arabic">
+<li><p><strong>Extract</strong> the following columns, and <strong>rename</strong> them.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Original Name</p></th>
+<th class="head"><p>New Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MSW05_Order</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Order</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MSW05_Binomial</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Binomial</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">5-1_AdultBodyMass_g</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Mass</span> <span class="pre">(g)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">23-1_SexualMaturityAge_d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Maturity</span> <span class="pre">(days)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">14-1_InterbirthInterval_d</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Interbirth</span> <span class="pre">(days)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">17-1_MaxLongevity_m</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Longevity</span> <span class="pre">(months)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">15-1_LitterSize</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Litter</span> <span class="pre">Size</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p><strong>Convert</strong> all columns into their most specific types (using <code class="docutils literal notranslate"><span class="pre">DataFrame.convert_types()</span></code>).</p></li>
+<li><p><strong>Replace</strong> all <code class="docutils literal notranslate"><span class="pre">-999</span></code> with <code class="docutils literal notranslate"><span class="pre">pd.NA</span></code>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Extract columns</span>
+<span class="n">important_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;MSW05_Order&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MSW05_Binomial&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;5-1_AdultBodyMass_g&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;23-1_SexualMaturityAge_d&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;14-1_InterbirthInterval_d&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;17-1_MaxLongevity_m&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;15-1_LitterSize&quot;</span>
+<span class="p">]</span>
+
+<span class="n">species_subset_data</span> <span class="o">=</span> <span class="n">species_raw_data</span><span class="p">[</span><span class="n">important_columns</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Rename columns</span>
+<span class="n">old_to_new</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;MSW05_Order&quot;</span><span class="p">:</span> <span class="s2">&quot;Order&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MSW05_Binomial&quot;</span><span class="p">:</span> <span class="s2">&quot;Binomial&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;5-1_AdultBodyMass_g&quot;</span><span class="p">:</span> <span class="s2">&quot;Mass (g)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;23-1_SexualMaturityAge_d&quot;</span><span class="p">:</span> <span class="s2">&quot;Maturity (days)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;14-1_InterbirthInterval_d&quot;</span><span class="p">:</span> <span class="s2">&quot;Interbirth (days)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;17-1_MaxLongevity_m&quot;</span><span class="p">:</span> <span class="s2">&quot;Longevity (months)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;15-1_LitterSize&quot;</span><span class="p">:</span> <span class="s2">&quot;Litter Size&quot;</span>
+<span class="p">}</span>
+<span class="n">species_renamed_data</span> <span class="o">=</span> <span class="n">species_subset_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">old_to_new</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2.Convert column types</span>
+<span class="n">species_converted_data</span> <span class="o">=</span> <span class="n">species_renamed_data</span><span class="o">.</span><span class="n">convert_dtypes</span><span class="p">()</span>
+<span class="n">species_converted_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace -999 values</span>
+<span class="n">species_data</span> <span class="o">=</span> <span class="n">species_converted_data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">-</span><span class="mi">999</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">NA</span><span class="p">)</span>
+<span class="n">species_data</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exploring-maturity-age-vs-endangered-level">
+<h2>Exploring Maturity Age vs. Endangered Level<a class="headerlink" href="#exploring-maturity-age-vs-endangered-level" title="Permalink to this heading">#</a></h2>
+<p><strong>Question</strong>: Are mammals that take longer go grow up at greater risk of extinction?</p>
+<p>Right now, we have mammal maturity age: <code class="docutils literal notranslate"><span class="pre">species_data[&quot;Maturity</span> <span class="pre">(days)&quot;]</span></code>.</p>
+<p>But what about extinction level?</p>
+<p>We have information about extinction level, but it’s in a different dataset: <code class="docutils literal notranslate"><span class="pre">iucn_status.csv</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iucn_raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;iucn_status.csv&quot;</span><span class="p">)</span>
+<span class="n">iucn_data</span> <span class="o">=</span> <span class="n">iucn_raw_data</span><span class="o">.</span><span class="n">convert_dtypes</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">iucn_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now it seems like we can “match” the <code class="docutils literal notranslate"><span class="pre">species</span></code> column with the PanTHERIA’s <code class="docutils literal notranslate"><span class="pre">Binomial</span></code> column, but unfortunately the format is different:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">iucn_data</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">species_data</span><span class="p">[</span><span class="s2">&quot;Binomial&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="working-with-text-columns">
+<h3>Working with text columns<a class="headerlink" href="#working-with-text-columns" title="Permalink to this heading">#</a></h3>
+<p>Let’s look at a single value first.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Abditomys_latidens&#39;</span>
+</pre></div>
+</div>
+<p>We need to replace the underscore <code class="docutils literal notranslate"><span class="pre">_</span></code> with a space.
+For a single Python string, we can use the <code class="docutils literal notranslate"><span class="pre">str.replace(...,</span> <span class="pre">...)</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_species</span> <span class="o">=</span> <span class="s2">&quot;Abditomys_latidens&quot;</span>
+<span class="c1"># Add line to replace &#39;_&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>How do we do this for an entire <code class="docutils literal notranslate"><span class="pre">Series</span></code>? Is there a method like <code class="docutils literal notranslate"><span class="pre">.round()</span></code>?</p>
+<p><strong>Yes</strong>! Each <code class="docutils literal notranslate"><span class="pre">Series</span></code> has access to many string-specific methods, analogous to the built-in <code class="docutils literal notranslate"><span class="pre">str</span></code> methods in Python.</p>
+<p>But there’s a catch: these methods must be accessed through a <code class="docutils literal notranslate"><span class="pre">.str</span></code> attribute. Here are some examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_series</span> <span class="o">=</span> <span class="n">iucn_data</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span>
+<span class="n">species_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_series</span> <span class="o">=</span> <span class="n">iucn_data</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span>
+<span class="n">species_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the one that we want:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_series</span> <span class="o">=</span> <span class="n">iucn_data</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span>
+<span class="n">species_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hooray! Now let’s store this <code class="docutils literal notranslate"><span class="pre">Series</span></code> as a new column in <code class="docutils literal notranslate"><span class="pre">iucn_data</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_series</span> <span class="o">=</span> <span class="n">iucn_data</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span>
+<span class="n">formatted_species_series</span> <span class="o">=</span> <span class="n">species_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="c1"># add a new column called &quot;Formatted Species&quot; to the iucn_data DataFrame</span>
+
+<span class="n">iucn_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="merging-dataframes">
+<h2>Merging <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s<a class="headerlink" href="#merging-dataframes" title="Permalink to this heading">#</a></h2>
+<p>In <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, a <strong>merge</strong> operation allows us to combine two different <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s, matching rows by their values on a specific column in each <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+<p>In our datasets, <code class="docutils literal notranslate"><span class="pre">species_data[&quot;Binomial&quot;]</span></code> has the same data as <code class="docutils literal notranslate"><span class="pre">iucn_data[&quot;Formatted</span> <span class="pre">Species&quot;]</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">species_data</span><span class="p">[</span><span class="s2">&quot;Binomial&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">iucn_data</span><span class="p">[</span><span class="s2">&quot;Formatted Species&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Formally, we merge two <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> using a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> function called <code class="docutils literal notranslate"><span class="pre">merge</span></code>.
+We’ll use <code class="docutils literal notranslate"><span class="pre">merge</span></code> with four arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">left</span></code>: the first <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> to merge</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right</span></code>: the second <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> to merge</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">left_on</span></code>: the name of the column in the <code class="docutils literal notranslate"><span class="pre">left</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> to match with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">right_on</span></code>: the name of the column in the <code class="docutils literal notranslate"><span class="pre">right</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> to match with</p></li>
+</ul>
+<p>Here’s how we can call <code class="docutils literal notranslate"><span class="pre">merge</span></code> for our two datasets:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">left</span><span class="o">=</span><span class="n">species_data</span><span class="p">,</span>
+    <span class="n">right</span><span class="o">=</span><span class="n">iucn_data</span><span class="p">,</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;Binomial&quot;</span><span class="p">,</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;Formatted Species&quot;</span>
+<span class="p">)</span>
+<span class="n">combined_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="grouping">
+<h2>Grouping<a class="headerlink" href="#grouping" title="Permalink to this heading">#</a></h2>
+<p>Now suppose we want to determine the average maturity age for each <code class="docutils literal notranslate"><span class="pre">iucn_status</span></code> level.</p>
+<p>We can do this manually by filtering for each group separately (similar to what you did on last week’s homework).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>is_cr = combined_data[&quot;iucn_status&quot;] == &quot;CR&quot;  # Create a boolean Series
+cr_species = ?????            # Use the Series to *filter rows* of the dataset
+????         # Extract a column and compute a mean
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_en</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="s2">&quot;iucn_status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;EN&quot;</span>
+<span class="n">en_species</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="n">is_en</span><span class="p">]</span>
+<span class="n">en_species</span><span class="p">[</span><span class="s2">&quot;Maturity (days)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s also possible to use a <em>for loop</em> to try each of the possible statuses (at least, assuming we know them in advance).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">statuses</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CR&quot;</span><span class="p">,</span> <span class="s2">&quot;EN&quot;</span><span class="p">,</span> <span class="s2">&quot;VU&quot;</span><span class="p">,</span> <span class="s2">&quot;NT&quot;</span><span class="p">,</span> <span class="s2">&quot;LC&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">statuses</span><span class="p">:</span>
+    <span class="n">is_status</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="s2">&quot;iucn_status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">status</span>
+    <span class="n">species_with_status</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="n">is_status</span><span class="p">]</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">species_with_status</span><span class="p">[</span><span class="s2">&quot;Maturity (days)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2"> species average time to maturity (in days): </span><span class="si">{</span><span class="n">mean</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But there’s a better approach that uses a new Pandas concept: <strong>grouping</strong>.
+This allows us to take a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> and put the rows into groups based on their value in a given column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combined_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;iucn_status&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">DataFrameGroupBy</span></code> object is conceptually similar to a “dictionary of <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s”, but is implemented by <code class="docutils literal notranslate"><span class="pre">pandas</span></code> in a more complex way.
+You aren’t responsible for the details of this type of data, but you do need to know about how you can work with these groups.</p>
+<section id="retrieving-a-group">
+<h3>Retrieving a group<a class="headerlink" href="#retrieving-a-group" title="Permalink to this heading">#</a></h3>
+<p>Given a <code class="docutils literal notranslate"><span class="pre">DataFrameGroupBy</span></code> object, we can obtain the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> for one of the groups using the <code class="docutils literal notranslate"><span class="pre">DataFrameGroupBy.get_group</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">groups_by_status</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;iucn_status&quot;</span><span class="p">)</span>
+<span class="n">groups_by_status</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="s2">&quot;EN&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="displaying-a-dataframegroupby">
+<h3>Displaying a DataFrameGroupBy<a class="headerlink" href="#displaying-a-dataframegroupby" title="Permalink to this heading">#</a></h3>
+<p>But what if we want to see the whole object?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Loop over the groups</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">groups_by_status</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">groups_by_status</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="computing-descriptive-statistics-per-group">
+<h3>Computing descriptive statistics per group (!)<a class="headerlink" href="#computing-descriptive-statistics-per-group" title="Permalink to this heading">#</a></h3>
+<p>Recall from last class, we can compute descriptive statistics on a numerical column by using <code class="docutils literal notranslate"><span class="pre">Series</span></code> methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Series.count()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Series.sum()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Series.min()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Series.max()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Series.mean()</span></code></p></li>
+</ul>
+<p>We can do the same thing on a <strong>per-group basis</strong> in two steps:</p>
+<ol class="arabic simple">
+<li><p>First, extract the relevant column (using familiar square bracket syntax).</p></li>
+<li><p>Call the desired descriptive statistics method.</p></li>
+</ol>
+<p><strong>Example</strong>: calculate the mean age to maturity for each IUCN status.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">groups_by_status</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;iucn_status&quot;</span><span class="p">)</span>
+<span class="n">maturities_by_status</span> <span class="o">=</span> <span class="n">groups_by_status</span><span class="p">[</span><span class="s2">&quot;Maturity (days)&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">maturities_by_status</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the result is just a regular <code class="docutils literal notranslate"><span class="pre">Series</span></code>, we can apply the same methods as last time—including sorting it!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maturities_by_status</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-visualization">
+<h2>Data Visualization<a class="headerlink" href="#data-visualization" title="Permalink to this heading">#</a></h2>
+<p>The last topic we’ll learn about today is how to do some basic data visualization using pandas.
+Both <code class="docutils literal notranslate"><span class="pre">Series</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> have multiple methods for plotting data, which can be accessed through the <code class="docutils literal notranslate"><span class="pre">.plot</span></code> attribute.</p>
+<section id="plotting-a-series">
+<h3>Plotting a <code class="docutils literal notranslate"><span class="pre">Series</span></code><a class="headerlink" href="#plotting-a-series" title="Permalink to this heading">#</a></h3>
+<p>We’ll start with just plotting a <code class="docutils literal notranslate"><span class="pre">Series</span></code>, using the grouped means from the previous example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_maturities</span> <span class="o">=</span> <span class="n">groups_by_status</span><span class="p">[</span><span class="s2">&quot;Maturity (days)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">mean_maturities</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot this series using a <strong>bar plot</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_maturities</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each plotting method accepts optional arguments to configure the appearance of the plot.
+For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: the title of the plot</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xlabel</span></code>: the label for the x-axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ylabel</span></code>: the label for the y-axis</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_maturities</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mean Age to Maturity by IUCN Status&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;IUCN Status&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean Age to Maturity (days)&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">Series.plot.bar</span></code> uses the <code class="docutils literal notranslate"><span class="pre">Series</span></code> <em>index</em> to label the bars.
+We can customize these labels by using the <code class="docutils literal notranslate"><span class="pre">Series.rename(index=...)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">old_to_new</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;DD&quot;</span><span class="p">:</span> <span class="s2">&quot;Data Deficient&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EN&quot;</span><span class="p">:</span> <span class="s2">&quot;Endangered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CR&quot;</span><span class="p">:</span> <span class="s2">&quot;Critically Endangered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VU&quot;</span><span class="p">:</span> <span class="s2">&quot;Vulnerable&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NT&quot;</span><span class="p">:</span> <span class="s2">&quot;Near Threatened&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LC&quot;</span><span class="p">:</span> <span class="s2">&quot;Least Concern&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EW&quot;</span><span class="p">:</span> <span class="s2">&quot;Extinct in the Wild&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EX&quot;</span><span class="p">:</span> <span class="s2">&quot;Extinct&quot;</span>
+<span class="p">}</span>
+
+<span class="n">mean_maturities_renamed</span> <span class="o">=</span> <span class="n">mean_maturities</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">old_to_new</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plotting a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is similar to plotting a <code class="docutils literal notranslate"><span class="pre">Series</span></code>, but we must specify the columns to use for the x- and y-axes of the plot.</p>
+<p>For example, we can take our <code class="docutils literal notranslate"><span class="pre">combined_data</span></code> and plot each species’ litter size against its maturity age as a <strong>scatter plot</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_maturities_renamed</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mean Age to Maturity by IUCN Status&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;IUCN Status&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean Age to Maturity (days)&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting-columns-from-a-dataframe">
+<h3>Plotting (columns from) a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code><a class="headerlink" href="#plotting-columns-from-a-dataframe" title="Permalink to this heading">#</a></h3>
+<p>Since <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s have multiple columns, we need to specify the columns we want to visualize.</p>
+<p><strong>Example</strong>: create a <em>scatter plot</em> that plots litter size against age to maturity for each species.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combined_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Litter Size&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Maturity (days)&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Litter Size vs. Mean Age to Maturity Among Mammals&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Example</strong>: create a <em>box plot</em> that plots IUCN status against age to maturity.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">combined_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span>
+    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;iucn_status&quot;</span><span class="p">,</span>
+    <span class="n">column</span><span class="o">=</span><span class="s2">&quot;Maturity (days)&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Age to Maturity Among Mammals by IUCN Status&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/user_guide/text.html">Pandas <em>Working with text data</em> guide</a></p></li>
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/user_guide/visualization.html">Pandas <em>Chart visualization</em> guide</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week08/lecture"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../../project/project_instructions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EEB125H1 Data Science Conference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../homework/Homework_8.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Homework 8: Investigating Mammalian Fecundity and Conservation using Filtering, Joins, and Arithmetic</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap">Recap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-maturity-age-vs-endangered-level">Exploring Maturity Age vs. Endangered Level</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-text-columns">Working with text columns</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-dataframes">Merging <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grouping">Grouping</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-a-group">Retrieving a group</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#displaying-a-dataframegroupby">Displaying a DataFrameGroupBy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-descriptive-statistics-per-group">Computing descriptive statistics per group (!)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization">Data Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-a-series">Plotting a <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-columns-from-a-dataframe">Plotting (columns from) a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1829 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Week 9: Hypothesis Testing &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week09/lecture/lecture9';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="Homework 8: Investigating Mammalian Fecundity and Conservation using Filtering, Joins, and Arithmetic" href="../../week08/homework/Homework_8.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_proposal.html">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_instructions.html">Final Project Instructions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week08/lecture/lecture8.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week08/homework/Homework_8.html">Week 8 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Moon's Notebook</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week09/lecture/lecture9.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week09/lecture/lecture9.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 9: Hypothesis Testing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#march-12-2025">March 12, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-u-s-covid-statistics">Recall: U.S. COVID statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-we-view-data">How we view data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#population-vs-sample">Population vs. sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-vs-mean">Parameter vs. mean</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#does-neanderthal-genes-increase-or-decrease-the-chance-of-experiencing-a-servere-covid-19-case">Does Neanderthal genes increase or decrease the chance of experiencing a servere COVID-19 case?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#we-use-statistics-to-make-our-best-guess-about-parameters">We use statistics to make our best guess about parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-we-make-decisions-based-on-data">How we make decisions based on data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing">Hypothesis Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-alternative-hypotheses-test-statistic-and-p-value">Null &amp; alternative hypotheses, test statistic, and p-value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-we-interpret-a-p-value">How do we interpret a p-value?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goals-of-data-science">Goals of Data Science</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jury-selection">Jury Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-model-of-random-selection">A model of random selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-rolling-a-six-sided-die-20-times">Example 1: Rolling a six-sided die 20 times</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-rolling-a-loaded-six-side-100-times-more-likely-to-land-on-6-repeated-3-times">Example 2: Rolling a loaded six-side 100 times more likely to land on 6 - repeated 3 times</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-one-value">Simulate one value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-multiple-values">Simulate multiple values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-likely-was-mr-swain-s-experience">How likely was Mr. Swain’s experience?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-of-the-data-analysis">Conclusion of the data analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-two-samples">Comparing two samples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-plant-fertilizers">Comparing plant fertilizers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-for-the-hypothesis-test">Steps for the hypothesis test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypotheses">1. Hypotheses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistic">2. Test statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-what-the-null-hypothesis-predicts-will-happen">3. Simulate what the null hypothesis predicts will happen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-what-the-null-hypothesis-predicts">Simulating what the null hypothesis predicts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1">Step 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2">Step 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3">Step 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4">Step 4</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-mammals-are-larger-or-smaller-than-birds">Are mammals are larger or smaller than birds?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-iucn-and-amniote-dataframes">Merge IUCN and Amniote DataFrames</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge"><code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Steps for the hypothesis test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. Hypotheses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. Test statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3. Simulate what the null hypothesis predicts will happen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulating what the null hypothesis predicts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Step 1</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Step 2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Step 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Step 4</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causality">Causality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-outcomes-and-randomized-control-trials">Potential outcomes and randomized control trials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review">Review</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-9-hypothesis-testing">
+<h1>Week 9: Hypothesis Testing<a class="headerlink" href="#week-9-hypothesis-testing" title="Permalink to this heading">#</a></h1>
+<section id="march-12-2025">
+<h2>March 12, 2025<a class="headerlink" href="#march-12-2025" title="Permalink to this heading">#</a></h2>
+<p><strong>Michael Jongho Moon</strong></p>
+</section>
+<section id="recall-u-s-covid-statistics">
+<h2>Recall: U.S. COVID statistics<a class="headerlink" href="#recall-u-s-covid-statistics" title="Permalink to this heading">#</a></h2>
+<p>In homework 7, we looked at the relationship between population size and COVID-10 infection rates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">covid_raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;covid_raw.csv&quot;</span><span class="p">)</span>
+<span class="n">covid_final_data</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">covid_raw_data</span><span class="p">[[</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;Total_cases&quot;</span><span class="p">,</span> <span class="s2">&quot;pop&quot;</span><span class="p">]]</span>
+    <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Total_cases&quot;</span><span class="p">:</span> <span class="s2">&quot;Total Cases&quot;</span><span class="p">,</span> <span class="s2">&quot;pop&quot;</span><span class="p">:</span> <span class="s2">&quot;Population&quot;</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">convert_dtypes</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">covid_final_data</span><span class="p">[</span><span class="s2">&quot;Case Rate (%)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">covid_final_data</span><span class="p">[</span><span class="s2">&quot;Total Cases&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">covid_final_data</span><span class="p">[</span><span class="s2">&quot;Population&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="c1"># with .loc[] (.iloc[]) you can access rows and columns at the same time</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">7500000</span>
+<span class="n">covid_final_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">covid_final_data</span><span class="p">[</span><span class="s2">&quot;Population&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="s2">&quot;State Size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Large&quot;</span>
+<span class="n">covid_final_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">covid_final_data</span><span class="p">[</span><span class="s2">&quot;Population&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">,</span> <span class="s2">&quot;State Size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Small&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Large state mean: </span><span class="si">{}</span><span class="s2"> vs. Small state mean: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">covid_final_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">covid_final_data</span><span class="p">[</span><span class="s2">&quot;State Size&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Large&quot;</span><span class="p">,</span> <span class="s2">&quot;Case Rate (%)&quot;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">covid_final_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">covid_final_data</span><span class="p">[</span><span class="s2">&quot;State Size&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Small&quot;</span><span class="p">,</span> <span class="s2">&quot;Case Rate (%)&quot;</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p>With <code class="docutils literal notranslate"><span class="pre">.loc[]</span></code> (and <code class="docutils literal notranslate"><span class="pre">.iloc[]</span></code>), you can access rows and columns at the same time. See <a class="reference external" href="https://pandas.pydata.org/pandas-docs/version/1.0/getting_started/intro_tutorials/03_subset_data.html">here</a> for more examples.</p>
+</div></blockquote>
+<p><em>Does this imply smaller states face a higher COVID-19 infection rate on average?</em></p>
+<p><strong>OR</strong></p>
+<p><em>Did we observe the difference only by chance?</em></p>
+</section>
+<section id="how-we-view-data">
+<h2>How we view data<a class="headerlink" href="#how-we-view-data" title="Permalink to this heading">#</a></h2>
+<p><em>The data values we see (observe) are one instance of sampling from the population.</em></p>
+<section id="population-vs-sample">
+<h3>Population vs. sample<a class="headerlink" href="#population-vs-sample" title="Permalink to this heading">#</a></h3>
+<p><strong>Population</strong>: the group that we wish to study</p>
+<blockquote>
+<div><p>e.g., <em>all</em> members of the U.S. population throughout the period of the COVID-19 pandemic.</p>
+</div></blockquote>
+<p><strong>Sample</strong>: a sub-group from the population that we can actually access/study, and use this to make <em>inference</em> about the population</p>
+<blockquote>
+<div><p>e.g., those whose COVID-19 infection was recorded in the public health system during the report period.</p>
+</div></blockquote>
+<a class="reference internal image-reference" href="../../../_images/sample+pop.png"><img alt="../../../_images/sample+pop.png" src="../../../_images/sample+pop.png" style="width: 800px;" /></a>
+</section>
+<section id="parameter-vs-mean">
+<h3>Parameter vs. mean<a class="headerlink" href="#parameter-vs-mean" title="Permalink to this heading">#</a></h3>
+<p><strong>Parameter</strong>: a metric from the population</p>
+<p><strong>Statistic</strong>: a metric from the sample</p>
+<a class="reference internal image-reference" href="../../../_images/stats.png"><img alt="../../../_images/stats.png" src="../../../_images/stats.png" style="width: 800px;" /></a>
+<p>More often than not, we are interested in parameters that are unknown to us.</p>
+<ul class="simple">
+<li><p>In a population of voters, what percent will vote for Candidate A?</p></li>
+<li><p>In a population of TikTok users, what is the largest number of followers for a user?</p></li>
+<li><p>In a population of Air Canada flights, what is the median departure delay?</p></li>
+</ul>
+</section>
+</section>
+<section id="does-neanderthal-genes-increase-or-decrease-the-chance-of-experiencing-a-servere-covid-19-case">
+<h2>Does Neanderthal genes increase or decrease the chance of experiencing a servere COVID-19 case?<a class="headerlink" href="#does-neanderthal-genes-increase-or-decrease-the-chance-of-experiencing-a-servere-covid-19-case" title="Permalink to this heading">#</a></h2>
+<p><img alt="" src="../../../_images/neanderthar-gene-does-all.png" /></p>
+</section>
+<section id="we-use-statistics-to-make-our-best-guess-about-parameters">
+<h2>We use statistics to make our best guess about parameters<a class="headerlink" href="#we-use-statistics-to-make-our-best-guess-about-parameters" title="Permalink to this heading">#</a></h2>
+<p><strong>Parameter</strong>: usually we use greek letters (<span class="math notranslate nohighlight">\(\mu\)</span>) to denote this</p>
+<p><strong>Statistic</strong>: usually we use roman alphabet (<span class="math notranslate nohighlight">\(\bar{y}\)</span>) to denote this.</p>
+<p>Note:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu\)</span> often represents the population mean</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{y}\)</span> often represents the sample mean</p></li>
+<li><p>There are other types of parameters and statistics that use different notations.</p></li>
+</ul>
+</section>
+<section id="how-we-make-decisions-based-on-data">
+<h2>How we make decisions based on data<a class="headerlink" href="#how-we-make-decisions-based-on-data" title="Permalink to this heading">#</a></h2>
+<section id="hypothesis-testing">
+<h3>Hypothesis Testing<a class="headerlink" href="#hypothesis-testing" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Hypothesis testing allows us to test if a hypothesis is true or not.</p></li>
+<li><p>We usually build a hypothesis about the population using parameter(s)</p></li>
+<li><p>Collect some data and see if the data is in support of the hypothesis or not.</p></li>
+</ul>
+<p>Let’s explore this, by revisiting an event from ~~my~~ childhood.</p>
+<p><a class="reference external" href="https://www.madewithnestle.ca/smarties">Smarties</a> had an <a class="reference external" href="https://www.youtube.com/watch?v=kYbKvBBvAG4">ad campaign</a> in the 1990s asking “When you eating your Smarties do you eat the red ones last?”.</p>
+<p><img alt="smarties2.png" src="../../../_images/smarties.png" /></p>
+<p>So shortly after I went to go eat a pack of Smarties, planning on saving the red ones for the end, I was disappointed to find no red ones in my box of Smarties.</p>
+<p>But I had to eat a red one last. I went out and bought another 20 boxes of Smarties.</p>
+<p>Now, Smarties has <strong>8</strong> colours in Canada (red, blue, purple, brown, pink, green, orange, and yellow) and I was buying packs with <strong>48</strong>. Smarties claimed to have an equal number of each colour. So, they they claim that the expected number of red Smarties of all packs is <span class="math notranslate nohighlight">\(\mu=\cfrac{48}{8}=6\)</span>.</p>
+<ul class="simple">
+<li><p>I counted the number of red Smarties in each box.</p></li>
+<li><p>The average number of red Smarties among all 20 boxes I bought was <span class="math notranslate nohighlight">\(\bar{y}\)</span> = 5.</p></li>
+<li><p>The is the <strong>sample mean</strong>.</p></li>
+</ul>
+<p>The 5 is different from <span class="math notranslate nohighlight">\(\mu=6\)</span>, the <strong>population mean</strong> claimed by Nestle. I should be rightfully upset at Nestle, right? Or, could it be that I’m just an unlucky person?</p>
+<p>We want to see how likely our 5 is, if we had kept collecting samples of size 20 under the assumption of Nestle’s claim is true.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">red_smarties</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># custom function to create the plot</span>
+<span class="c1"># for demonstration purpose only</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dot_plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">binwidth</span><span class="p">,</span> <span class="n">bindots</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="n">binwidth</span><span class="p">)</span> <span class="o">/</span> <span class="n">binwidth</span><span class="p">,</span> 
+        <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="n">binwidth</span><span class="p">)</span> <span class="o">/</span> <span class="n">binwidth</span> <span class="o">+</span> <span class="n">binwidth</span><span class="p">,</span> 
+        <span class="n">binwidth</span><span class="p">)</span>
+    <span class="n">counts</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">]:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="n">spine</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">/</span> <span class="n">bindots</span><span class="p">)</span> <span class="o">/</span> <span class="mi">50</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">/</span> <span class="n">bindots</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span>  <span class="nb">enumerate</span><span class="p">(</span><span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">bins</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="s2">&quot;lightgrey&quot;</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span> <span class="o">%</span> <span class="n">bindots</span><span class="p">)</span> <span class="o">*</span> <span class="n">binwidth</span> <span class="o">*</span> <span class="mf">.8</span> <span class="o">/</span> <span class="n">bindots</span> <span class="o">+</span> <span class="n">binwidth</span> <span class="o">*</span> <span class="mf">.1</span><span class="p">)</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">c</span> <span class="o">/</span> <span class="n">bindots</span><span class="p">))</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the code simulates the average of red Smarties from 20 Smarties packages if Nestle was truthful</span>
+<span class="c1"># don&#39;t worry about understanding the code for now</span>
+<span class="n">red_smarties</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="c1"># call the custom function</span>
+<span class="n">dot_plot</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;steelblue&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Assuming that Smarties claim is true (i.e., <span class="math notranslate nohighlight">\(\mu=6\)</span>), maybe 100 repeats of the experiment would look like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">634</span><span class="p">)</span>
+<span class="n">red_smarties</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span> <span class="c1"># repeeat 100 times</span>
+    <span class="n">red_smarties</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="n">dot_plot</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;steelblue&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <em>hypothesis</em> is that <span class="math notranslate nohighlight">\(\mu=6\)</span>.</p>
+<p>Now, here is where our data (<span class="math notranslate nohighlight">\(\bar{y}=5\)</span>) falls, when we assume that Smarties claim is true (i.e., <span class="math notranslate nohighlight">\(\mu=6\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observed</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;coral&quot;</span> <span class="k">if</span> <span class="n">x</span>  <span class="o">==</span> <span class="mi">5</span> <span class="k">else</span> <span class="s2">&quot;#A9A9A9&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">)]</span>
+<span class="n">dot_plot</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">observed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="null-alternative-hypotheses-test-statistic-and-p-value">
+<h3>Null &amp; alternative hypotheses, test statistic, and p-value<a class="headerlink" href="#null-alternative-hypotheses-test-statistic-and-p-value" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Our value of 5 is known as the <strong>test statistic</strong> — a <em>statsistic</em> used to perfomr our hypothesis <em>test</em>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>The hypothesis under which we compute the test statistic is called the <strong>null hypothesis</strong>. The “opposite” claim or the complement hypothesis is called the <strong>alternative hypothesis</strong>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>How probable was our data/test statistic, if the null hypothesis is actually true? The answer to this is the <strong>p-value</strong>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Specifically, the <strong>p-value</strong> is the probability of observing any data points <em>more or as extreme</em> as our test statistic (given that the null hypothesis was true).</p>
+<ul>
+<li><p>We typically test with <em>“more or as extreme”</em> in both directions using absolute difference from the null hypothesis.</p></li>
+</ul>
+</li>
+</ul>
+<p>So our <strong>p-value is <span class="math notranslate nohighlight">\(0.05\)</span></strong>. Since there are 3 instances of <span class="math notranslate nohighlight">\(\bar{y}\)</span> equal to or less than 5 out of 100.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extremes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;coral&quot;</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)</span>  <span class="o">&gt;=</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;#A9A9A9&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">)]</span>
+<span class="n">dot_plot</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">extremes</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;steelblue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">red_smarties</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="how-do-we-interpret-a-p-value">
+<h2>How do we interpret a p-value?<a class="headerlink" href="#how-do-we-interpret-a-p-value" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The smaller your p-value is, the more “convinced” we are that the <strong>null hypothesis is false</strong>.</p></li>
+<li><p>Typically…</p></li>
+</ul>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>p-value</p></th>
+<th class="head text-left"><p>Conclusion</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(&gt;0.1\)</span></p></td>
+<td class="text-left"><p>Weak evidence against the null hypothsis.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>Between 0.05 and 0.1</p></td>
+<td class="text-left"><p>Moderate evidence against the null hypothesis.</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>Between 0.01 and 0.05</p></td>
+<td class="text-left"><p>Strong evidence against the null hypothesis.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(&lt;0.01\)</span></p></td>
+<td class="text-left"><p>Very strong evidence against the null hypothesis.</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>A large p-value doesn’t provide evidence for the null hypothesis. By construction, a hypothesis test starts under the assumption of the null hypothesis and we either find evidence <em>against</em> it or don’t.</p></li>
+</ul>
+<p>In this case 0.05 is quite small, so we would say there is strong evidence against the hypothesis that there were 6 red smarties on average in all boxes of smarties.</p>
+</section>
+<section id="goals-of-data-science">
+<h2>Goals of Data Science<a class="headerlink" href="#goals-of-data-science" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Deeper understanding of the world.</p></li>
+<li><p>Make the world a better place to live.</p></li>
+<li><p>For example, help expose injustice.</p></li>
+<li><p>The skills you are learning help empower you to do this.</p></li>
+</ul>
+</section>
+<section id="jury-selection">
+<h2>Jury Selection<a class="headerlink" href="#jury-selection" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>U.S. Constitution grants equal protection under the law.</p></li>
+</ul>
+<ul class="simple">
+<li><p>All defendants have the right to due process.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Robert Swain, a black man, was convicted in Talladega County, AL.</p></li>
+</ul>
+<ul class="simple">
+<li><p>He appealed to the U.S. Supreme Court.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Main reason: Unfair jury selection in the County’s trials.</p></li>
+</ul>
+<ul class="simple">
+<li><p>At the time of the trial, only men aged 21 or more were eligible to serve on juries in Talladega County. In that population, 26% of the men were black.</p></li>
+</ul>
+<ul class="simple">
+<li><p>But only eight men among the panel of 100 men (that is, 8%) were black.</p></li>
+</ul>
+<ul class="simple">
+<li><p>The U.S. Supreme Court reviewed the appeal and concluded, “the overall percentage disparity has been small.” But was this assertion reasonable?</p></li>
+</ul>
+<ul class="simple">
+<li><p>If jury panelists were selected at random from the county’s eligible population, there would be some chance variation. We wouldn’t get exactly 26 black panelists on every 100-person panel. But would we expect as few as eight?</p></li>
+</ul>
+</section>
+<section id="a-model-of-random-selection">
+<h2>A model of random selection<a class="headerlink" href="#a-model-of-random-selection" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A model of the data is that the panel was selected at random and ended up with a small number of black panelists just due to chance.</p></li>
+<li><p>Since the panel was supposed to resemble the population of all eligible jurors, the model of random selection is important to assess. Let’s see if it stands up to scrutiny.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">numpy.random</span></code> function <code class="docutils literal notranslate"><span class="pre">multinomial(n,</span> <span class="pre">pvals,</span> <span class="pre">size)</span></code> can be used to simulate sample proportions or counts with two or more categories.</p></li>
+</ul>
+</section>
+<section id="example-1-rolling-a-six-sided-die-20-times">
+<h2>Example 1: Rolling a six-sided die 20 times<a class="headerlink" href="#example-1-rolling-a-six-sided-die-20-times" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">num_simulations</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">true_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">sample_size</span><span class="p">,</span> 
+                               <span class="n">pvals</span><span class="o">=</span><span class="n">true_probabilities</span><span class="p">,</span> 
+                               <span class="n">size</span><span class="o">=</span><span class="n">num_simulations</span><span class="p">)</span>
+
+<span class="n">proportions</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">sample_size</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True probabilities: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">true_probabilities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample counts: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample proportions: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">proportions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-2-rolling-a-loaded-six-side-100-times-more-likely-to-land-on-6-repeated-3-times">
+<h2>Example 2: Rolling a loaded six-side 100 times more likely to land on 6 - repeated 3 times<a class="headerlink" href="#example-2-rolling-a-loaded-six-side-100-times-more-likely-to-land-on-6-repeated-3-times" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">num_simulations</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">true_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">7</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">7</span><span class="p">]</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> 
+                               <span class="n">true_probabilities</span><span class="p">,</span> 
+                               <span class="n">num_simulations</span><span class="p">)</span>
+
+<span class="n">proportions</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">sample_size</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True probabilities: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">true_probabilities</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample counts:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample proportions: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">proportions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Let’s use this to simulate the jury selection process.</p></li>
+<li><p>The size of the jury panel is 100, so <code class="docutils literal notranslate"><span class="pre">sample_size</span></code> is 100.</p></li>
+<li><p>The distribution from which we will draw the sample is the distribution in the population of eligible jurors: 26% of them were Black, so 100% - 26% = 74% are white (very simplistic assumption, but let’s go with it for now).</p></li>
+<li><p>This mean <code class="docutils literal notranslate"><span class="pre">true_proportions</span></code> is <code class="docutils literal notranslate"><span class="pre">[0.26,</span> <span class="pre">0.74]</span></code>.</p></li>
+<li><p>One simulation is below.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">true_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.26</span><span class="p">,</span> <span class="mf">0.74</span><span class="p">]</span>
+<span class="n">num_simulations</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> 
+                               <span class="n">true_probabilities</span><span class="p">,</span> 
+                               <span class="n">num_simulations</span><span class="p">)</span>
+
+<span class="n">proportions</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">sample_size</span>
+
+<span class="n">sim_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">proportions</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Black&quot;</span><span class="p">,</span> <span class="s2">&quot;White&quot;</span><span class="p">])</span>
+
+<span class="n">sim_counts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract the element in the first row, first column</span>
+<span class="n">sim_counts</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulate-one-value">
+<h2>Simulate one value<a class="headerlink" href="#simulate-one-value" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">simulate_one_count</span><span class="p">():</span>
+<span class="w">   </span><span class="sd">&quot;&quot;&quot;Simulate a panel of 100 randomly selected from a population of 26% black and 74% white males.</span>
+<span class="sd">    </span>
+<span class="sd">   Returns:</span>
+<span class="sd">      integer : the simulated number of black males selected for the panel of 100.</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="n">sample_size</span> <span class="o">=</span> <span class="mi">100</span>
+   <span class="n">true_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.26</span><span class="p">,</span> <span class="mf">0.74</span><span class="p">]</span>
+   <span class="n">num_simulations</span> <span class="o">=</span> <span class="mi">1</span>
+   <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> 
+                                  <span class="n">true_probabilities</span><span class="p">,</span> 
+                                  <span class="n">num_simulations</span><span class="p">)</span>
+    
+   <span class="c1"># sim_counts = pd.DataFrame(counts, columns=[&quot;Black&quot;, &quot;White&quot;])</span>
+   <span class="c1"># return sim_counts.iloc[0, 0]</span>
+   <span class="k">return</span> <span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulate_one_count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulate-multiple-values">
+<h2>Simulate multiple values<a class="headerlink" href="#simulate-multiple-values" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Our analysis is focused on the variability in the counts.</p></li>
+<li><p>Let’s generate 10,000 simulated values of the count and see how they vary.</p></li>
+<li><p>We will do this by using a for loop and collecting all the simulated counts in a list.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span> <span class="c1"># repeat 10000 times</span>
+    <span class="n">sim_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">simulate_one_count</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># can you see the 10,000 dots?</span>
+<span class="n">dot_plot</span><span class="p">(</span><span class="n">sim_counts</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="histogram">
+<h2>Histogram<a class="headerlink" href="#histogram" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A histogram plots bars representing the (relative) frequency of data observed in each <em>bin</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> library provides functions to visualize data and is the default backend used for <code class="docutils literal notranslate"><span class="pre">pandas</span></code> plotting functions.</p></li>
+<li><p>We can specify the bins with <code class="docutils literal notranslate"><span class="pre">np.arange(start=5.5,</span> <span class="pre">stop=47,</span> <span class="pre">step=1)</span></code> which creates a <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array (like a <code class="docutils literal notranslate"><span class="pre">Serries</span></code> but for numpy) with numbers starting at 5.5 and increasing by 1 until reaching 47.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">5.5</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">47</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># numpy array</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sim_counts</span><span class="p">,</span>        <span class="c1"># data to plot in the histogram</span>
+         <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span>         <span class="c1"># specify the bounds of the bins</span>
+         <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="c1"># you can specify other aesthetics</span>
+         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Count in random sample&quot;</span><span class="p">)</span>  <span class="c1"># update the x-axis label of the current plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">);</span>              <span class="c1"># update the y-axis label of the current plot</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Setting <code class="docutils literal notranslate"><span class="pre">density=True</span></code> in the <code class="docutils literal notranslate"><span class="pre">plt.hist()</span></code> function creates a “density” histogram.</p></li>
+<li><p>The bar heights are adjusted to relative frequencies such that the total area of the bars is 1.</p></li>
+<li><p>When the width of the bins are 1, the heights represent the proportions.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sim_counts</span><span class="p">,</span> 
+         <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> 
+         <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> 
+         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> 
+         <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Count in random sample&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="how-likely-was-mr-swain-s-experience">
+<h2>How likely was Mr. Swain’s experience?<a class="headerlink" href="#how-likely-was-mr-swain-s-experience" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sim_counts</span><span class="p">,</span> 
+         <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> 
+         <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> 
+         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> 
+         <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Count in random sample&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The simulation also could have been done using <code class="docutils literal notranslate"><span class="pre">np.random.multinomial</span></code>.</p></li>
+<li><p>This is an example of a ‘vectorized’ computation, and are usually faster than non-vectorized computations.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_size</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">true_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.26</span><span class="p">,</span> <span class="mf">0.74</span><span class="p">]</span>
+
+<span class="n">num_simulations</span> <span class="o">=</span> <span class="mi">10000</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">sample_size</span><span class="p">,</span> 
+                               <span class="n">true_probabilities</span><span class="p">,</span> 
+                               <span class="n">num_simulations</span><span class="p">)</span>
+
+<span class="n">counts</span>
+<span class="c1"># counts[:,0] # returns the first item of the individual arrays</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion-of-the-data-analysis">
+<h2>Conclusion of the data analysis<a class="headerlink" href="#conclusion-of-the-data-analysis" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The histogram shows that if we select a panel of size 100 at random from the eligible population, we are very unlikely to get counts of Black panelists that are as low as the eight that were observed on the panel in the trial.</p></li>
+<li><p>This is evidence that the model of random selection of the jurors in the panel is not consistent with the data from the panel. While it is possible that the panel could have been generated by chance, our simulation demonstrates that it is hugely unlikely.</p></li>
+<li><p>Therefore the most <em>reasonable</em> conclusion is that the assumption of random selection is unjustified for this jury panel.</p></li>
+</ul>
+</section>
+<section id="comparing-two-samples">
+<h2>Comparing two samples<a class="headerlink" href="#comparing-two-samples" title="Permalink to this heading">#</a></h2>
+<section id="comparing-plant-fertilizers">
+<h3>Comparing plant fertilizers<a class="headerlink" href="#comparing-plant-fertilizers" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A gardener wanted to discover whether a change in fertilizer mixture applied to their tomato plants would result in improved yield.</p></li>
+<li><p>She had 11 plants set out in a single row:</p>
+<ul>
+<li><p>5 were given standard fertilizer mixture A</p></li>
+<li><p>6 were given a supposedly improved mixture B</p></li>
+</ul>
+</li>
+<li><p>The A’s and B’s were randomly applied to positions along the row to give the following data:</p></li>
+</ul>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Position in row</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p>8</p></td>
+<td><p>9</p></td>
+<td><p>10</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fertilizer</p></td>
+<td><p>A</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+<td><p>A</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>Tomatoe yields (lbs)</p></td>
+<td><p>29.2</p></td>
+<td><p>11.4</p></td>
+<td><p>26.6</p></td>
+<td><p>23.7</p></td>
+<td><p>25.3</p></td>
+<td><p>28.5</p></td>
+<td><p>14.2</p></td>
+<td><p>17.9</p></td>
+<td><p>16.5</p></td>
+<td><p>21.1</p></td>
+<td><p>24.3</p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Position in row</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p>8</p></td>
+<td><p>9</p></td>
+<td><p>10</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fertilizer</p></td>
+<td><p>A</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+<td><p>A</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>Tomatoe yields (lbs)</p></td>
+<td><p>29.2</p></td>
+<td><p>11.4</p></td>
+<td><p>26.6</p></td>
+<td><p>23.7</p></td>
+<td><p>25.3</p></td>
+<td><p>28.5</p></td>
+<td><p>14.2</p></td>
+<td><p>17.9</p></td>
+<td><p>16.5</p></td>
+<td><p>21.1</p></td>
+<td><p>24.3</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>The random arrangement was arrived at by taking 11 playing cards, 5 marked A, and 6 marked B.</p></li>
+<li><p>Thoroughly shuffling the cards once the gardener arrived at the arrangement above.</p></li>
+</ul>
+<ul class="simple">
+<li><p>To test for an improvement, the null hypothesis is: <span class="math notranslate nohighlight">\(\mu_A = \mu_B\)</span> or <span class="math notranslate nohighlight">\(\mu_B-\mu_A=0\)</span></p></li>
+</ul>
+<p>Let’s store the results in a DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">fertilizer</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">]</span>
+
+<span class="n">tomatoes</span> <span class="o">=</span> <span class="p">[</span><span class="mf">29.2</span><span class="p">,</span> <span class="mf">11.4</span><span class="p">,</span> <span class="mf">26.6</span><span class="p">,</span> <span class="mf">23.7</span><span class="p">,</span> <span class="mf">25.3</span><span class="p">,</span> <span class="mf">28.5</span><span class="p">,</span> <span class="mf">14.2</span><span class="p">,</span> <span class="mf">17.9</span><span class="p">,</span> <span class="mf">16.5</span><span class="p">,</span> <span class="mf">21.1</span><span class="p">,</span> <span class="mf">24.3</span><span class="p">]</span>
+<span class="c1"># this is a dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fert&quot;</span><span class="p">:</span> <span class="n">fertilizer</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">:</span> <span class="n">tomatoes</span><span class="p">}</span>
+<span class="c1"># this is a DataFrame</span>
+<span class="n">plant_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">plant_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the DataFrame to compute the observed mean difference.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean of plants assigned fert A</span>
+<span class="n">mean_A_obs</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># note the use of .loc[]</span>
+
+<span class="c1"># mean of plants assigned fert B</span>
+<span class="n">mean_B_obs</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># mean difference</span>
+<span class="n">obs_diff</span> <span class="o">=</span>  <span class="n">mean_B_obs</span> <span class="o">-</span> <span class="n">mean_A_obs</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean tomato yield using the standard fertilizer was </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">mean_A_obs</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs &quot;</span>
+      <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;while using the new fertlizer yielded </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">mean_B_obs</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs on average. &quot;</span> 
+      <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;The difference is </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">obs_diff</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Since the assignment of fertilizers to plants is random it could have happened another way.</p></li>
+<li><p>If the null hypothesis is true, the difference we observed happened only by chance; i.e., only because we happened to randomly shuffle the cards in the particular order.</p></li>
+<li><p>We can use the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">sample</span></code> function with <code class="docutils literal notranslate"><span class="pre">frac</span></code> and <code class="docutils literal notranslate"><span class="pre">replace</span></code> parameters to simulate these other potential assignments of fertilizers to plants.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">frac=1</span></code> - specifies the fraction of rows to return (1 means return all the rows)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">replace=False</span></code> - specifies to sample without replacement</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Notice that the index is out of order.</p></li>
+<li><p>We are going to want to have an ordered index later on.</p></li>
+<li><p>To do this we can use the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> function <code class="docutils literal notranslate"><span class="pre">reset_index(drop=True)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop=True</span></code> indicates that we don’t want to keep the previous index.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="steps-for-the-hypothesis-test">
+<h2>Steps for the hypothesis test<a class="headerlink" href="#steps-for-the-hypothesis-test" title="Permalink to this heading">#</a></h2>
+<section id="hypotheses">
+<h3>1. Hypotheses<a class="headerlink" href="#hypotheses" title="Permalink to this heading">#</a></h3>
+<p>Two claims:</p>
+<ol class="arabic simple">
+<li><p>There is no difference in the mean weight between fertilizers A and B.  This is called the null hypothesis.</p></li>
+<li><p>There is no difference in the mean weight between fertilizers A and B.  This is called the alternative hypothesis.</p></li>
+</ol>
+</section>
+<section id="test-statistic">
+<h3>2. Test statistic<a class="headerlink" href="#test-statistic" title="Permalink to this heading">#</a></h3>
+<p>The test statistic is a number, calculated from the data, that captures what we’re interested in.</p>
+<p>What would be a useful test statistic for this study?  1.833 (<code class="docutils literal notranslate"><span class="pre">obs_diff</span></code>)</p>
+</section>
+<section id="simulate-what-the-null-hypothesis-predicts-will-happen">
+<h3>3. Simulate what the null hypothesis predicts will happen<a class="headerlink" href="#simulate-what-the-null-hypothesis-predicts-will-happen" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>If the null hypothesis is true then the weight of tomatoes for each plant will be the same regardless of how they are labeled. That means we can randomly shuffle the labels and the mean difference should be close to 0.</p></li>
+</ul>
+<p>Assume that there is no difference in mean weight between A and B (i.e., the null hypothesis is true).  Now, consider the following <strong>thought experiment (we don’t actually do this, this is a model for the data)</strong>:</p>
+<ul class="simple">
+<li><p>Imagine we have 5 playing cards labelled <code class="docutils literal notranslate"><span class="pre">A</span></code> and 6 cards labelled <code class="docutils literal notranslate"><span class="pre">B</span></code>.</p></li>
+<li><p>Shuffle the cards …</p></li>
+<li><p>Assign the cards to the 11 plants then calculate the mean weight difference between <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>.  This is one simulated value of the test statistic.</p></li>
+<li><p>Shuffle the cards again …</p></li>
+<li><p>Assign the cards to the 11 plants then calculate the mean weight difference between <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code>.  This is second simulated value of the test statistic.</p></li>
+<li><p>Continue shuffling, assigning , and computing the mean difference.</p></li>
+</ul>
+</section>
+</section>
+<section id="simulating-what-the-null-hypothesis-predicts">
+<h2>Simulating what the null hypothesis predicts<a class="headerlink" href="#simulating-what-the-null-hypothesis-predicts" title="Permalink to this heading">#</a></h2>
+<p>Let’s assume the null hypothesis is true and simulate what the null hypothesis predicts.</p>
+<section id="step-1">
+<h3>Step 1<a class="headerlink" href="#step-1" title="Permalink to this heading">#</a></h3>
+<p>Randomly shuffle the assignment of fertilizers to plants.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fert_sim</span> <span class="o">=</span> <span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fert_sim</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2">
+<h3>Step 2<a class="headerlink" href="#step-2" title="Permalink to this heading">#</a></h3>
+<p>Compute the mean difference between fertilizers A and B.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_A</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fert_sim</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">mean_B</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fert_sim</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">sim_diff</span> <span class="o">=</span> <span class="n">mean_B</span> <span class="o">-</span> <span class="n">mean_A</span>
+
+<span class="n">sim_diff</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3">
+<h3>Step 3<a class="headerlink" href="#step-3" title="Permalink to this heading">#</a></h3>
+<p>Repeat Steps 1 and 2 a large number of times (e.g., 5000) to get the distribution of mean differences.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulated_diffs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="n">fert_sim</span> <span class="o">=</span> <span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">mean_A</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fert_sim</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">mean_B</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fert_sim</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">sim_diff</span> <span class="o">=</span> <span class="n">mean_B</span> <span class="o">-</span> <span class="n">mean_A</span>
+    <span class="n">simulated_diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sim_diff</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">simulated_diffs</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">12.2</span><span class="p">,</span> <span class="mf">13.8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">obs_diff</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1150</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># a vertical line</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">obs_diff</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span>              <span class="c1"># an arrowhead</span>
+<span class="n">obs_diff</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The histogram above shows the randomization distribution with the observed difference as the black line.</p></li>
+<li><p>What proportion of the simulated differences are “as unusual as or more than” the observed mean difference of 1.833 assuming the null hypothesis of 0 difference?  This is known as the <strong>p-value</strong>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulated_diffs_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">simulated_diffs</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">simulated_diffs_series</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">12.2</span><span class="p">,</span> <span class="mf">13.8</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">simulated_diffs_series</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">simulated_diffs_series</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">obs_diff</span><span class="p">)],</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">12.2</span><span class="p">,</span> <span class="mf">13.8</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">obs_diff</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1150</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="n">obs_diff</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1150</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="n">right_extreme_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">simulated_diffs_series</span> <span class="o">&gt;=</span> <span class="n">obs_diff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">left_extreme_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">simulated_diffs_series</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">obs_diff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+
+<span class="n">all_extreme</span> <span class="o">=</span> <span class="n">right_extreme_count</span> <span class="o">+</span> <span class="n">left_extreme_count</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number of simulated differences as far or further away from 0 difference as the observed mean difference is:&quot;</span><span class="p">,</span> <span class="n">all_extreme</span><span class="p">)</span>
+
+<span class="n">pvalue</span> <span class="o">=</span> <span class="n">all_extreme</span> <span class="o">/</span> <span class="mi">5000</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The p-value is:&quot;</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4">
+<h3>Step 4<a class="headerlink" href="#step-4" title="Permalink to this heading">#</a></h3>
+<p>Interpret the results.</p>
+<p>Assuming that there is no difference in the mean tomato plant weights between A and B, 62% of simulations resulted in the absolute mean difference between the two fertilizers as large as or larger than the observed mean difference of 1.833.</p>
+<p>Therefore, there is little reason to doubt the null hypothesis that fertilizers produce similar yields.</p>
+<p><strong>Exercise</strong></p>
+<p>Suppose that in a similar study of two fertilizers effect on yield of tomatoes a similar simulation of 5000 yielded that 10 simulated absolute differences were greater than the observed difference (of 1.833).  How would this change your interpretation of the results?</p>
+<p><strong>Try on your own exercise:</strong></p>
+<p>Modify the simulation so that you compare the difference in medians instead of the difference in means.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hint: you can compute the observed difference as below:</span>
+<span class="n">med_A_obs</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span> 
+<span class="n">med_B_obs</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+
+<span class="n">med_B_obs</span> <span class="o">-</span> <span class="n">med_A_obs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What is the p-value for the case of Robert Swain?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sim_counts</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Count in random sample&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The simulated data is based on the assumption that the panel was selected fairly — the null hypothesis.</p></li>
+<li><p>The observed data contained 8 black men out of 100 panel members.</p></li>
+<li><p>How many of the simulated values were as extreme or more than 8?</p></li>
+</ul>
+</section>
+</section>
+<section id="are-mammals-are-larger-or-smaller-than-birds">
+<h2>Are mammals are larger or smaller than birds?<a class="headerlink" href="#are-mammals-are-larger-or-smaller-than-birds" title="Permalink to this heading">#</a></h2>
+<p>We want to use the birds and mammals common in the IUCN and Amniote Data files. Let’s read them in.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">animal_iucn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;animal_iucn.csv&quot;</span><span class="p">)</span>
+<span class="n">amniote_db</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;amniote_Database_Aug_2015.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">animal_iucn</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">animal_iucn</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">amniote_db</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">amniote_db</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="merge-iucn-and-amniote-dataframes">
+<h2>Merge IUCN and Amniote DataFrames<a class="headerlink" href="#merge-iucn-and-amniote-dataframes" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We want to merge <code class="docutils literal notranslate"><span class="pre">Amniote_db</span></code> and <code class="docutils literal notranslate"><span class="pre">animal_iucn</span></code></p></li>
+<li><p>What column can we merge on?</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">'scientificName'</span></code> column in <code class="docutils literal notranslate"><span class="pre">animal_iucn</span></code> can be found in <code class="docutils literal notranslate"><span class="pre">Amniote_db</span></code> if we concatenate <code class="docutils literal notranslate"><span class="pre">'genus'</span></code>, <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'species'</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code> concatenates (links) strings together in python.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># an example of of concatenation</span>
+
+<span class="n">string1</span> <span class="o">=</span> <span class="s2">&quot;IUCN&quot;</span>
+
+<span class="n">string3</span> <span class="o">=</span> <span class="s2">&quot;is an interesting&quot;</span>
+
+<span class="n">string4</span> <span class="o">=</span> <span class="s2">&quot;dataset.&quot;</span>
+
+<span class="n">space</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
+
+<span class="n">string1</span> <span class="o">+</span> <span class="n">space</span> <span class="o">+</span> <span class="n">string3</span> <span class="o">+</span> <span class="n">space</span> <span class="o">+</span> <span class="n">string4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s create a column called <code class="docutils literal notranslate"><span class="pre">&quot;sciname&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">Amniote_db</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sciname</span> <span class="o">=</span> <span class="n">amniote_db</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">amniote_db</span><span class="p">[</span><span class="s2">&quot;species&quot;</span><span class="p">]</span>
+<span class="n">amniote_db</span><span class="p">[</span><span class="s2">&quot;sciname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sciname</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amniote_db</span><span class="p">[[</span><span class="s2">&quot;genus&quot;</span><span class="p">,</span> <span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="s2">&quot;sciname&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="merge">
+<h3><code class="docutils literal notranslate"><span class="pre">merge</span></code><a class="headerlink" href="#merge" title="Permalink to this heading">#</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">merge</span></code> function to join <code class="docutils literal notranslate"><span class="pre">Amniote_iucn</span></code> and <code class="docutils literal notranslate"><span class="pre">animal_iucn</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amniote_iucn</span> <span class="o">=</span> <span class="n">amniote_db</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">animal_iucn</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;sciname&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;scientificName&quot;</span><span class="p">)</span>
+<span class="n">amniote_iucn</span><span class="p">[[</span><span class="s2">&quot;scientificName&quot;</span><span class="p">,</span> <span class="s2">&quot;sciname&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We want to compare body mass between <code class="docutils literal notranslate"><span class="pre">&quot;Aves&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Mammalia&quot;</span></code>.</p></li>
+<li><p>So, let’s create a DataFrame with only these two classes.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aves</span> <span class="o">=</span> <span class="n">amniote_iucn</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Aves&quot;</span>
+<span class="n">mam</span> <span class="o">=</span> <span class="n">amniote_iucn</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Mammalia&quot;</span>
+
+<span class="c1"># select aves or mammals</span>
+<span class="n">amniote_iucn_aves_mam</span> <span class="o">=</span> <span class="n">amniote_iucn</span><span class="p">[</span><span class="n">aves</span> <span class="o">|</span> <span class="n">mam</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amniote_iucn_aves_mam</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The observed weight distributions in the two groups is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amniote_iucn_aves_mam</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">)[</span><span class="s2">&quot;adult_body_mass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Extract the group means.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_table</span> <span class="o">=</span> <span class="n">amniote_iucn_aves_mam</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">)[</span><span class="s2">&quot;adult_body_mass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_table</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compute the observed difference.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observed_mean_difference</span> <span class="o">=</span> <span class="n">mean_table</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean_table</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">observed_mean_difference</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>So, mammals are on average 132,658 grams larger than aves.</p></li>
+<li><p>Could this difference be due to the sample of mammmals and aves in our data?  In other words, is this due to chance?</p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2>Steps for the hypothesis test<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<section id="id2">
+<h3>1. Hypotheses<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Two claims:</p>
+<ol class="arabic simple">
+<li><p>There is no difference in the mean body weight between mammals and Aves. This is the null hypothesis.</p></li>
+<li><p>There is a difference in the mean body weight between mammals and Aves. This is called the alternative hypothesis.</p></li>
+</ol>
+</section>
+<section id="id3">
+<h3>2. Test statistic<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>The test statistic is a number, calculated from the data, that captures what we’re interested in.</p>
+<p>What would be a useful test statistic for this study?  <code class="docutils literal notranslate"><span class="pre">observed_mean_difference</span></code></p>
+</section>
+<section id="id4">
+<h3>3. Simulate what the null hypothesis predicts will happen<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>If the null hypothesis is true then the mean weight in mammals should be the same as aves.  This implies that we can randomly shuffle the labels and the mean difference should be close to 0.</p></li>
+<li><p>Imagine we have 8644 playing cards labelled <code class="docutils literal notranslate"><span class="pre">Aves</span></code> and 4490 cards labelled <code class="docutils literal notranslate"><span class="pre">Mammalia</span></code>.</p></li>
+<li><p>Shuffle the cards …</p></li>
+<li><p>Assign the cards to the 13,134 animals then calculate the mean difference between <code class="docutils literal notranslate"><span class="pre">Aves</span></code> and <code class="docutils literal notranslate"><span class="pre">Mammalia</span></code>.  This is one simulated value of the test statistic.</p></li>
+<li><p>Shuffle the cards again …</p></li>
+<li><p>Assign the cards to the 13,134 animals then calculate the mean difference between <code class="docutils literal notranslate"><span class="pre">Aves</span></code> and <code class="docutils literal notranslate"><span class="pre">Mammalia</span></code>.  This is one simulated value of the test statistic.</p></li>
+<li><p>Continue shuffling, assigning to neigbourhoods, and computing the mean difference.</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>Simulating what the null hypothesis predicts<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<section id="id6">
+<h3>Step 1<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<p>Randomly shuffle the assignment of <code class="docutils literal notranslate"><span class="pre">Aves</span></code> and <code class="docutils literal notranslate"><span class="pre">Mammalia</span></code> to animals</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avemam_sim</span> <span class="o">=</span> <span class="n">amniote_iucn_aves_mam</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">avemam_sim</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>Step 2<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<p>Calculate the mean difference for the shuffled labels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ave_mean_sim</span> <span class="o">=</span> <span class="n">amniote_iucn_aves_mam</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">avemam_sim</span> <span class="o">==</span> <span class="s2">&quot;Aves&quot;</span><span class="p">,</span> <span class="s2">&quot;adult_body_mass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">mam_mean_sim</span> <span class="o">=</span> <span class="n">amniote_iucn_aves_mam</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">avemam_sim</span> <span class="o">==</span> <span class="s2">&quot;Mammalia&quot;</span><span class="p">,</span> <span class="s2">&quot;adult_body_mass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">sim_diff</span> <span class="o">=</span> <span class="n">Mam_mean_sim</span> <span class="o">-</span> <span class="n">Ave_mean_sim</span>
+
+<span class="n">sim_diff</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id8">
+<h3>Step 3<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<p>Repeat Steps 1 and 2 a large number of times (e.g., 10000) to get the distribution of mean differences.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulated_diffs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">avemam_sim</span> <span class="o">=</span> <span class="n">amniote_iucn_aves_mam</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># shuffling bird + mammal labels</span>
+    <span class="n">ave_mean_sim</span> <span class="o">=</span> <span class="n">amniote_iucn_aves_mam</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">avemam_sim</span> <span class="o">==</span> <span class="s2">&quot;Aves&quot;</span><span class="p">,</span> <span class="s2">&quot;adult_body_mass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># calculate mean bird weight</span>
+    <span class="n">mam_mean_sim</span> <span class="o">=</span> <span class="n">amniote_iucn_aves_mam</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">avemam_sim</span> <span class="o">==</span> <span class="s2">&quot;Mammalia&quot;</span><span class="p">,</span> <span class="s2">&quot;adult_body_mass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># mean mammal weight</span>
+    <span class="n">sim_diff</span> <span class="o">=</span> <span class="n">mam_mean_sim</span> <span class="o">-</span> <span class="n">ave_mean_sim</span> <span class="c1"># difference in simulated mammal and bird weight</span>
+    <span class="n">simulated_diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sim_diff</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">simulated_diffs</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;teal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">observed_mean_difference</span> <span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;pink&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The histogram above shows the randomization distribution with the observed difference as the pink line.</p></li>
+<li><p>What proportion of the simulated differences are larger than the observed mean difference of 35829.4?  This is known as the <strong>p-value</strong>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulated_diffs_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">simulated_diffs</span><span class="p">)</span>
+
+<span class="n">right_extreme_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">simulated_diffs_series</span> <span class="o">&gt;=</span> <span class="n">observed_mean_difference</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">left_extreme_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">simulated_diffs_series</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">observed_mean_difference</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+
+<span class="n">all_extreme</span> <span class="o">=</span> <span class="n">right_extreme_count</span> <span class="o">+</span> <span class="n">left_extreme_count</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number of simulated differences greater than the observed difference is:&quot;</span><span class="p">,</span> <span class="n">all_extreme</span><span class="p">)</span>
+
+<span class="n">pvalue</span> <span class="o">=</span> <span class="n">all_extreme</span> <span class="o">/</span> <span class="mi">10000</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The p-value is:&quot;</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id9">
+<h3>Step 4<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<p>Interpret the results.</p>
+<p>Assuming that there is no difference in the mean weights between Aves and Mammalia, 0% of simulations had as large or larger value than the observed mean difference of 35829.4.  Therefore, there is reason to doubt the null hypothesis that one group is larger than the other.</p>
+<p><em>Does the biological class <strong>cause</strong> a higher weight in Mammalia?</em></p>
+</section>
+</section>
+<section id="causality">
+<h2>Causality<a class="headerlink" href="#causality" title="Permalink to this heading">#</a></h2>
+<p>Imagine…</p>
+<div class="grid-row">
+<div class="col-sm-7">
+<ul>
+<li>You have a headache.</li>
+</ul>
+</div>
+<div class="col-sm-5"><img src="headache.svg" />
+</div>
+<div class="grid-row">
+<div class="col-sm-7">
+<ul>
+<li>You take an Aspirin at 10:00 to relieve your pain.</li>
+<li>Your pain goes away after <strong>30 minutes</strong>.</li>
+</ul>
+</div>
+<div class="col-sm-5"><img src="pill.svg" />
+</div>
+<div class="grid-row">
+<div class="col-sm-7">
+<ul>
+<li>Now, you go back in time to 10:00 and you don't take an Aspirin.</li>
+<li>Your pain goes away after 48 minutes.</li>
+</ul>
+</div>
+<div class="col-sm-5"><img src="clock.svg" />
+</div>
+<p>The <strong>causal effect</strong> of taking an Aspirin is 18 minutes (48 minutes - 30 minutes).</p>
+<p><img alt="" src="../../../_images/causal.jpeg" /></p>
+</section>
+<section id="potential-outcomes-and-randomized-control-trials">
+<h2>Potential outcomes and randomized control trials<a class="headerlink" href="#potential-outcomes-and-randomized-control-trials" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Establishing causality involves comparing these <strong>potential outcomes</strong>.</p></li>
+<li><p>The problem is that we can never observe both taking an Aspirin and not taking as Aspirin (in the same person at the same time under the same conditions).</p></li>
+<li><p>A close approximation to comparing potential outcomes is to compare two groups of people that are similar on average (age, sex, income, etc.) except one group is allowed to take Aspirin after a headache and the other group takes a fake Aspirin (sugar pill/placebo) after a headache.  This is an example of a randomized control trial.</p></li>
+<li><p>Then the mean difference between time to pain relief should be due to Aspirin and not other factors related to why people may or may not take an Aspirin.</p></li>
+</ul>
+</section>
+<section id="review">
+<h2>Review<a class="headerlink" href="#review" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The tomato plant example is an example of a test where the conclusion is indeterminate. The observed difference between groups is plausible under the model that the fertilizer had no effect on the weight of tomatoes.</p></li>
+<li><p>If the null hypothesis is true then the two results from each particular pot will be exchangeable.  But, this hypothesis could be false if, say, some of the plants were diseased.</p></li>
+<li><p>The example investigating the weight difference between two biological classes provided strong evidence for difference in weights; but the hypothesis analysis doesn’t prove a cause-and-effect relationship.</p></li>
+<li><p>It would be more reasonable to believe another factor/attribute not studied in the analysis <em>caused</em> the difference in weights AND labelling of the biological classes.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week09/lecture"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../week08/homework/Homework_8.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 8: Investigating Mammalian Fecundity and Conservation using Filtering, Joins, and Arithmetic</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#march-12-2025">March 12, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recall-u-s-covid-statistics">Recall: U.S. COVID statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-we-view-data">How we view data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#population-vs-sample">Population vs. sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-vs-mean">Parameter vs. mean</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#does-neanderthal-genes-increase-or-decrease-the-chance-of-experiencing-a-servere-covid-19-case">Does Neanderthal genes increase or decrease the chance of experiencing a servere COVID-19 case?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#we-use-statistics-to-make-our-best-guess-about-parameters">We use statistics to make our best guess about parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-we-make-decisions-based-on-data">How we make decisions based on data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing">Hypothesis Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-alternative-hypotheses-test-statistic-and-p-value">Null &amp; alternative hypotheses, test statistic, and p-value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-we-interpret-a-p-value">How do we interpret a p-value?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goals-of-data-science">Goals of Data Science</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jury-selection">Jury Selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-model-of-random-selection">A model of random selection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-rolling-a-six-sided-die-20-times">Example 1: Rolling a six-sided die 20 times</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-rolling-a-loaded-six-side-100-times-more-likely-to-land-on-6-repeated-3-times">Example 2: Rolling a loaded six-side 100 times more likely to land on 6 - repeated 3 times</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-one-value">Simulate one value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-multiple-values">Simulate multiple values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram">Histogram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-likely-was-mr-swain-s-experience">How likely was Mr. Swain’s experience?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-of-the-data-analysis">Conclusion of the data analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-two-samples">Comparing two samples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-plant-fertilizers">Comparing plant fertilizers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-for-the-hypothesis-test">Steps for the hypothesis test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypotheses">1. Hypotheses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistic">2. Test statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-what-the-null-hypothesis-predicts-will-happen">3. Simulate what the null hypothesis predicts will happen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-what-the-null-hypothesis-predicts">Simulating what the null hypothesis predicts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1">Step 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2">Step 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3">Step 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4">Step 4</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#are-mammals-are-larger-or-smaller-than-birds">Are mammals are larger or smaller than birds?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-iucn-and-amniote-dataframes">Merge IUCN and Amniote DataFrames</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merge"><code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Steps for the hypothesis test</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. Hypotheses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. Test statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3. Simulate what the null hypothesis predicts will happen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Simulating what the null hypothesis predicts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Step 1</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Step 2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Step 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Step 4</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causality">Causality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-outcomes-and-randomized-control-trials">Potential outcomes and randomized control trials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review">Review</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Homework 9: Hypothesis Testing &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week09/homework/Homework_9';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="EEB125 Lab 9: Final Project Proposal" href="../lab/Lab_9.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_proposal.html">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_instructions.html">Final Project Instructions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week08/lecture/lecture8.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week08/homework/Homework_8.html">Week 8 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture9.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab/Lab_9.html">Week 9 Homework</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 9 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week09/homework/Homework_9.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week09/homework/Homework_9.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Homework 9: Hypothesis Testing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-section">Introduction section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0">Step 0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1">Step 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2">Step 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-section">Methods section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-section">Computation section</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-create-a-column-indicating-whether-a-quadrat-has-a-greater-or-equal-percentage-of-coral-surface-area-as-non-coral-surface-area">Step 1: Create a column indicating whether a quadrat has a greater or equal percentage of coral surface area as non-coral surface area</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-create-a-function-to-calculate-mean-differences-in-temperature-by-group">Step 2: Create a function to calculate mean differences in temperature by group</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-write-a-helper-function-that-shuffles-our-labels">Step 3: Write a helper function that shuffles our labels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-simulating-our-sample-means">Step 4: Simulating our sample means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-calculating-our-p-value">Step 5: Calculating our p-value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-visualizing-our-results">Step 6: Visualizing our results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-9-hypothesis-testing">
+<h1>Homework 9: Hypothesis Testing<a class="headerlink" href="#homework-9-hypothesis-testing" title="Permalink to this heading">#</a></h1>
+<section id="logistics">
+<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
+<p><strong>Due date</strong>: The homework is due 11:59 pm on Tuesday, March 18.</p>
+<p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
+To submit your work:</p>
+<ol class="arabic simple">
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_9.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../../../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>hw9</strong> assignment. (See <a class="reference internal" href="../../../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)
+All homeworks will take place in a Jupyter notebook (like this one). When you are done, you will download this notebook and submit it to MarkUs.
+We’ve incuded submission instructions at the end of this notebook.</p></li>
+</ol>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>For this week’s homework, we will investigate the predominance of coral presence in relationship to temperature. We will analyze data coming from six sites within a coral reef French Polinesia, from 2005 to 2022. Throughout these sites, with a quadrat sampling design along transects, percentage cover of corals, macroalgae, microalgae and sand were estimated across different depths and temperatures.</p>
+</section>
+<section id="question">
+<h2>Question<a class="headerlink" href="#question" title="Permalink to this heading">#</a></h2>
+<p><em>General Question: Do corals prefer warmer temperatures or colder temperatures?</em></p>
+<p><em>Specific Question: When comparing quadrats of high coral percentage and low coral percentage, is there a difference in the mean temperature between the two groups?</em></p>
+</section>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<p>You will be creating and submitting a data story answering a data science question. You will be required to submit your work in the format which has complete sections for <em>Introduction</em>, <em>Data</em>, <em>Methods</em>, <em>Computation</em>, and <em>Conclusion</em>.</p>
+<p>In this homework, you will:</p>
+<ul class="simple">
+<li><p>Create a data story in a notebook exploring the question.</p></li>
+<li><p>Work with the Moorea Coral reef long-term ecological research dataset to investigate changes in biodiversity as temperature changes.</p></li>
+<li><p>Define a function that resamples from our original dataset and randomly shuffles treatment assignment</p></li>
+<li><p>Create and modify for loops and functions to run sampling simulations</p></li>
+<li><p>Visualize and analyze sampling distributions via histograms</p></li>
+</ul>
+</section>
+<section id="introduction-section">
+<h2>Introduction section<a class="headerlink" href="#introduction-section" title="Permalink to this heading">#</a></h2>
+<p>This should introduce the question being explored in a sentence. <strong>(1 mark)</strong></p>
+</section>
+<section id="data-section">
+<h2>Data section<a class="headerlink" href="#data-section" title="Permalink to this heading">#</a></h2>
+<p>The Data part of your notebook should read the raw data, extract a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> containing the important columns, rename the columns, and filter out missing values.</p>
+<p>You might find it helpful to name intermediate values in your algorithms. That way you can examine them to make sure they have the type you expect and that they look like what you expect. Very helpful when debugging!</p>
+<p>To start, replace the <code class="docutils literal notranslate"><span class="pre">...</span></code> with your student number in the code below.
+Then, run the cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please fill in this cell with your student number (as an int)</span>
+<span class="n">student_number</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">student_number</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;Did you fill in the student_number variable correctly?&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-0">
+<h2>Step 0<a class="headerlink" href="#step-0" title="Permalink to this heading">#</a></h2>
+<p>Create the following pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s:</p>
+<p>a. <code class="docutils literal notranslate"><span class="pre">corals_data</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> created by reading in the <code class="docutils literal notranslate"><span class="pre">LTER_data.csv</span></code> file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+<span class="n">corals_data</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-1">
+<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this heading">#</a></h2>
+<p>Apply the following data cleaning operations to <code class="docutils literal notranslate"><span class="pre">corals_data</span></code> to create another pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> named <code class="docutils literal notranslate"><span class="pre">corals_clean</span></code>. Your <code class="docutils literal notranslate"><span class="pre">corals_data</span></code> should contain the original raw data from reading the <code class="docutils literal notranslate"><span class="pre">LTER_data.csv</span></code> file.</p>
+<ul>
+<li><p>Convert column data types using <code class="docutils literal notranslate"><span class="pre">DataFrame.convert_dtypes()</span></code>.</p></li>
+<li><p>Convert column names to the ‘snake case’ format using <code class="docutils literal notranslate"><span class="pre">&lt;columns&gt;.str.lower()</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;columns&gt;.str.replace()</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;columns&gt;.str.strip()</span></code>. <a class="reference external" href="https://en.wikipedia.org/wiki/Snake_case">Snake cases</a> uses fully lowercase letters and underscores instead of spaces. It is the <a class="reference external" href="https://peps.python.org/pep-0008/#function-and-variable-names">recommended naming convention</a> for Python.  For example, if we have the column name: “Tomo is a Great prof  “, the snake case equivalent would be ‘tomo_is_a_great_prof’. Furthermore, we will replace the following symbols to the corresponding symbols/text:</p>
+<ul class="simple">
+<li><p>” ” with “_”,</p></li>
+<li><p>“%” to “percent”</p></li>
+<li><p>“metres” to “m”</p></li>
+<li><p>“celsius” to “c”</p></li>
+<li><p>“temperature” to “temp”</p></li>
+</ul>
+<p>Check that your column names are correct using <code class="docutils literal notranslate"><span class="pre">list(corals_clean.columns)</span></code>.</p>
+</li>
+</ul>
+<p><em><strong>Note</strong>: For this data the missing data has already been converted to <code class="docutils literal notranslate"><span class="pre">NA</span></code>s, so don’t need to do any replacing of values. But keep in mind that when working on your final project or with any other future data, you might need a step to convert <code class="docutils literal notranslate"><span class="pre">-999</span></code> (or some other convention) to <code class="docutils literal notranslate"><span class="pre">NA</span></code>s.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here; you may add additional code cells to check intermediate steps</span>
+<span class="n">corals_clean</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">co_columns</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># extract current column names</span>
+
+<span class="n">co_columns_clean</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># clean the column names</span>
+
+<span class="n">corals_clean</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">co_columns_clean</span> <span class="c1"># assign the cleaned column names</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check that you have the correct column names</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">corals_clean</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2">
+<h2>Step 2<a class="headerlink" href="#step-2" title="Permalink to this heading">#</a></h2>
+<p>Select the columns relevant to this week’s analysis. Those are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">site</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">year</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temp_c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">corals_percent</span></code></p></li>
+</ul>
+<p>Name the final <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> <code class="docutils literal notranslate"><span class="pre">corals_select_data</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="methods-section">
+<h2>Methods section<a class="headerlink" href="#methods-section" title="Permalink to this heading">#</a></h2>
+<p>Here we are describing all steps of the Computation Section for you.</p>
+<ol class="arabic">
+<li><p>Create a copy of <code class="docutils literal notranslate"><span class="pre">corals_select_data</span></code> named <code class="docutils literal notranslate"><span class="pre">corals_labelled</span></code>; this steps is already written for you. Create a column named <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code> indicating whether a quadrat is represented by a greater surface area of corals than non-corals in the <code class="docutils literal notranslate"><span class="pre">corals_labelled</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. Assume a quadrat with <strong>50% or more</strong> of its surface area composed of coral species is considered a quadrat having a greater surface area of corals.</p>
+<p><em>Hint: Think about what column from <code class="docutils literal notranslate"><span class="pre">corals_select_data</span></code> provides us with this information, and the values in this column corresponding to a ‘greater surface area of corals over non-corals’.</em></p>
+</li>
+<li><p>Create a function that computes the difference between:</p>
+<ul class="simple">
+<li><p>the mean temperature of all quadrats with a larger surface area of non-corals; and</p></li>
+<li><p>the mean temperature of all quadrats with a larger surface area of corals.</p></li>
+</ul>
+<p>Furthermore, using this function, compute this difference as observed in our data.</p>
+</li>
+<li><p>Randomly shuffle the labels (values) corresponding to greater or lower coral percent cover. Design a function that re-samples the labels for the column created in 1., and then re-assigns it to that column. In Step 4, we will take multiple random re-samples.</p></li>
+<li><p>Complete a for loop that re-samples our data using the function defined in Step 3, then compute the mean difference temperature between quadrats with greater coral percentage and quadrats with lower coral percentage.</p></li>
+<li><p>Visualize our results in Step 4, with a histogram.</p></li>
+<li><p>Calculate the p-value, from our results in Step 4.</p></li>
+</ol>
+</section>
+<section id="computation-section">
+<h2>Computation section<a class="headerlink" href="#computation-section" title="Permalink to this heading">#</a></h2>
+<section id="step-1-create-a-column-indicating-whether-a-quadrat-has-a-greater-or-equal-percentage-of-coral-surface-area-as-non-coral-surface-area">
+<h3>Step 1: Create a column indicating whether a quadrat has a greater or equal percentage of coral surface area as non-coral surface area<a class="headerlink" href="#step-1-create-a-column-indicating-whether-a-quadrat-has-a-greater-or-equal-percentage-of-coral-surface-area-as-non-coral-surface-area" title="Permalink to this heading">#</a></h3>
+<p><strong>SOLUTION</strong></p>
+<p>Add a new column to <code class="docutils literal notranslate"><span class="pre">corals_labelled</span></code> named <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code> that has value <code class="docutils literal notranslate"><span class="pre">True</span></code> if the quadrat has a percentage surface area of corals greater than or equal to 50%, or <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corals_labelled</span> <span class="o">=</span> <span class="n">corals_select_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># this creates a copy of corals_select_data</span>
+<span class="c1"># Write your code below</span>
+
+
+<span class="c1"># Verify the new column</span>
+<span class="n">corals_labelled</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-create-a-function-to-calculate-mean-differences-in-temperature-by-group">
+<h3>Step 2: Create a function to calculate mean differences in temperature by group<a class="headerlink" href="#step-2-create-a-function-to-calculate-mean-differences-in-temperature-by-group" title="Permalink to this heading">#</a></h3>
+<p>We will create a <em>helper function</em> that computes the difference in mean temperature between quadrats with lower coral surface area and greater coral surface area. A helper function is a function that performs part of the computation of another function. Helper functions are used to make your programs easier to read by giving descriptive names to computations.</p>
+<p>In the following code cell, define a helper function as specified below.</p>
+<ul class="simple">
+<li><p>Function name: <code class="docutils literal notranslate"><span class="pre">compute_mean_diff_temperature_by_coral_sa</span></code>.</p></li>
+<li><p>Input argument:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> containing information about the coral surface area (<code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code>) AND temperature by quadrat.</p></li>
+</ol>
+</li>
+<li><p>Tasks:</p>
+<ol class="arabic simple">
+<li><p>Compute the mean temperature of all quadrats with greater surface area of corals based on the value of <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code>.</p></li>
+<li><p>Compute the mean temperature of all quadrats with lower surface area of corals based on the value of <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code>.</p></li>
+<li><p>Compute the difference in the mean temperatures as the value from step 2 minus the value from step 1.</p></li>
+</ol>
+</li>
+<li><p>Output: Return the difference in the temperature means quadrats with a lower coral surface area and quadrats with a greater coral surface area.</p></li>
+</ul>
+<p>Finally, calculate the observed difference in mean temperature between quadrats with lower coral surface area and greater coral surface area by applying the function the <code class="docutils literal notranslate"><span class="pre">corals_labelled</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. The calculated result should be a <code class="docutils literal notranslate"><span class="pre">float</span></code>, and you should name it <code class="docutils literal notranslate"><span class="pre">observed_diff_in_mean_temperature</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+
+
+<span class="c1"># Verify the result</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">observed_diff_in_mean_temperature</span><span class="p">))</span> <span class="c1"># print the data type</span>
+<span class="n">observed_diff_in_mean_temperature</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-write-a-helper-function-that-shuffles-our-labels">
+<h3>Step 3: Write a helper function that shuffles our labels<a class="headerlink" href="#step-3-write-a-helper-function-that-shuffles-our-labels" title="Permalink to this heading">#</a></h3>
+<p>We will create another helper function that re-shuffles the labels (values) found in the column <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code>. In the following code cell, define a helper function as specified below.</p>
+<ul class="simple">
+<li><p>Function name: <code class="docutils literal notranslate"><span class="pre">shuffle_labels</span></code>.</p></li>
+<li><p>Input argument:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> containing information about the coral surface area (<code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code>) AND temperature by quadrat.</p></li>
+</ol>
+</li>
+<li><p>Tasks:</p>
+<ol class="arabic simple">
+<li><p>Shuffle the labelled values in <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code>.</p></li>
+</ol>
+</li>
+<li><p>Output: Return the shuffled labelled values. The output will be a pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Complete the function body below (replace the ... with Python code).</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">shuffle_labels</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+
+    <span class="o">...</span>
+        
+    <span class="k">return</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-simulating-our-sample-means">
+<h3>Step 4: Simulating our sample means<a class="headerlink" href="#step-4-simulating-our-sample-means" title="Permalink to this heading">#</a></h3>
+<p>Here, we will write code for the machinery of our hypothesis test. Specifically, we will simulate samples under assumption of the null hypothesis - that is, we will generate a sampling distribution of the difference in mean temperature between our two groups of quadrats.</p>
+<p>Write code to accomplish the following:</p>
+<ul class="simple">
+<li><p>Create a copy of <code class="docutils literal notranslate"><span class="pre">corals_labelled</span></code> named <code class="docutils literal notranslate"><span class="pre">corals_shuffled_data</span></code>; this steps is already written for you.</p></li>
+<li><p>Initialize a new list that will be used to store the sample test statistics we will compute. Name this list <code class="docutils literal notranslate"><span class="pre">resample_test_statistics</span></code>.</p></li>
+<li><p>In a for loop, re-sample the labels of <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code> from the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> <code class="docutils literal notranslate"><span class="pre">corals_shuffled_data</span></code> 1000 times. Assign these shuffled labels to the column <code class="docutils literal notranslate"><span class="pre">is_corals_percent_gte_50</span></code>.</p></li>
+<li><p>Call the function you created in Step 2 to calculate the difference in mean temperature between quadrats with low and high coral surface area. Name this value <code class="docutils literal notranslate"><span class="pre">mean_diff</span></code>.</p></li>
+<li><p>Append your result, <code class="docutils literal notranslate"><span class="pre">mean_diff</span></code>, above to <code class="docutils literal notranslate"><span class="pre">resample_test_statistics</span></code>.</p></li>
+<li><p>Outside of the for loop, convert <code class="docutils literal notranslate"><span class="pre">resample_test_statistics</span></code> from a list to a <code class="docutils literal notranslate"><span class="pre">Series</span></code>.</p></li>
+</ul>
+<p>We will only autotest your final result, <code class="docutils literal notranslate"><span class="pre">resample_test_statistics</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following line of code uses your student number to set a random seed.</span>
+<span class="c1"># This ensures that every time you run this cell, you&#39;ll get the same result.</span>
+<span class="c1"># Do not modify this line of code!</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">student_number</span><span class="p">)</span>
+
+<span class="n">corals_shuffled_data</span> <span class="o">=</span> <span class="n">corals_labelled</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># this creates a copy of corals_labelled</span>
+
+<span class="c1"># Write your code here</span>
+
+
+<span class="c1"># Verify the result</span>
+<span class="n">resample_test_statistics</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-calculating-our-p-value">
+<h3>Step 5: Calculating our p-value<a class="headerlink" href="#step-5-calculating-our-p-value" title="Permalink to this heading">#</a></h3>
+<p>We can calculate a p-value by following the following steps:</p>
+<ul class="simple">
+<li><p>Take the absolute value of the elements of the <code class="docutils literal notranslate"><span class="pre">Series</span></code> from the previous step. We do this because we want to consider both tails of our sample distribution regardless of the sign of the observed value.</p></li>
+<li><p>Create a boolean <code class="docutils literal notranslate"><span class="pre">Series</span></code> where the entry is <code class="docutils literal notranslate"><span class="pre">True</span></code> if the absolute value of test statistic is geater than or equal to the absolute value of the observed mean difference, as calculated in Step 2.</p></li>
+<li><p>Finally, determine the probability by calculating the proportion of entries that are <code class="docutils literal notranslate"><span class="pre">True</span></code> in <code class="docutils literal notranslate"><span class="pre">resample_test_statistics_series</span></code>. Name your result <code class="docutils literal notranslate"><span class="pre">p_value</span></code>.</p></li>
+</ul>
+<p>We will only check the name <code class="docutils literal notranslate"><span class="pre">p_value</span></code> in the autotester.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
+
+
+<span class="c1"># Verify the result</span>
+<span class="n">p_value</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-6-visualizing-our-results">
+<h3>Step 6: Visualizing our results<a class="headerlink" href="#step-6-visualizing-our-results" title="Permalink to this heading">#</a></h3>
+<p>We don’t need a visualization to calculate our p-value, but it might help in illustrating whether our p-value makes sense. In one plot, plot the following three things:</p>
+<ul class="simple">
+<li><p>a histogram plotting the test statistics</p></li>
+<li><p>two vertical lines plotting the observed difference in mean temperature between quadrats of different groups (see lecture)</p></li>
+</ul>
+<p>The plots will be marked for completion - you can decide what parameters you’d like to play with, only the correct data needs to be passed to each plot. <strong>(1 mark)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>State the difference in mean temperature between quadrats with high coral surface area and those with low coral surface area. From your results, state the p-value, and give its interpretation. What conclusions can you make from the observed p-value? <strong>(2 marks)</strong></p>
+<p><strong>WRITE YOUR RESPONSE HERE.</strong></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week09/homework"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lab/Lab_9.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EEB125 Lab 9: Final Project Proposal</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-section">Introduction section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0">Step 0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1">Step 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2">Step 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-section">Methods section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-section">Computation section</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-create-a-column-indicating-whether-a-quadrat-has-a-greater-or-equal-percentage-of-coral-surface-area-as-non-coral-surface-area">Step 1: Create a column indicating whether a quadrat has a greater or equal percentage of coral surface area as non-coral surface area</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-create-a-function-to-calculate-mean-differences-in-temperature-by-group">Step 2: Create a function to calculate mean differences in temperature by group</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-write-a-helper-function-that-shuffles-our-labels">Step 3: Write a helper function that shuffles our labels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-simulating-our-sample-means">Step 4: Simulating our sample means</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-calculating-our-p-value">Step 5: Calculating our p-value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-visualizing-our-results">Step 6: Visualizing our results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

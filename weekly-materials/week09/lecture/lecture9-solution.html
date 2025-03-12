@@ -63,12 +63,12 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week09/lecture/lecture9';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week09/lecture/lecture9-solution';</script>
     <link rel="shortcut icon" href="../../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Week 9: Hypothesis Testing" href="lecture9-solution.html" />
-    <link rel="prev" title="Homework 8: Investigating Mammalian Fecundity and Conservation using Filtering, Joins, and Arithmetic" href="../../week08/homework/Homework_8.html" />
+    <link rel="next" title="Homework 9: Hypothesis Testing" href="../homework/Homework_9.html" />
+    <link rel="prev" title="Week 9: Hypothesis Testing" href="lecture9.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -208,8 +208,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Moon's Notebook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lecture9-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture9.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Moon's Notebook with Exercise Solutions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../homework/Homework_9.html">Week 9 Homework</a></li>
 </ul>
 
@@ -265,7 +265,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week09/lecture/lecture9.ipynb&branch=main" target="_blank"
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week09/lecture/lecture9-solution.ipynb&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onJupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -296,7 +296,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../../_sources/weekly-materials/week09/lecture/lecture9.ipynb" target="_blank"
+      <li><a href="../../../_sources/weekly-materials/week09/lecture/lecture9-solution.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -497,6 +497,21 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Large state mean: 12.094 vs. Small state mean: 13.838
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/0j/ybsv4ncn5w50v40vdh5jjlww0000gn/T/ipykernel_30080/2781715131.py:1: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+</pre></div>
+</div>
+</div>
 </div>
 <blockquote>
 <div><p>With <code class="docutils literal notranslate"><span class="pre">.loc[]</span></code> (and <code class="docutils literal notranslate"><span class="pre">.iloc[]</span></code>), you can access rows and columns at the same time. See <a class="reference external" href="https://pandas.pydata.org/pandas-docs/version/1.0/getting_started/intro_tutorials/03_subset_data.html">here</a> for more examples.</p>
@@ -620,6 +635,9 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/daef97b991f037a1ede929fb01a735964bd1c0b4e389e46baedf97e26f825de5.png" src="../../../_images/daef97b991f037a1ede929fb01a735964bd1c0b4e389e46baedf97e26f825de5.png" />
+</div>
 </div>
 <p>Assuming that Smarties claim is true (i.e., <span class="math notranslate nohighlight">\(\mu=6\)</span>), maybe 100 repeats of the experiment would look like this:</p>
 <div class="cell docutils container">
@@ -632,6 +650,9 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/792dd2e47c72d9d387235e78f96e10b5c1a0408dcc724b54c4851a306ed4f287.png" src="../../../_images/792dd2e47c72d9d387235e78f96e10b5c1a0408dcc724b54c4851a306ed4f287.png" />
+</div>
 </div>
 <p>The <em>hypothesis</em> is that <span class="math notranslate nohighlight">\(\mu=6\)</span>.</p>
 <p>Now, here is where our data (<span class="math notranslate nohighlight">\(\bar{y}=5\)</span>) falls, when we assume that Smarties claim is true (i.e., <span class="math notranslate nohighlight">\(\mu=6\)</span>).</p>
@@ -641,6 +662,9 @@ document.write(`
 <span class="n">dot_plot</span><span class="p">(</span><span class="n">red_smarties</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">observed</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/fa7e178dc88a40da6a67264aa19fa7123445bc19f467d44c72c93c8e0ead13d9.png" src="../../../_images/fa7e178dc88a40da6a67264aa19fa7123445bc19f467d44c72c93c8e0ead13d9.png" />
 </div>
 </div>
 </section>
@@ -673,6 +697,12 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">red_smarties</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)))</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p-value: 0.05
+</pre></div>
+</div>
+<img alt="../../../_images/941df94cfe8ff20f1fe405ed137359f52dfbc4d2dc6295f6e89d03fe7c967455.png" src="../../../_images/941df94cfe8ff20f1fe405ed137359f52dfbc4d2dc6295f6e89d03fe7c967455.png" />
 </div>
 </div>
 </section>
@@ -778,6 +808,16 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True probabilities: 
+ [0.16666666666666666, 0.16666666666666666, 0.16666666666666666, 0.16666666666666666, 0.16666666666666666, 0.16666666666666666]
+Sample counts: 
+ [[2 2 8 2 2 4]]
+Sample proportions: 
+ [[0.1 0.1 0.4 0.1 0.1 0.2]]
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="example-2-rolling-a-loaded-six-side-100-times-more-likely-to-land-on-6-repeated-3-times">
@@ -797,6 +837,20 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True probabilities: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">true_probabilities</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample counts:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span> 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample proportions: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">proportions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True probabilities: 
+ [0.14285714285714285, 0.14285714285714285, 0.14285714285714285, 0.14285714285714285, 0.14285714285714285, 0.2857142857142857]
+Sample counts:
+ [[16 15 13  7 12 37]
+ [ 9 16 11 17 14 33]
+ [17 14 12 17 18 22]]
+Sample proportions: 
+ [[0.16 0.15 0.13 0.07 0.12 0.37]
+ [0.09 0.16 0.11 0.17 0.14 0.33]
+ [0.17 0.14 0.12 0.17 0.18 0.22]]
 </pre></div>
 </div>
 </div>
@@ -828,11 +882,50 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Black</th>
+      <th>White</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.26</td>
+      <td>0.74</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract the element in the first row, first column</span>
-<span class="n">sim_counts</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">sim_counts</span><span class="p">[</span><span class="s2">&quot;Black&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># give me the column &quot;Black&quot; then extract the &quot;first&quot; row</span>
+<span class="n">sim_counts</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="c1"># (row number, column number)</span>
+<span class="n">sim_counts</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Black&quot;</span><span class="p">]</span>  <span class="c1"># (row index, column name)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.26
 </pre></div>
 </div>
 </div>
@@ -868,6 +961,11 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="simulate-multiple-values">
@@ -893,6 +991,9 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/6e7b8e64a8d67b7f91c5cb5fd9b4823e70b9fc055487bca818e0ab02d89ba8f8.png" src="../../../_images/6e7b8e64a8d67b7f91c5cb5fd9b4823e70b9fc055487bca818e0ab02d89ba8f8.png" />
+</div>
 </div>
 </section>
 <section id="histogram">
@@ -905,6 +1006,14 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">5.5</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">47</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 5.5,  6.5,  7.5,  8.5,  9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5,
+       16.5, 17.5, 18.5, 19.5, 20.5, 21.5, 22.5, 23.5, 24.5, 25.5, 26.5,
+       27.5, 28.5, 29.5, 30.5, 31.5, 32.5, 33.5, 34.5, 35.5, 36.5, 37.5,
+       38.5, 39.5, 40.5, 41.5, 42.5, 43.5, 44.5, 45.5, 46.5])
 </pre></div>
 </div>
 </div>
@@ -921,6 +1030,9 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">);</span>              <span class="c1"># update the y-axis label of the current plot</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/881b494b2939714ec5ba5ffa97fa2d412413caf7da6862c8d78f1bc53126e626.png" src="../../../_images/881b494b2939714ec5ba5ffa97fa2d412413caf7da6862c8d78f1bc53126e626.png" />
 </div>
 </div>
 <ul class="simple">
@@ -940,6 +1052,9 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/0515e4fa0f18070ee45d94f863a38bd65a3be943c1edfc1c8df59b647dd04df5.png" src="../../../_images/0515e4fa0f18070ee45d94f863a38bd65a3be943c1edfc1c8df59b647dd04df5.png" />
+</div>
 </div>
 </section>
 <section id="how-likely-was-mr-swain-s-experience">
@@ -956,6 +1071,9 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d49d9eb636a264882029d5cb9473a64eba9271826b74de7cf1ca1587644588f3.png" src="../../../_images/d49d9eb636a264882029d5cb9473a64eba9271826b74de7cf1ca1587644588f3.png" />
 </div>
 </div>
 <ul class="simple">
@@ -974,10 +1092,25 @@ document.write(`
                                <span class="n">true_probabilities</span><span class="p">,</span> 
                                <span class="n">num_simulations</span><span class="p">)</span>
 
-<span class="n">counts</span>
 <span class="c1"># counts[:,0] # returns the first item of the individual arrays</span>
+
+<span class="n">black_counts_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">counts</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># pandas allows you to plot directly from a series</span>
+<span class="n">black_counts_series</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> 
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> 
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> 
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Count in random sample&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Density&#39;)
+</pre></div>
+</div>
+<img alt="../../../_images/51340977baf3d5473427d073783a9d3d7340ac6ab5f3fb45fe4d23639e493bb4.png" src="../../../_images/51340977baf3d5473427d073783a9d3d7340ac6ab5f3fb45fe4d23639e493bb4.png" />
 </div>
 </div>
 </section>
@@ -1143,6 +1276,22 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   fert  tomatoes
+0     A      29.2
+1     A      11.4
+2     B      26.6
+3     B      23.7
+4     A      25.3
+5     B      28.5
+6     B      14.2
+7     B      17.9
+8     A      16.5
+9     A      21.1
+10    B      24.3
+</pre></div>
+</div>
+</div>
 </div>
 <p>We can use the DataFrame to compute the observed mean difference.</p>
 <div class="cell docutils container">
@@ -1159,6 +1308,11 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean tomato yield using the standard fertilizer was </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">mean_A_obs</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs &quot;</span>
       <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;while using the new fertlizer yielded </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">mean_B_obs</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs on average. &quot;</span> 
       <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;The difference is </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">obs_diff</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean tomato yield using the standard fertilizer was 20.7 lbs while using the new fertlizer yielded 22.533 lbs on average. The difference is 1.833 lbs.
 </pre></div>
 </div>
 </div>
@@ -1179,6 +1333,22 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7     B
+2     B
+6     B
+4     A
+8     A
+3     B
+5     B
+9     A
+1     A
+10    B
+0     A
+Name: fert, dtype: object
+</pre></div>
+</div>
+</div>
 </div>
 <ul class="simple">
 <li><p>Notice that the index is out of order.</p></li>
@@ -1189,6 +1359,22 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     B
+1     A
+2     B
+3     B
+4     B
+5     A
+6     A
+7     A
+8     A
+9     B
+10    B
+Name: fert, dtype: object
 </pre></div>
 </div>
 </div>
@@ -1239,6 +1425,22 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     B
+1     B
+2     B
+3     B
+4     A
+5     A
+6     B
+7     A
+8     A
+9     B
+10    A
+Name: fert, dtype: object
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="step-2">
@@ -1253,6 +1455,11 @@ document.write(`
 <span class="n">sim_diff</span> <span class="o">=</span> <span class="n">mean_B</span> <span class="o">-</span> <span class="n">mean_A</span>
 
 <span class="n">sim_diff</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.4666666666666615
 </pre></div>
 </div>
 </div>
@@ -1285,6 +1492,12 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.8333333333333357
+</pre></div>
+</div>
+<img alt="../../../_images/b4327e4d2e0c744c75adaca2a36bf83f8f53e9cbb0d7a4abda46a4925ace10d7.png" src="../../../_images/b4327e4d2e0c744c75adaca2a36bf83f8f53e9cbb0d7a4abda46a4925ace10d7.png" />
+</div>
 </div>
 <ul class="simple">
 <li><p>The histogram above shows the randomization distribution with the observed difference as the black line.</p></li>
@@ -1313,6 +1526,13 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The number of simulated differences as far or further away from 0 difference as the observed mean difference is: 3119
+The p-value is: 0.6238
+</pre></div>
+</div>
+<img alt="../../../_images/1ac7be2d7745d2403815dc604f13d08fb5e899c9ee6ac5007c3f9bf1997f82b2.png" src="../../../_images/1ac7be2d7745d2403815dc604f13d08fb5e899c9ee6ac5007c3f9bf1997f82b2.png" />
+</div>
 </div>
 </section>
 <section id="step-4">
@@ -1322,6 +1542,11 @@ document.write(`
 <p>Therefore, there is little reason to doubt the null hypothesis that fertilizers produce similar yields.</p>
 <p><strong>Exercise</strong></p>
 <p>Suppose that in a similar study of two fertilizers effect on yield of tomatoes a similar simulation of 5000 yielded that 10 simulated absolute differences were greater than the observed difference (of 1.833).  How would this change your interpretation of the results?</p>
+<ul class="simple">
+<li><p>Conclude that there is a difference</p></li>
+<li><p>If the difference is positive, fertilizer B is better.</p></li>
+<li><p>If the difference is negative, fertizlier B is worse.</p></li>
+</ul>
 <p><strong>Try on your own exercise:</strong></p>
 <p>Modify the simulation so that you compare the difference in medians instead of the difference in means.</p>
 <div class="cell docutils container">
@@ -1330,9 +1555,41 @@ document.write(`
 <span class="n">med_A_obs</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span> 
 <span class="n">med_B_obs</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 
-<span class="n">med_B_obs</span> <span class="o">-</span> <span class="n">med_A_obs</span>
+<span class="n">obs_diff</span> <span class="o">=</span> <span class="n">med_B_obs</span> <span class="o">-</span> <span class="n">med_A_obs</span>
+
+<span class="n">simulated_diffs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="n">fert_sim</span> <span class="o">=</span> <span class="n">plant_df</span><span class="p">[</span><span class="s2">&quot;fert&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">med_A</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fert_sim</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+    <span class="n">med_B</span> <span class="o">=</span> <span class="n">plant_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fert_sim</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;tomatoes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+    <span class="n">sim_diff</span> <span class="o">=</span> <span class="n">med_B</span> <span class="o">-</span> <span class="n">med_A</span>
+    <span class="n">simulated_diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sim_diff</span><span class="p">)</span>
+    
+<span class="n">simulated_diffs_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">simulated_diffs</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">simulated_diffs_series</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">12.2</span><span class="p">,</span> <span class="mf">13.8</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">simulated_diffs_series</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">simulated_diffs_series</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">obs_diff</span><span class="p">)],</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;CadetBlue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">12.2</span><span class="p">,</span> <span class="mf">13.8</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">obs_diff</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1150</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;CadetBlue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="n">obs_diff</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1150</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;CadetBlue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="n">right_extreme_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">simulated_diffs_series</span> <span class="o">&gt;=</span> <span class="n">obs_diff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">left_extreme_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">simulated_diffs_series</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">obs_diff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+
+<span class="n">all_extreme</span> <span class="o">=</span> <span class="n">right_extreme_count</span> <span class="o">+</span> <span class="n">left_extreme_count</span>
+
+<span class="n">pvalue</span> <span class="o">=</span> <span class="n">all_extreme</span> <span class="o">/</span> <span class="mi">5000</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The p-value is:&quot;</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The p-value is: 0.7142
+</pre></div>
+</div>
+<img alt="../../../_images/0acd167df21a93fc18c63a361c8459dadefff0468d9515c47d0cc38114334cfb.png" src="../../../_images/0acd167df21a93fc18c63a361c8459dadefff0468d9515c47d0cc38114334cfb.png" />
 </div>
 </div>
 <p>What is the p-value for the case of Robert Swain?</p>
@@ -1344,6 +1601,9 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="mi">7</span><span class="p">);</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d49d9eb636a264882029d5cb9473a64eba9271826b74de7cf1ca1587644588f3.png" src="../../../_images/d49d9eb636a264882029d5cb9473a64eba9271826b74de7cf1ca1587644588f3.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1360,7 +1620,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="n">animal_iucn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;animal_iucn.csv&quot;</span><span class="p">)</span>
-<span class="n">amniote_db</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;amniote_Database_Aug_2015.csv&quot;</span><span class="p">)</span>
+<span class="n">amniote_db</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Amniote_Database_Aug_2015.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1372,11 +1632,44 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;assessmentId&#39;, &#39;internalTaxonId&#39;, &#39;scientificName&#39;, &#39;kingdomName&#39;,
+       &#39;phylumName&#39;, &#39;orderName&#39;, &#39;className&#39;, &#39;familyName&#39;, &#39;genusName&#39;,
+       &#39;speciesName&#39;, &#39;infraType&#39;, &#39;infraName&#39;, &#39;infraAuthority&#39;, &#39;authority&#39;,
+       &#39;redlistCategory&#39;, &#39;redlistCriteria&#39;, &#39;criteriaVersion&#39;,
+       &#39;populationTrend&#39;, &#39;scopes&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(83669, 19)
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">amniote_db</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 <span class="n">amniote_db</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;class&#39;, &#39;order&#39;, &#39;family&#39;, &#39;genus&#39;, &#39;species&#39;, &#39;subspecies&#39;,
+       &#39;common_name&#39;, &#39;female_maturity_d&#39;, &#39;litter_or_clutch_size_n&#39;,
+       &#39;litters_or_clutches_per_y&#39;, &#39;adult_body_mass_g&#39;, &#39;maximum_longevity_y&#39;,
+       &#39;gestation_d&#39;, &#39;weaning_d&#39;, &#39;birth_or_hatching_weight_g&#39;,
+       &#39;weaning_weight_g&#39;, &#39;egg_mass_g&#39;, &#39;incubation_d&#39;, &#39;fledging_age_d&#39;,
+       &#39;longevity_y&#39;, &#39;male_maturity_d&#39;,
+       &#39;inter_litter_or_interbirth_interval_y&#39;, &#39;female_body_mass_g&#39;,
+       &#39;male_body_mass_g&#39;, &#39;no_sex_body_mass_g&#39;, &#39;egg_width_mm&#39;,
+       &#39;egg_length_mm&#39;, &#39;fledging_mass_g&#39;, &#39;adult_svl_cm&#39;, &#39;male_svl_cm&#39;,
+       &#39;female_svl_cm&#39;, &#39;birth_or_hatching_svl_cm&#39;,
+       &#39;female_svl_at_maturity_cm&#39;, &#39;female_body_mass_at_maturity_g&#39;,
+       &#39;no_sex_svl_cm&#39;, &#39;no_sex_maturity_d&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(21322, 36)
 </pre></div>
 </div>
 </div>
@@ -1406,6 +1699,11 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;IUCN is an interesting dataset.&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <p>Let’s create a column called <code class="docutils literal notranslate"><span class="pre">&quot;sciname&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">Amniote_db</span></code>.</p>
 <div class="cell docutils container">
@@ -1422,6 +1720,101 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>genus</th>
+      <th>species</th>
+      <th>sciname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Accipiter</td>
+      <td>albogularis</td>
+      <td>Accipiter albogularis</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Accipiter</td>
+      <td>badius</td>
+      <td>Accipiter badius</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Accipiter</td>
+      <td>bicolor</td>
+      <td>Accipiter bicolor</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Accipiter</td>
+      <td>brachyurus</td>
+      <td>Accipiter brachyurus</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Accipiter</td>
+      <td>brevipes</td>
+      <td>Accipiter brevipes</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>21317</th>
+      <td>Nilssonia</td>
+      <td>nigricans</td>
+      <td>Nilssonia nigricans</td>
+    </tr>
+    <tr>
+      <th>21318</th>
+      <td>Palea</td>
+      <td>steindachneri</td>
+      <td>Palea steindachneri</td>
+    </tr>
+    <tr>
+      <th>21319</th>
+      <td>Pelochelys</td>
+      <td>bibroni</td>
+      <td>Pelochelys bibroni</td>
+    </tr>
+    <tr>
+      <th>21320</th>
+      <td>Pelodiscus</td>
+      <td>sinensis</td>
+      <td>Pelodiscus sinensis</td>
+    </tr>
+    <tr>
+      <th>21321</th>
+      <td>Trionyx</td>
+      <td>triunguis</td>
+      <td>Trionyx triunguis</td>
+    </tr>
+  </tbody>
+</table>
+<p>21322 rows × 3 columns</p>
+</div></div></div>
 </div>
 <section id="merge">
 <h3><code class="docutils literal notranslate"><span class="pre">merge</span></code><a class="headerlink" href="#merge" title="Permalink to this heading">#</a></h3>
@@ -1433,6 +1826,58 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>scientificName</th>
+      <th>sciname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Accipiter albogularis</td>
+      <td>Accipiter albogularis</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Accipiter badius</td>
+      <td>Accipiter badius</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Accipiter bicolor</td>
+      <td>Accipiter bicolor</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Accipiter brachyurus</td>
+      <td>Accipiter brachyurus</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Accipiter brevipes</td>
+      <td>Accipiter brevipes</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <ul class="simple">
 <li><p>We want to compare body mass between <code class="docutils literal notranslate"><span class="pre">&quot;Aves&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Mammalia&quot;</span></code>.</p></li>
@@ -1455,6 +1900,14 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>class
+Aves        8644
+Mammalia    4490
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
 </div>
 <p>The observed weight distributions in the two groups is:</p>
 <div class="cell docutils container">
@@ -1463,6 +1916,72 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>class</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Aves</th>
+      <td>8644.0</td>
+      <td>275.566039</td>
+      <td>2.079283e+03</td>
+      <td>-999.0</td>
+      <td>14.00</td>
+      <td>35.0125</td>
+      <td>131.56250</td>
+      <td>109250.0</td>
+    </tr>
+    <tr>
+      <th>Mammalia</th>
+      <td>4490.0</td>
+      <td>132933.163932</td>
+      <td>2.779909e+06</td>
+      <td>-999.0</td>
+      <td>15.13</td>
+      <td>60.9475</td>
+      <td>692.19125</td>
+      <td>149000000.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Extract the group means.</p>
 <div class="cell docutils container">
@@ -1472,12 +1991,25 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>class
+Aves           275.566039
+Mammalia    132933.163932
+Name: adult_body_mass_g, dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 <p>Compute the observed difference.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observed_mean_difference</span> <span class="o">=</span> <span class="n">mean_table</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean_table</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">observed_mean_difference</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>132657.59789303897
 </pre></div>
 </div>
 </div>
@@ -1528,6 +2060,22 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0            Aves
+1            Aves
+2            Aves
+3            Aves
+4            Aves
+           ...   
+13129        Aves
+13130        Aves
+13131    Mammalia
+13132        Aves
+13133    Mammalia
+Name: class, Length: 13134, dtype: object
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -1543,6 +2091,11 @@ document.write(`
 <span class="n">sim_diff</span> <span class="o">=</span> <span class="n">mam_mean_sim</span> <span class="o">-</span> <span class="n">ave_mean_sim</span>
 
 <span class="n">sim_diff</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29752.335601462793
 </pre></div>
 </div>
 </div>
@@ -1574,6 +2127,9 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b8b99587d94aa62f5369cf65e436a352c6fc022d16b39e76cce1e864d7b66f0e.png" src="../../../_images/b8b99587d94aa62f5369cf65e436a352c6fc022d16b39e76cce1e864d7b66f0e.png" />
+</div>
 </div>
 <ul class="simple">
 <li><p>The histogram above shows the randomization distribution with the observed difference as the pink line.</p></li>
@@ -1595,6 +2151,12 @@ document.write(`
 <span class="n">pvalue</span> <span class="o">=</span> <span class="n">all_extreme</span> <span class="o">/</span> <span class="mi">10000</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The p-value is:&quot;</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The number of simulated differences greater than the observed difference is: 0
+The p-value is: 0.0
 </pre></div>
 </div>
 </div>
@@ -1688,20 +2250,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../week08/homework/Homework_8.html"
+       href="lecture9.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Homework 8: Investigating Mammalian Fecundity and Conservation using Filtering, Joins, and Arithmetic</p>
+        <p class="prev-next-title">Week 9: Hypothesis Testing</p>
       </div>
     </a>
     <a class="right-next"
-       href="lecture9-solution.html"
+       href="../homework/Homework_9.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Week 9: Hypothesis Testing</p>
+        <p class="prev-next-title">Homework 9: Hypothesis Testing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

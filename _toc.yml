@@ -81,3 +81,7 @@ parts:
       title: Prof. Moon's Notebook with Exercise Solutions
     - file: weekly-materials/week09/homework/Homework_9.ipynb
       title: Week 9 Homework 
+  - caption: Week 10
+    chapters:
+    - file: weekly-materials/week10/lecture/lecture10.ipynb
+      title: Prof. Moon's Notebook

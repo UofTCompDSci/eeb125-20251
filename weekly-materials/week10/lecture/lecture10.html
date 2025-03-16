@@ -1,0 +1,1662 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Week 10: Bootstrap &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week10/lecture/lecture10';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="Homework 9: Hypothesis Testing" href="../../week09/homework/Homework_9.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_proposal.html">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_instructions.html">Final Project Instructions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week08/lecture/lecture8.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week08/homework/Homework_8.html">Week 8 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week09/lecture/lecture9.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/lecture/lecture9-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/homework/Homework_9.html">Week 9 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Moon's Notebook</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week10/lecture/lecture10.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week10/lecture/lecture10.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 10: Bootstrap</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#march-19-2025">March 19, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-data-visualization">Recap of Data Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-histogram-modality">Shape of a Histogram: Modality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-histogram-skewness">Shape of a Histogram: Skewness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-descriptions-percentiles">Data Descriptions: Percentiles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-boxplot">Shape of a Boxplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-boxplot-skewness">Shape of a Boxplot: Skewness</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#center-of-the-data">Center of the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#center-of-the-data-based-on-skewness">Center of the data based on skewness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Center of the data based on skewness</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bootstrap">The Bootstrap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-this-a-good-idea">Why is this a good idea?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resampled-median">Resampled median</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boostrap-confidence-intervals">Boostrap confidence intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrap-confidence-intervals-for-other-statistics">Bootstrap confidence intervals for other statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-primate-carnivores-have-different-body-sizes-compared-to-carnivora-carnivores">Do Primate carnivores have different body sizes compared to Carnivora carnivores?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-idea">Basic idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-a-perfect-linear-relationship">Example 1: A perfect linear relationship</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-regression-line">Compute the regression line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-another-perfect-linear-relationship">Example 2: Another perfect linear relationship</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-y-intercept">Interpretation of y-intercept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-slope">Interpretation of slope</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-close-to-linear">Example 3: Close to linear</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-linear-regression">Statistical summary of linear regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitted-values-predicted-values-and-residuals">Fitted values, predicted values, and residuals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-linear-regression">Accuracy of linear regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-regression-with-two-or-more-independent-variables">Example 4: Regression with two or more independent variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-a-multiple-regression-model">Statistical summary of a multiple regression model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-multiple-regression-model">Accuracy of multiple regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-regression-model-of-longevity-on-gestation">A regression model of longevity on gestation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-regression-model-of-length-of-longevity-on-gestation">A regression model of length of longevity on gestation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-the-regression-model">Fit the regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-the-regression-model">Statistical summary of the regression model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-regression-model">Accuracy of regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-of-data-analysis-using-linear-regression-model">Conclusion of data analysis using linear regression model</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-10-bootstrap">
+<h1>Week 10: Bootstrap<a class="headerlink" href="#week-10-bootstrap" title="Permalink to this heading">#</a></h1>
+<section id="march-19-2025">
+<h2>March 19, 2025<a class="headerlink" href="#march-19-2025" title="Permalink to this heading">#</a></h2>
+<p><strong>Michael Jongho Moon</strong></p>
+</section>
+<section id="recap-of-data-visualization">
+<h2>Recap of Data Visualization<a class="headerlink" href="#recap-of-data-visualization" title="Permalink to this heading">#</a></h2>
+<p>We have seen histograms and boxplots (for numeric/quantitative data).<br />
+What do they tell us?</p>
+<section id="shape-of-a-histogram-modality">
+<h3>Shape of a Histogram: Modality<a class="headerlink" href="#shape-of-a-histogram-modality" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="../../../_images/modes.png"><img alt="../../../_images/modes.png" src="../../../_images/modes.png" style="width: 800px;" /></a>
+</section>
+<section id="shape-of-a-histogram-skewness">
+<h3>Shape of a Histogram: Skewness<a class="headerlink" href="#shape-of-a-histogram-skewness" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="../../../_images/symmetry.png"><img alt="../../../_images/symmetry.png" src="../../../_images/symmetry.png" style="width: 800px;" /></a>
+</section>
+<section id="data-descriptions-percentiles">
+<h3>Data Descriptions: Percentiles<a class="headerlink" href="#data-descriptions-percentiles" title="Permalink to this heading">#</a></h3>
+<p>The <span class="math notranslate nohighlight">\(k^{th}\)</span> percentile is a point in the data in which <span class="math notranslate nohighlight">\(k\)</span>% of the data is below that percentile.</p>
+<blockquote>
+<div><p>For example, if 170 cm is the <span class="math notranslate nohighlight">\(90^{th}\)</span> percentile for female heights, that means that 90% of females are below 170 cm tall.</p>
+</div></blockquote>
+<p>Common percentiles:</p>
+<ul class="simple">
+<li><p>the <strong>median</strong> is the <span class="math notranslate nohighlight">\(50^{th}\)</span> percentile.</p></li>
+<li><p>the <strong>first quartile (Q1)</strong> is the <span class="math notranslate nohighlight">\(25^{th}\)</span> percentile.</p></li>
+<li><p>the <strong>third quartile (Q3)</strong> is the <span class="math notranslate nohighlight">\(75^{th}\)</span> percentile.</p></li>
+</ul>
+</section>
+<section id="shape-of-a-boxplot">
+<h3>Shape of a Boxplot<a class="headerlink" href="#shape-of-a-boxplot" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="../../../_images/boxplot.png"><img alt="../../../_images/boxplot.png" src="../../../_images/boxplot.png" style="width: 400px;" /></a>
+</section>
+<section id="shape-of-a-boxplot-skewness">
+<h3>Shape of a Boxplot: Skewness<a class="headerlink" href="#shape-of-a-boxplot-skewness" title="Permalink to this heading">#</a></h3>
+<a class="reference internal image-reference" href="../../../_images/boxplot_skew.png"><img alt="../../../_images/boxplot_skew.png" src="../../../_images/boxplot_skew.png" style="width: 800px;" /></a>
+</section>
+</section>
+<section id="center-of-the-data">
+<h2>Center of the data<a class="headerlink" href="#center-of-the-data" title="Permalink to this heading">#</a></h2>
+<p>If you have the following data: what is the <em>mean</em>? what is the <em>median</em>?</p>
+<p>{4, 5, 6, 6, 7}</p>
+<ul class="simple">
+<li><p>The mean is: <span class="math notranslate nohighlight">\(\frac{4 + 5 + 6 + 6 + 7}{5} = 5.6\)</span></p></li>
+<li><p>The median is: <span class="math notranslate nohighlight">\(6\)</span></p></li>
+</ul>
+<section id="center-of-the-data-based-on-skewness">
+<h3>Center of the data based on skewness<a class="headerlink" href="#center-of-the-data-based-on-skewness" title="Permalink to this heading">#</a></h3>
+<p>What if your data was right skewed? What is the <em>mean</em> and what is the <em>median</em> for the data below?</p>
+<p>{4, 4, 5, 5, 20}</p>
+<ul class="simple">
+<li><p>The mean is: 7.6</p></li>
+<li><p>The median is: 5</p></li>
+</ul>
+<p>The <b style="color: maroon;">mean</b> gets pulled toward the outliers while the <b style="color: forestgreen;">median</b> is less sensitive to outlisers. This makes median a better representation for skewed data, or data with a lot of outliers, in general.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;maroon&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">])</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> 
+                  <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>  
+                  <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> 
+                  <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Center of the data based on skewness<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Generally, we have:</p>
+<ul class="simple">
+<li><p>symmetric data has: mean <span class="math notranslate nohighlight">\(\approx\)</span> median</p></li>
+<li><p>left-skewed data has: mean &lt; median</p></li>
+<li><p>right-skewed data has: mean &gt; median</p></li>
+</ul>
+</section>
+</section>
+<section id="the-bootstrap">
+<h2>The Bootstrap<a class="headerlink" href="#the-bootstrap" title="Permalink to this heading">#</a></h2>
+<p>Last week we covered hypothesis testing, where we tested if:</p>
+<ul class="simple">
+<li><p>a percentage was different from some number (i.e., 26%)</p></li>
+<li><p>if the average was different between two groups (i.e., do mammals weigh more than birds)</p></li>
+</ul>
+<p>What if instead we wanted to just look at a statistic and provide a reasonable estimate of what we think the parameter is.</p>
+<p>This is where we can use bootstrapping to provide a plausible range in which we think our metric of interest will land.</p>
+<p>For example, producing a statement such as “we are confident that the mean heights of all females is between 164 cm and 167 cm.”</p>
+<div style="display:flex; justify-content: space-between; column-gap: 25px;">
+<div>
+<img src="stats00.png" width="100%">
+</div>
+<div>
+<p>A data scientist is using the data in a random sample to estimate an unknown statistical parameter.</p>
+<p>They use the sample to calculate the value of a statistic to estimate.</p>
+</div>
+</div><div style="display:flex; justify-content: space-between; column-gap: 25px;">
+<div>
+<img src="stats01.png" width="100%">
+</div>
+<div>
+<p>Once they calculate the observed value of the statistic, they can present it as their estimate and go on their merry way.</p>
+<p>But they are a data scientist. They know that their random sample is just one of numerous possible random samples, and thus their estimate is just one of numerous plausible estimates.</p>
+</div>
+</div><div style="display:flex; justify-content: space-between; column-gap: 25px;">
+<div>
+<img src="stats02.png" width="100%">
+</div>
+<div>
+<p>By how much could those estimates vary? </p>
+<p>To answer this, it appears as though they need to draw another sample from the population, and compute a new estimate based on the new sample, and repeat, and repeat...</p> 
+<p>But they don't have the resources to go back to the population and draw another sample.</p>
+</div>
+</div>
+<p>Fortunately, a brilliant idea called the bootstrap can help. Since it is not feasible to generate new samples from the population, the bootstrap generates new random samples by a method called <strong>resampling — the new samples are drawn at random from the original sample.</strong></p>
+<a class="reference internal image-reference" href="../../../_images/bootstraps.png"><img alt="../../../_images/bootstraps.png" src="../../../_images/bootstraps.png" style="width: 400px;" /></a>
+<p><em>“Achieve the impossible!” … “Achieve the difficult but possible.”</em></p>
+<p><em>Source: Useless Etymology, The origins of the phrase “pull yourself up by your bootstraps”. <a class="reference external" href="https://uselessetymology.com/2019/11/07/the-origins-of-the-phrase-pull-yourself-up-by-your-bootstraps/">https://uselessetymology.com/2019/11/07/the-origins-of-the-phrase-pull-yourself-up-by-your-bootstraps/</a></em></p>
+<p>For example, you sample 5 students and see that their heights are: {160, 162, 165, 168, 170} in cm and the median of this sample is 165.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plt_sample</span><span class="p">(</span><span class="n">samp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Display resampled values.</span>
+<span class="sd">    </span>
+<span class="sd">    Don&#39;t worry about the code. Treat it as a black box.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">max_n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="ow">in</span> <span class="n">samp</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">max_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">max_n</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span>
+                        <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_n</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">159</span><span class="p">,</span> <span class="mi">171</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mi">160</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">170</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">samp</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">heights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">160</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">170</span><span class="p">])</span>
+<span class="n">plt_sample</span><span class="p">(</span><span class="n">heights</span><span class="p">);</span>
+<span class="n">heights</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>One example of a “resample” of the original sample/data is: {165, 168, 168, 168, 170} and the median of this resample is 168.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">125</span><span class="p">)</span>
+<span class="n">heights_1</span> <span class="o">=</span> <span class="n">heights</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt_sample</span><span class="p">(</span><span class="n">heights_1</span><span class="p">);</span>
+<span class="n">heights_1</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Another resample of the original sample/data is: {160, 160, 165, 165, 168} and the mean of this resample is 165.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights_2</span> <span class="o">=</span> <span class="n">heights</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt_sample</span><span class="p">(</span><span class="n">heights_2</span><span class="p">);</span>
+<span class="n">heights_2</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Another resample of the original sample/data is: {162, 166, 168, 168, 170} and the median of this resample is 168.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights_3</span> <span class="o">=</span> <span class="n">heights</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt_sample</span><span class="p">(</span><span class="n">heights_3</span><span class="p">);</span>
+<span class="n">heights_3</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, with all of our resamples we have the medians of the resamples are 168, 165, and 168.</p>
+<p>The resample medians of 168, 165, and 168 have a mean of 167, which is pretty close to the original datas median (which was 165).</p>
+<p>Logic of the bootstrap:</p>
+<ul class="simple">
+<li><p>choose your statistic of interest (e.g., median heights of female students)</p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">.sample(frac=1,</span> <span class="pre">replace=True)</span></code> to resample your data and calculate the statistic for the resample.</p></li>
+<li><p>repeat the previous step a lot of times (say, at least 1000 times)</p></li>
+<li><p>look at the distribution of the statistic from all of the resamples (e.g., look at the histogram of all of the resample medians).</p>
+<ul>
+<li><p>The bootstrap distribution provides an approximation of the distribution of the statistic if you were to draw many samples.</p></li>
+<li><p>E.g., find the 5th and 95th percentiles of the resampled statistics to get an interval which captures the middle 90% of the resampled statistics to approximate the range of values the statisic would fall 90% of times.</p></li>
+</ul>
+</li>
+</ul>
+<p>Reminder: we can use the <code class="docutils literal notranslate"><span class="pre">.sample(frac=1,</span> <span class="pre">replace=True)</span></code> to create the resamples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pantheria</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;pantheria.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pantheria</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;pink&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">650</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;maroon&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Gestational length (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What is a good representation of the centre of the data: <span style="color: maroon;">mean</span> or <span style="color: forestgreen;">median</span>?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Draw a random sample with replacement of the same size (number of rows) as the original sample.</p></li>
+<li><p>This opens the possibility for the new sample to be different from the original sample.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boot_gest</span> <span class="o">=</span> <span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">boot_gest</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">650</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">boot_gest</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Resampled gestational length (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boot_gest</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">20250319</span><span class="p">)</span> <span class="c1"># To keep your solution consistent</span>
+
+<span class="n">boot_gest</span> <span class="o">=</span> <span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">boot_gest</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">boot_gest</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;forestgreen&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Resampled gestational length (days)&quot;</span><span class="p">);</span>
+
+<span class="n">boot_gest</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="why-is-this-a-good-idea">
+<h3>Why is this a good idea?<a class="headerlink" href="#why-is-this-a-good-idea" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>By the law of averages, the distribution of the original sample is likely to resemble the population.</p></li>
+<li><p>The distributions of all the “resamples” are likely to resemble the original sample.</p></li>
+<li><p>So the distributions of all the resamples are likely to resemble the population as well.</p></li>
+</ul>
+</section>
+<section id="resampled-median">
+<h3>Resampled median<a class="headerlink" href="#resampled-median" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We generated one resampled or <em>bootstrapped</em> median above.</p></li>
+<li><p>By resampling many times we can compute the empirical distribution of the median gestation time.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">boot_single_median</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a bootstrapped median of gestation period.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">boot_gest_med</span> <span class="o">=</span> <span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">boot_gest_med</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">125</span><span class="p">)</span>
+<span class="n">boot_single_median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Now let’s compute many bootstrap medians by writing a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bootstrap_medians</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># empty list to collect medians</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2025</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="n">bootstrap_medians</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">boot_single_median</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bootstrap_medians</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;teal&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Medians of resampled gestational lengths (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="boostrap-confidence-intervals">
+<h2>Boostrap confidence intervals<a class="headerlink" href="#boostrap-confidence-intervals" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We can use the bootstrap distribution to construct a range of values such that 95% of the random samples will contain the true median.</p></li>
+<li><p>The range of values is called a confidence interval.</p></li>
+<li><p>A 95% confidence interval for the median can be constructed finding the 2.5% percentile and the 97.5% percentile.</p></li>
+<li><p>The reason for choosing 2.5% and 97.5% is that 0.05/2 = 0.025, and 1 - 0.025 = 0.975.</p></li>
+<li><p>We can do this using the <code class="docutils literal notranslate"><span class="pre">percentile</span></code> function in <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootstrap_medians</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootstrap_medians</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A 95% bootstrap confidence interval for median is 62.99 days to 78.21 days.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lwr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootstrap_medians</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
+<span class="n">upr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootstrap_medians</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bootstrap_medians</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">bootstrap_medians</span><span class="p">)[(</span><span class="n">bootstrap_medians</span> <span class="o">&gt;</span> <span class="n">lwr</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">bootstrap_medians</span> <span class="o">&lt;</span> <span class="n">upr</span><span class="p">)],</span> 
+         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;teal&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">lwr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">upr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;coral&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Medians of resampled gestational lengths (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bootstrap-confidence-intervals-for-other-statistics">
+<h2>Bootstrap confidence intervals for other statistics<a class="headerlink" href="#bootstrap-confidence-intervals-for-other-statistics" title="Permalink to this heading">#</a></h2>
+<section id="do-primate-carnivores-have-different-body-sizes-compared-to-carnivora-carnivores">
+<h3>Do Primate carnivores have different body sizes compared to Carnivora carnivores?<a class="headerlink" href="#do-primate-carnivores-have-different-body-sizes-compared-to-carnivora-carnivores" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Let’s create a dataset (<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>) with primates and carnivora body mass measurements.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MSW05_Order&quot;</span><span class="p">,</span> <span class="s2">&quot;5-1_AdultBodyMass_g&quot;</span><span class="p">]</span>
+
+<span class="n">condition</span> <span class="o">=</span> <span class="p">(</span><span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;MSW05_Order&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Primates&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">pantheria</span><span class="p">[</span><span class="s2">&quot;MSW05_Order&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Carnivora&quot;</span><span class="p">)</span>
+
+<span class="n">primcarn_df</span> <span class="o">=</span> <span class="n">pantheria</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">condition</span><span class="p">,</span> <span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>  <span class="c1"># .loc[rows, columns]</span>
+
+<span class="n">primcarn_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MSW05_Order&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">primcarn_df</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;MSW05_Order&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+                <span class="c1">#  orientation=&quot;horizontal&quot;,</span>
+                <span class="c1"># layout=[2, 1], # [rows, columns]</span>
+                <span class="c1"># sharex=True, # share same axis</span>
+                <span class="n">xrot</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create a function to create one bootstrap sample of the median difference.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">boot_single_median_diff</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a bootstrapped difference in adult body mass medians.</span>
+<span class="sd">    </span>
+<span class="sd">    The function computes the difference of the medians by subtracting the bootstrapped median</span>
+<span class="sd">    of primates from the bootstrapped median of carnivoras.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># sample body mass with replacement</span>
+    <span class="n">boot_mass</span> <span class="o">=</span> <span class="n">primcarn_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># primate rows</span>
+    <span class="n">primes</span> <span class="o">=</span> <span class="n">boot_mass</span><span class="p">[</span><span class="s2">&quot;MSW05_Order&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Primates&quot;</span>
+    <span class="c1"># carnivora rows</span>
+    <span class="n">carns</span> <span class="o">=</span> <span class="n">boot_mass</span><span class="p">[</span><span class="s2">&quot;MSW05_Order&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Carnivora&quot;</span>
+    
+    <span class="c1"># compute difference in medians on bootstrap sample</span>
+    <span class="n">boot_mass_med_diff</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">boot_mass</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">carns</span><span class="p">,</span> <span class="s2">&quot;5-1_AdultBodyMass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span> 
+        <span class="o">-</span> <span class="n">boot_mass</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">primes</span><span class="p">,</span> <span class="s2">&quot;5-1_AdultBodyMass_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>    <span class="c1"># carnivores - primates</span>
+    <span class="k">return</span> <span class="n">boot_mass_med_diff</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boot_single_median_diff</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, compute bootstrap distribution for a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bootst_med_diffs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="n">bootst_med_diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">boot_single_median_diff</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bootst_med_diffs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">250</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Resampled differences of body mass medians (grams)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A 95% confidence interval for the median difference in mass of carnivores and primates is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootst_med_diffs</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootst_med_diffs</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>The confidence interval contains 0. So we cannot really rule out that the medians are the same.</p>
+<p>Therefore there is very weak evidence that the medians are different.</p>
+</section>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>Hypothesis testing covered how to:</p>
+<ul class="simple">
+<li><p>test if a percentage (statistic) is different from some hypothesized values.</p></li>
+<li><p>test if two different groups have different means (or median).</p></li>
+</ul>
+<p>Confidence intervals covered how to:</p>
+<ul class="simple">
+<li><p>get a range of values which estimate a parameter (i.e., mean, median, percentage).</p></li>
+<li><p>get a range of values which estimate the difference in means (or medians) of two different groups.</p></li>
+</ul>
+<p>With linear regression we will cover how to:</p>
+<ul class="simple">
+<li><p>look at the relationship between two columns in a data frame. (E.g., the relationship between height and mass of mammals).</p></li>
+</ul>
+</section>
+<section id="linear-regression">
+<h2>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this heading">#</a></h2>
+<section id="basic-idea">
+<h3>Basic idea<a class="headerlink" href="#basic-idea" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Linear regression is a useful technique for creating models to explain relationships between variables.</p></li>
+<li><p>The dependent variable must be numeric, and have meaningful numeric values.</p></li>
+<li><p>The independent variables can be quantitative or categorical variables.</p></li>
+</ul>
+<p>Essentially we have some data and want to estimate the line.</p>
+<a class="reference internal image-reference" href="../../../_images/line.png"><img alt="../../../_images/line.png" src="../../../_images/line.png" style="width: 400px;" /></a>
+<p>We call the estimated line <span class="math notranslate nohighlight">\(\hat{Y} = b_0 + b_1 X\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(b_0\)</span> is the estimated y-intercept</p></li>
+<li><p><span class="math notranslate nohighlight">\(b_1\)</span> is the estimated slope</p></li>
+</ul>
+</section>
+<section id="example-1-a-perfect-linear-relationship">
+<h3>Example 1: A perfect linear relationship<a class="headerlink" href="#example-1-a-perfect-linear-relationship" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;indvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+       <span class="s2">&quot;depvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot the data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;indvar&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;depvar&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;indvar&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depvar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The scatter plot shows each pair of points (0, 7), (1, 8), etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;indvar&quot;</span></code> is sometimes called an <em>independent</em> or <em>predictor</em> variable, or <em>covariate</em>,<br />
+and <code class="docutils literal notranslate"><span class="pre">&quot;depvar&quot;</span></code> is called the <em>dependent</em> variable or <em>response</em> variable.</p></li>
+<li><p>In this example the dependent variable is perfectly predicted by the independent variable using the line y=7+1x.</p></li>
+</ul>
+</section>
+<section id="compute-the-regression-line">
+<h3>Compute the regression line<a class="headerlink" href="#compute-the-regression-line" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">regmod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;depvar ~ indvar&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="c1"># setup the model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The code above uses the <code class="docutils literal notranslate"><span class="pre">ols()</span></code> function from <code class="docutils literal notranslate"><span class="pre">statsmodels.formula.api</span></code></p></li>
+<li><p>The syntax in the function <code class="docutils literal notranslate"><span class="pre">ols()</span></code> function <code class="docutils literal notranslate"><span class="pre">&quot;depvar</span> <span class="pre">~</span> <span class="pre">indvar&quot;</span></code> is a special syntax for describing statistical models.</p></li>
+<li><p>The column name to the <strong>left</strong> of <code class="docutils literal notranslate"><span class="pre">~</span></code> specifies the dependent variable.</p></li>
+<li><p>The column name to the <strong>right</strong> of <code class="docutils literal notranslate"><span class="pre">~</span></code> specifies the independent variable(s).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span> <span class="o">=</span> <span class="n">regmod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After the model is setup then the <code class="docutils literal notranslate"><span class="pre">fit</span></code> function can be applied to the model.  This function computes the equation of the regression line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span> <span class="c1"># get parameter estimates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The estimates of the <strong>y-intercept</strong> and <strong>slope</strong> are labelled <code class="docutils literal notranslate"><span class="pre">Intercept</span></code> (7.0)  and <code class="docutils literal notranslate"><span class="pre">indvar</span></code> (1.0).</p></li>
+<li><p>This means the regression equation is: $<span class="math notranslate nohighlight">\(\texttt{depvar} = 7 + 1 \times \texttt{indvar}\)</span><span class="math notranslate nohighlight">\( or \)</span><span class="math notranslate nohighlight">\(Y = 7 + 1 \times X\)</span>$</p></li>
+</ul>
+</section>
+<section id="example-2-another-perfect-linear-relationship">
+<h3>Example 2: Another perfect linear relationship<a class="headerlink" href="#example-2-another-perfect-linear-relationship" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;depvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+       <span class="s2">&quot;indvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;indvar&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;depvar&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;indvar&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depvar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;depvar ~ indvar&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">regmod_fit</span> <span class="o">=</span> <span class="n">regmod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+
+<span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span> <span class="c1"># get parameter estimates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The scatter plot is similar to Example 1 except that the values of the dependent variable has been increased by 2.</p></li>
+<li><p>The equation of the regression line for this data is:  $<span class="math notranslate nohighlight">\(\texttt{depvar} = 2 + 1 \times \texttt{indvar} \)</span>$</p></li>
+</ul>
+<p>For the line: $<span class="math notranslate nohighlight">\(\texttt{depvar} = 2 + 1 \times \texttt{indvar} \)</span>$</p>
+</section>
+<section id="interpretation-of-y-intercept">
+<h3>Interpretation of y-intercept<a class="headerlink" href="#interpretation-of-y-intercept" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When the independent variable is 0 the dependent variable is 2.  This is the meaning of the <strong>y-intercept</strong> value of 2.</p></li>
+</ul>
+</section>
+<section id="interpretation-of-slope">
+<h3>Interpretation of slope<a class="headerlink" href="#interpretation-of-slope" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>For a one-unit change in the independent variable we expect the dependent variable increases by 1 unit.</p></li>
+</ul>
+</section>
+<section id="example-3-close-to-linear">
+<h3>Example 3: Close to linear<a class="headerlink" href="#example-3-close-to-linear" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Examples 1 and 2 were perfect linear relationships.</p></li>
+<li><p>In this example we examine what happens if the relationship between the dependent and independent variables is almost perfectly linear.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2025</span><span class="p">)</span> <span class="c1"># set the seed so that it&#39;s reproducible</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;depvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;indvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;indvar&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;depvar&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;indvar&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depvar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;depvar ~ indvar&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">regmod_fit</span> <span class="o">=</span> <span class="n">regmod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+
+<span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span> <span class="c1"># get parameter estimates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, now the relationship isn’t perfectly linear, but close.  The equation of this regression line is:</p>
+<div class="math notranslate nohighlight">
+\[\texttt{depvar} = 1.112654 + 0.964393 \times \texttt{indvar}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;indvar&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;depvar&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axline</span><span class="p">(</span><span class="n">xy1</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.112654</span><span class="p">),</span> <span class="n">slope</span><span class="o">=</span><span class="mf">0.964393</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;indvar&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depvar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">plt.axline()</span></code> from the <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> can be used to add a line to a plot.</p></li>
+<li><p>We can use <code class="docutils literal notranslate"><span class="pre">xy1</span></code> and <code class="docutils literal notranslate"><span class="pre">slope</span></code> to specify the intercept point and the slope of the line respectively.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;indvar&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;depvar&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">regplot()</span></code> function in the <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> library will produce a scatter plot with the regression line.</p>
+<p>The parameters of <code class="docutils literal notranslate"><span class="pre">regplot()</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> is the independent variable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> is the dependent variable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ci=None</span></code> specifies no confidence interval for the regression line.</p></li>
+</ul>
+</section>
+<section id="statistical-summary-of-linear-regression">
+<h3>Statistical summary of linear regression<a class="headerlink" href="#statistical-summary-of-linear-regression" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span> <span class="c1"># turn off warnings</span>
+
+<span class="n">regsum</span> <span class="o">=</span> <span class="n">regmod_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="c1"># warnings.filterwarnings(&quot;default&quot;) # turn warnings back on</span>
+<span class="n">regsum</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>A statistical summary of the regression model is given above using the <code class="docutils literal notranslate"><span class="pre">summary</span></code> function in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>.</p></li>
+<li><p>There are three summary tables, but we will only be interested in the second summary table — <code class="docutils literal notranslate"><span class="pre">regsum.tables[1]</span></code> (in this course).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regsum</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What does the statistical summary represent?</p>
+<ul class="simple">
+<li><p>the column labelled <code class="docutils literal notranslate"><span class="pre">coef</span></code> are same values as <code class="docutils literal notranslate"><span class="pre">regmod_fit.params</span></code>.  In this case the average increase <code class="docutils literal notranslate"><span class="pre">depvar</span></code> for a one unit change in <code class="docutils literal notranslate"><span class="pre">indvar</span></code> is 0.9319.</p></li>
+</ul>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">std</span> <span class="pre">err</span></code> column represents the standard deviation of the intercept and slope (we won’t discuss in this course).</p></li>
+</ul>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">t</span></code> column represents the value of the t-statistic (we won’t discuss in this course).</p></li>
+</ul>
+<ul class="simple">
+<li><p>the column <code class="docutils literal notranslate"><span class="pre">P&gt;|t|</span></code> represents the p-value corresponding to the null hypothesis that the intercept or slope are equal to 0.  If the value is small then this is evidence against the null hypothesis.  But if the p-value is large then there is no evidence against the null hypothesis.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regsum</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The traditional threshold is 0.05 (i.e., a p-value less than or equal to 0.05 is supposed to indicate evidence against the null hypothesis). However, we shouldn’t conclude solely based on the p-value being smaller than an arbitrary threshold.</p></li>
+</ul>
+<ul class="simple">
+<li><p>In the example above the p-value for the slope is 0 (or too close to 0 to display).  This indicates strong evidence that the <em>true</em> value of the slope is non-zero.</p></li>
+</ul>
+<ul class="simple">
+<li><p>The columns <code class="docutils literal notranslate"><span class="pre">[0.025</span>&#160;&#160; <span class="pre">0.975]</span></code> form a plausible range of values for the y-intercept and slope (formally known as a 95% confidence interval). In this case the plausible values for the slope are 0.738 and 1.191.</p></li>
+</ul>
+<ul class="simple">
+<li><p>If the plausible range includes 0 then this is usually interpreted as not providing evidence against the null hypothesis (equivalent to saying a p-value greater than 0.05 does not provide the evidence).</p></li>
+</ul>
+</section>
+<section id="fitted-values-predicted-values-and-residuals">
+<h3>Fitted values, predicted values, and residuals<a class="headerlink" href="#fitted-values-predicted-values-and-residuals" title="Permalink to this heading">#</a></h3>
+<p>If the values of the independent variable are plugged into the regression equation then we obtain the fitted values.</p>
+<div class="math notranslate nohighlight">
+\[\texttt{depvar} = 1.1127 + 0.9644 \times \texttt{indvar}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <strong>fitted value</strong> for the first row of <code class="docutils literal notranslate"><span class="pre">df</span></code> is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">1.1127</span> <span class="o">+</span> <span class="mf">0.9644</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;indvar&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If the linear regression model is used on an independent variable that is not in the data set used to build the model then it’s often referred to as a <strong>predicted value</strong>.</p></li>
+</ul>
+<p>To extract the fitted values from a regression model access the <code class="docutils literal notranslate"><span class="pre">fittedvalues</span></code> attribute of the fitted <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">fittedvalues</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <strong>residual</strong> is how far above or below the line a point is. So, it is the dependent variable minus the fitted value.</p>
+<p>So, for the first row the residual is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="o">-</span> <span class="mf">1.373982</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will chat more about residuals next week.</p>
+</section>
+</section>
+<section id="accuracy-of-linear-regression">
+<h2>Accuracy of linear regression<a class="headerlink" href="#accuracy-of-linear-regression" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>There are several measures of accuracy for linear regression.</p></li>
+<li><p>Popular measures are R-squared and root mean squared error; we will discuss root mean squared error next class.</p></li>
+<li><p>R-squared can be calculated from a fitted model regression model using the <code class="docutils literal notranslate"><span class="pre">rsquared</span></code> attribute in a fitted <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> object.</p></li>
+<li><p>R-squared is always between 0 and 1.</p>
+<ul>
+<li><p>R-squared of 0 indicates a poor fit</p></li>
+<li><p>R-squared of 1 indicates a perfect fit</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="example-4-regression-with-two-or-more-independent-variables">
+<h3>Example 4: Regression with two or more independent variables<a class="headerlink" href="#example-4-regression-with-two-or-more-independent-variables" title="Permalink to this heading">#</a></h3>
+<p>It’s possible to include more than one independent variable in a regression model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="c1">#set the seed so that it&#39;s reproducible</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;depvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;indvar1&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span>
+        <span class="s2">&quot;indvar2&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To include more than one independent variable in a regression model add it to the right side of syntax for describing statistical models.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;depvar</span> <span class="pre">~</span> <span class="pre">indvar1</span> <span class="pre">+</span> <span class="pre">indvar2&quot;</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;depvar ~ indvar1 + indvar2&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="c1"># setup the model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now <code class="docutils literal notranslate"><span class="pre">fit</span></code> <code class="docutils literal notranslate"><span class="pre">regmod</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span> <span class="o">=</span> <span class="n">regmod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Extract the regression parameter estimates using <code class="docutils literal notranslate"><span class="pre">params</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span> <span class="c1"># get parameter estimates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The estimated linear (multiple) linear regression model is:</p>
+<div class="math notranslate nohighlight">
+\[\texttt{depvar} = 1.892482 + 0.549341 \times \texttt{indvar1} + 0.385197 \times \texttt{indvar2}\]</div>
+<ul class="simple">
+<li><p>The y-intercept value (1.892482) is the value of the dependent variable when <code class="docutils literal notranslate"><span class="pre">indvar1</span></code> and <code class="docutils literal notranslate"><span class="pre">indvar2</span></code> are both 0.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">indvar1</span></code> changes by one-unit, <code class="docutils literal notranslate"><span class="pre">depvar</span></code> changes (on average) by 0.549341.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">indvar2</span></code> changes by one-unit, <code class="docutils literal notranslate"><span class="pre">depvar</span></code> changes (on average) by 0.385197.</p></li>
+</ul>
+</section>
+<section id="statistical-summary-of-a-multiple-regression-model">
+<h3>Statistical summary of a multiple regression model<a class="headerlink" href="#statistical-summary-of-a-multiple-regression-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">multregsummary</span> <span class="o">=</span> <span class="n">regmod_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+
+<span class="n">multregsummary</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The statistical summary indicates:</p>
+<ul class="simple">
+<li><p>the p-value for <code class="docutils literal notranslate"><span class="pre">indvar1</span></code> is 0.003 and the range of plausible values for the slope is 0.288 to 0.810.</p></li>
+<li><p>the p-value for <code class="docutils literal notranslate"><span class="pre">indvar2</span></code> is 0.010 and the range of plausible values for the slope is 0.137 to 0.634.</p></li>
+<li><p>Since, both p-values are small there is evidence that slope is different from 0, and the range of plausible values does not include 0.</p></li>
+</ul>
+</section>
+<section id="accuracy-of-multiple-regression-model">
+<h3>Accuracy of multiple regression model<a class="headerlink" href="#accuracy-of-multiple-regression-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="a-regression-model-of-longevity-on-gestation">
+<h2>A regression model of longevity on gestation<a class="headerlink" href="#a-regression-model-of-longevity-on-gestation" title="Permalink to this heading">#</a></h2>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>pantheria data contains data on longevity and body mass.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="n">pantheria</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;pantheria.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">pantheria</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will be interested in the following columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;5-1_AdultBodyMass_g&quot;</span><span class="p">,</span> <span class="s2">&quot;17-1_MaxLongevity_m&quot;</span><span class="p">,</span> <span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">,</span> <span class="s2">&quot;MSW05_Binomial&quot;</span><span class="p">]</span>
+
+<span class="n">panthdat_trans</span> <span class="o">=</span> <span class="n">pantheria</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+
+<span class="n">colnames</span> <span class="o">=</span> <span class="p">{</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;bodymass&quot;</span><span class="p">,</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;longevity&quot;</span><span class="p">,</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;gestation&quot;</span><span class="p">,</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">}</span>
+
+<span class="n">panthdat_trans</span> <span class="o">=</span> <span class="n">panthdat_trans</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">panthdat_trans</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">colnames</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">panthdat_trans</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at the distribution of <code class="docutils literal notranslate"><span class="pre">&quot;bodymass&quot;</span></code> <code class="docutils literal notranslate"><span class="pre">&quot;longevity&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;gestation&quot;</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">panthdat_trans</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bodymass&quot;</span><span class="p">,</span> <span class="s2">&quot;longevity&quot;</span><span class="p">,</span> <span class="s2">&quot;gestation&quot;</span><span class="p">],</span>
+                    <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s specifically now look at longevity and gestation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdat_trans</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdat_trans</span><span class="p">[</span><span class="s2">&quot;longevity&quot;</span><span class="p">],</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span> <span class="c1"># helps display overlapping data values </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longevity (months)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="a-regression-model-of-length-of-longevity-on-gestation">
+<h2>A regression model of length of longevity on gestation<a class="headerlink" href="#a-regression-model-of-length-of-longevity-on-gestation" title="Permalink to this heading">#</a></h2>
+<section id="fit-the-regression-model">
+<h3>Fit the regression model<a class="headerlink" href="#fit-the-regression-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">reg_longgest</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;gestation ~ longevity&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">panthdat_trans</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">reg_longgest_fit</span> <span class="o">=</span> <span class="n">reg_longgest</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="statistical-summary-of-the-regression-model">
+<h2>Statistical summary of the regression model<a class="headerlink" href="#statistical-summary-of-the-regression-model" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_longgest_summ</span> <span class="o">=</span> <span class="n">reg_longgest_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+
+<span class="n">reg_longgest_summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The regression equation is: <span class="math notranslate nohighlight">\(\texttt{gestation} = 38.6062 + 0.431\times \texttt{longevity}\)</span></p></li>
+<li><p>The <strong>slope</strong> indicates that for a 1 month <strong>increase</strong> in longevity, we expectat the gestational period to increase by 0.43 days.</p></li>
+<li><p>The <strong>y-intercept</strong> indicates that when longevity is 0 months, gestational period is 38.6 days.</p></li>
+</ul>
+<p>Are there any species with 0 longevitiy?</p>
+<ul class="simple">
+<li><p>No!</p></li>
+</ul>
+<p>The <strong>y-intercept</strong> in regression models often doesn”t have a sensible interpretation, but is often mathematically important for regression to work well.</p>
+<section id="accuracy-of-regression-model">
+<h3>Accuracy of regression model<a class="headerlink" href="#accuracy-of-regression-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_longgest_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This <span class="math notranslate nohighlight">\(R^2\)</span> is pretty far from 1, and so using a line to predict the relationship between longevity and gestational length probably isn’t the best approach.</p>
+<p>We can probably do better, but we will save “model improvements” for next week.</p>
+</section>
+</section>
+<section id="conclusion-of-data-analysis-using-linear-regression-model">
+<h2>Conclusion of data analysis using linear regression model<a class="headerlink" href="#conclusion-of-data-analysis-using-linear-regression-model" title="Permalink to this heading">#</a></h2>
+<p>The regression model appears to provide an okay to moderate fit the data. The scatter plot indicated that there is a lot of variation in gestational length based on the different longevities.</p>
+<ul class="simple">
+<li><p>As the longevity increases, we expect gestational length to increase too.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Next week we will build on this and look at other factors that might affect gestation.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week10/lecture"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../week09/homework/Homework_9.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 9: Hypothesis Testing</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#march-19-2025">March 19, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recap-of-data-visualization">Recap of Data Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-histogram-modality">Shape of a Histogram: Modality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-histogram-skewness">Shape of a Histogram: Skewness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-descriptions-percentiles">Data Descriptions: Percentiles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-boxplot">Shape of a Boxplot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-of-a-boxplot-skewness">Shape of a Boxplot: Skewness</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#center-of-the-data">Center of the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#center-of-the-data-based-on-skewness">Center of the data based on skewness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Center of the data based on skewness</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bootstrap">The Bootstrap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-this-a-good-idea">Why is this a good idea?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resampled-median">Resampled median</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boostrap-confidence-intervals">Boostrap confidence intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrap-confidence-intervals-for-other-statistics">Bootstrap confidence intervals for other statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-primate-carnivores-have-different-body-sizes-compared-to-carnivora-carnivores">Do Primate carnivores have different body sizes compared to Carnivora carnivores?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-idea">Basic idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-a-perfect-linear-relationship">Example 1: A perfect linear relationship</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-regression-line">Compute the regression line</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-another-perfect-linear-relationship">Example 2: Another perfect linear relationship</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-y-intercept">Interpretation of y-intercept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-slope">Interpretation of slope</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-close-to-linear">Example 3: Close to linear</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-linear-regression">Statistical summary of linear regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitted-values-predicted-values-and-residuals">Fitted values, predicted values, and residuals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-linear-regression">Accuracy of linear regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-regression-with-two-or-more-independent-variables">Example 4: Regression with two or more independent variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-a-multiple-regression-model">Statistical summary of a multiple regression model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-multiple-regression-model">Accuracy of multiple regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-regression-model-of-longevity-on-gestation">A regression model of longevity on gestation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-regression-model-of-length-of-longevity-on-gestation">A regression model of length of longevity on gestation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-the-regression-model">Fit the regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-the-regression-model">Statistical summary of the regression model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-regression-model">Accuracy of regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-of-data-analysis-using-linear-regression-model">Conclusion of data analysis using linear regression model</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

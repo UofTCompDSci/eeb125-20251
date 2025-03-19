@@ -212,6 +212,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Homework 9: Hypothesis Testing</a></li>
 
 
+
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
 <ul class="nav bd-sidenav">
@@ -394,13 +398,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Homework 9: Hypothesis Testing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Homework 9: Hypothesis Testing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-section">Introduction section</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0">Step 0</a></li>
@@ -431,10 +433,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="homework-9-hypothesis-testing">
+  <section id="homework-9-hypothesis-testing">
 <h1>Homework 9: Hypothesis Testing<a class="headerlink" href="#homework-9-hypothesis-testing" title="Permalink to this heading">#</a></h1>
+</section>
 <section id="logistics">
-<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
+<h1>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h1>
 <p><strong>Due date</strong>: The homework is due 11:59 pm on Tuesday, March 18.</p>
 <p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
 To submit your work:</p>
@@ -444,16 +447,16 @@ To submit your work:</p>
 </ol>
 </section>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h1>
 <p>For this week’s homework, we will investigate the predominance of coral presence in relationship to temperature. We will analyze data coming from six sites within a coral reef French Polinesia, from 2005 to 2022. Throughout these sites, with a quadrat sampling design along transects, percentage cover of corals, macroalgae, microalgae and sand were estimated across different depths and temperatures.</p>
 </section>
 <section id="question">
-<h2>Question<a class="headerlink" href="#question" title="Permalink to this heading">#</a></h2>
+<h1>Question<a class="headerlink" href="#question" title="Permalink to this heading">#</a></h1>
 <p><em>General Question: Do corals prefer warmer temperatures or colder temperatures?</em></p>
 <p><em>Specific Question: When comparing quadrats of high coral percentage and low coral percentage, is there a difference in the mean temperature between the two groups?</em></p>
 </section>
 <section id="learning-objectives">
-<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<h1>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h1>
 <p>You will be creating and submitting a data story answering a data science question. You will be required to submit your work in the format which has complete sections for <em>Introduction</em>, <em>Data</em>, <em>Methods</em>, <em>Computation</em>, and <em>Conclusion</em>.</p>
 <p>In this homework, you will:</p>
 <ul class="simple">
@@ -463,7 +466,6 @@ To submit your work:</p>
 <li><p>Create and modify for loops and functions to run sampling simulations</p></li>
 <li><p>Visualize and analyze sampling distributions via histograms</p></li>
 </ul>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="introduction-section">
 <h1>Introduction section<a class="headerlink" href="#introduction-section" title="Permalink to this heading">#</a></h1>
@@ -511,6 +513,173 @@ Then, run the cell.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Site</th>
+      <th>Quadrat</th>
+      <th>Year</th>
+      <th>Depth metres</th>
+      <th>Temperature celsius</th>
+      <th>Sand %</th>
+      <th>Macroalgae %</th>
+      <th>Microalgae %</th>
+      <th>Corals %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LTER01</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>27.529318</td>
+      <td>22.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>77.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LTER02</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>27.594212</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2.6</td>
+      <td>97.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LTER03</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>30.1</td>
+      <td>0.0</td>
+      <td>36.7</td>
+      <td>33.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LTER04</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>21.4</td>
+      <td>0.0</td>
+      <td>57.1</td>
+      <td>21.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LTER05</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0.6</td>
+      <td>0.0</td>
+      <td>3.6</td>
+      <td>95.8</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>11785</th>
+      <td>LTER02</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.243200</td>
+      <td>0.0</td>
+      <td>2.2</td>
+      <td>62.2</td>
+      <td>31.9</td>
+    </tr>
+    <tr>
+      <th>11786</th>
+      <td>LTER03</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>21.7</td>
+      <td>45.6</td>
+      <td>22.8</td>
+    </tr>
+    <tr>
+      <th>11787</th>
+      <td>LTER04</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.271281</td>
+      <td>0.0</td>
+      <td>12.3</td>
+      <td>62.6</td>
+      <td>21.9</td>
+    </tr>
+    <tr>
+      <th>11788</th>
+      <td>LTER05</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.202561</td>
+      <td>2.8</td>
+      <td>4.5</td>
+      <td>84.7</td>
+      <td>7.3</td>
+    </tr>
+    <tr>
+      <th>11789</th>
+      <td>LTER06</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.194049</td>
+      <td>0.0</td>
+      <td>36.0</td>
+      <td>46.0</td>
+      <td>17.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>11790 rows × 9 columns</p>
+</div></div></div>
 </div>
 </section>
 <section id="step-1">
@@ -550,11 +719,191 @@ Then, run the cell.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>site</th>
+      <th>quadrat</th>
+      <th>year</th>
+      <th>depth_m</th>
+      <th>temp_c</th>
+      <th>sand_percent</th>
+      <th>macroalgae_percent</th>
+      <th>microalgae_percent</th>
+      <th>corals_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LTER01</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>27.529318</td>
+      <td>22.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>77.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LTER02</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>27.594212</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2.6</td>
+      <td>97.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LTER03</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>&lt;NA&gt;</td>
+      <td>30.1</td>
+      <td>0.0</td>
+      <td>36.7</td>
+      <td>33.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LTER04</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>&lt;NA&gt;</td>
+      <td>21.4</td>
+      <td>0.0</td>
+      <td>57.1</td>
+      <td>21.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LTER05</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>&lt;NA&gt;</td>
+      <td>0.6</td>
+      <td>0.0</td>
+      <td>3.6</td>
+      <td>95.8</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>11785</th>
+      <td>LTER02</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.2432</td>
+      <td>0.0</td>
+      <td>2.2</td>
+      <td>62.2</td>
+      <td>31.9</td>
+    </tr>
+    <tr>
+      <th>11786</th>
+      <td>LTER03</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>&lt;NA&gt;</td>
+      <td>0.0</td>
+      <td>21.7</td>
+      <td>45.6</td>
+      <td>22.8</td>
+    </tr>
+    <tr>
+      <th>11787</th>
+      <td>LTER04</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.271281</td>
+      <td>0.0</td>
+      <td>12.3</td>
+      <td>62.6</td>
+      <td>21.9</td>
+    </tr>
+    <tr>
+      <th>11788</th>
+      <td>LTER05</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.202561</td>
+      <td>2.8</td>
+      <td>4.5</td>
+      <td>84.7</td>
+      <td>7.3</td>
+    </tr>
+    <tr>
+      <th>11789</th>
+      <td>LTER06</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.194049</td>
+      <td>0.0</td>
+      <td>36.0</td>
+      <td>46.0</td>
+      <td>17.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>11790 rows × 9 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check that you have the correct column names</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">corals_clean</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;site&#39;,
+ &#39;quadrat&#39;,
+ &#39;year&#39;,
+ &#39;depth_m&#39;,
+ &#39;temp_c&#39;,
+ &#39;sand_percent&#39;,
+ &#39;macroalgae_percent&#39;,
+ &#39;microalgae_percent&#39;,
+ &#39;corals_percent&#39;]
 </pre></div>
 </div>
 </div>
@@ -584,6 +933,70 @@ Then, run the cell.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>site</th>
+      <th>year</th>
+      <th>temp_c</th>
+      <th>corals_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LTER01</td>
+      <td>2005</td>
+      <td>27.529318</td>
+      <td>77.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LTER02</td>
+      <td>2005</td>
+      <td>27.594212</td>
+      <td>97.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LTER03</td>
+      <td>2005</td>
+      <td>&lt;NA&gt;</td>
+      <td>33.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LTER04</td>
+      <td>2005</td>
+      <td>&lt;NA&gt;</td>
+      <td>21.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LTER05</td>
+      <td>2005</td>
+      <td>&lt;NA&gt;</td>
+      <td>95.8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="methods-section">
@@ -623,6 +1036,76 @@ Then, run the cell.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>site</th>
+      <th>year</th>
+      <th>temp_c</th>
+      <th>corals_percent</th>
+      <th>is_corals_percent_gte_50</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LTER01</td>
+      <td>2005</td>
+      <td>27.529318</td>
+      <td>77.5</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LTER02</td>
+      <td>2005</td>
+      <td>27.594212</td>
+      <td>97.4</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LTER03</td>
+      <td>2005</td>
+      <td>&lt;NA&gt;</td>
+      <td>33.2</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LTER04</td>
+      <td>2005</td>
+      <td>&lt;NA&gt;</td>
+      <td>21.5</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LTER05</td>
+      <td>2005</td>
+      <td>&lt;NA&gt;</td>
+      <td>95.8</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="step-2-create-a-function-to-calculate-mean-differences-in-temperature-by-group">
@@ -666,6 +1149,14 @@ Then, run the cell.</p>
 <span class="c1"># Verify the result</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">observed_diff_in_mean_temperature</span><span class="p">))</span> <span class="c1"># print the data type</span>
 <span class="n">observed_diff_in_mean_temperature</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.float64&#39;&gt;
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(-0.06443893039779525)
 </pre></div>
 </div>
 </div>
@@ -745,6 +1236,22 @@ Then, run the cell.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     -0.009486
+1     -0.004217
+2     -0.005379
+3     -0.005135
+4     -0.016262
+         ...   
+995   -0.006254
+996    0.003201
+997   -0.001090
+998    0.014004
+999    0.015579
+Length: 1000, dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="step-5-calculating-our-p-value">
@@ -768,6 +1275,11 @@ Then, run the cell.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0)
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="step-6-visualizing-our-results">
@@ -786,6 +1298,12 @@ Then, run the cell.</p>
 <span class="n">observed_diff_in_mean_temperature</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(-0.06443893039779525)
+</pre></div>
+</div>
+<img alt="../../../../_images/08f178de0dbc206b288696145e5075d7b8f443835c982a057490caf2077a095a.png" src="../../../../_images/08f178de0dbc206b288696145e5075d7b8f443835c982a057490caf2077a095a.png" />
 </div>
 </div>
 </section>
@@ -862,13 +1380,11 @@ Then, run the cell.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Homework 9: Hypothesis Testing</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Homework 9: Hypothesis Testing</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-section">Introduction section</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0">Step 0</a></li>

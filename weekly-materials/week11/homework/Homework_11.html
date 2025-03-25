@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Homework 10: Bootstrap &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+    <title>Homework 11: Linear Regression &#8212; Computation and Data Science for the Life and Physical Sciences</title>
   
   
   
@@ -61,12 +61,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week10/homework/Homework_10';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week11/homework/Homework_11';</script>
     <link rel="shortcut icon" href="../../../_static/favicon.png"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Week 11: Linear Regression" href="../../week11/lecture/lecture11.html" />
-    <link rel="prev" title="Week 10: Bootstrap" href="../lecture/lecture10-solution.html" />
+    <link rel="prev" title="Week 11: Linear Regression" href="../lecture/lecture11.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -218,15 +219,15 @@ const thebe_selector_output = ".output, .cell_output"
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture10.html">Prof. Moon's Notebook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture10-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 10 Homework</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week10/lecture/lecture10.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week10/lecture/lecture10-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week10/homework/Homework_10.html">Week 10 Homework</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 11</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../week11/lecture/lecture11.html">Prof. Moon's Notebook</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../week11/homework/Homework_11.html">Week 11 Homework</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lecture/lecture11.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 11 Homework</a></li>
 </ul>
 
     </div>
@@ -281,7 +282,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week10/homework/Homework_10.ipynb&branch=main" target="_blank"
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week11/homework/Homework_11.ipynb&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onJupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -312,7 +313,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../../_sources/weekly-materials/week10/homework/Homework_10.ipynb" target="_blank"
+      <li><a href="../../../_sources/weekly-materials/week11/homework/Homework_11.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -394,7 +395,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Homework 10: Bootstrap</h1>
+    <h1>Homework 11: Linear Regression</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -411,7 +412,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-bootstrap-confidence-interval">Method: Bootstrap Confidence Interval</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
@@ -424,58 +425,47 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="homework-10-bootstrap">
-<h1>Homework 10: Bootstrap<a class="headerlink" href="#homework-10-bootstrap" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-11-linear-regression">
+<h1>Homework 11: Linear Regression<a class="headerlink" href="#homework-11-linear-regression" title="Permalink to this heading">#</a></h1>
 <section id="logistics">
 <h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
-<p><strong>Due date</strong>: The homework is due 11:59 pm on Tuesday, March 25.</p>
-<p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
+<p><strong>Due date</strong>: The homework is due 11:59 pm on Tuesday, April 1.</p>
+<p>You will submit your work on <a class="reference external" href="https://markus-ds.teach.cs.toronto.edu">MarkUs</a>.
 To submit your work:</p>
 <ol class="arabic simple">
-<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_10.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../../../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
-<li><p>Submit this file to MarkUs under the <strong>hw10</strong> assignment. (See <a class="reference internal" href="../../../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_11.ipynb</span></code>) from JupyterHub. (See <a class="reference internal" href="../../../guides/jupyterhub_guide.html"><span class="doc std std-doc">our JupyterHub Guide</span></a> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>hw11</strong> assignment. (See <a class="reference internal" href="../../../guides/markus_guide.html"><span class="doc std std-doc">our MarkUs Guide</span></a> for detailed instructions.)
 All homeworks will take place in a Jupyter notebook (like this one). When you are done, you will download this notebook and submit it to MarkUs.
 We’ve incuded submission instructions at the end of this notebook.</p></li>
 </ol>
 </section>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
-<p>For this week’s homework, we will look at the median percentage of coral coverage over all of the quadrats sampled in the <code class="docutils literal notranslate"><span class="pre">LTER</span></code> data. We will analyze data coming from six sites within a coral reef in French Polynesia, from 2005 to 2022. Throughout these sites, with a quadrat sampling design along transects, percentage cover of corals, macroalgae, microalgae and sand were estimated across different depths and temperatures.</p>
+<p>For this week’s homework, we will look at the relationship between the length and width of fish with the weight of the fish, available in the <code class="docutils literal notranslate"><span class="pre">fish.csv</span></code> file. This dataset is a record of 7 common different fish species used in fish market sales. The 7 species include: Bream, Parkki, Perch, Pike, Roach, Smelt, and Whitefish.</p>
 </section>
 <section id="question">
 <h2>Question<a class="headerlink" href="#question" title="Permalink to this heading">#</a></h2>
-<p><em>General Question: What is the distribution of the percentage of coral coverage in each of the quadrats? Can we provide an range that does a good job of estimating the median of the percentage of coral coverage?</em></p>
+<p><em>General Question: What can we say about the relationship between the length and width of a fish while trying to predict its weight?</em></p>
 </section>
 <section id="instructions-and-learning-objectives">
 <h2>Instructions and Learning Objectives<a class="headerlink" href="#instructions-and-learning-objectives" title="Permalink to this heading">#</a></h2>
-<p>You will be creating and submitting a data story answering a data science question.</p>
 <p>In this homework, you will:</p>
 <ul class="simple">
 <li><p>Create a data story in a notebook exploring the question.</p></li>
-<li><p>Work with the Moorea Coral reef Long-term ecological research dataset to investigate changes in biodiversity as temperature changes.</p></li>
-<li><p>Visualize and analyze the distribution of the percentage of coral coverage</p></li>
-<li><p>Create a 95% confidence interval for the median percentage of coral coverage.</p></li>
+<li><p>Visualize and analyze the relationships between length, width and weight.</p></li>
+<li><p>Create and compare different linear regression models.</p></li>
 </ul>
 </section>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
-<p>First import <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> by running the cell below.</p>
+<p>First import <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>, and <code class="docutils literal notranslate"><span class="pre">statsmodels.formula.api</span></code> by running the cell below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Then fill in your student number to use as a random seed.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Please fill in this cell with your student number (as an int)</span>
-<span class="n">student_number</span> <span class="o">=</span> <span class="o">...</span>
-
-<span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">student_number</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;Did you fill in the student_number variable correctly?&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
 </pre></div>
 </div>
 </div>
@@ -483,44 +473,14 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
 </section>
 <section id="data-section">
 <h2>Data section<a class="headerlink" href="#data-section" title="Permalink to this heading">#</a></h2>
-<p>The this part of your notebook should read the raw data, extract a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> containing the important columns, rename the columns, and filter out missing values.</p>
-<p>You might find it helpful to name intermediate values in your algorithms - e.g., <code class="docutils literal notranslate"><span class="pre">corals_data.head()</span></code>, <code class="docutils literal notranslate"><span class="pre">corals_clean.head()</span></code>. That way you can examine them to make sure they have the type you expect and that they look like what you expect. Very helpful when debugging!</p>
+<p>The this part of your notebook should read the raw data, extract a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> containing the columns of interest.</p>
 <p>Create the following pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">corals_data</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> created by reading in the <code class="docutils literal notranslate"><span class="pre">LTER_data.csv</span></code> file.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">corals_clean</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> with column names converted to ‘snake case’ format using <code class="docutils literal notranslate"><span class="pre">&lt;columns&gt;.str.lower()</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;columns&gt;.str.replace()</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;columns&gt;.str.strip()</span></code>. <a class="reference external" href="https://en.wikipedia.org/wiki/Snake_case">Snake cases</a> uses fully lowercase letters and underscores instead of spaces. It is the <a class="reference external" href="https://peps.python.org/pep-0008/#function-and-variable-names">recommended naming convention</a> for Python.  For example, if we have the column name: “Tomo is a Great prof  “, the snake case equivalent would be ‘tomo_is_a_great_prof’. Furthermore, we will replace the following symbols to the corresponding symbols/text:symbols/text:</p>
 <ul class="simple">
-<li><p>” ” with “_”,</p></li>
-<li><p>“%” to “percent”</p></li>
-<li><p>“metres” to “m”</p></li>
-<li><p>“celsius” to “c”</p></li>
-<li><p>“temperature” to “temp”</p></li>
-</ul>
-<p>Check that your column names are correct using <code class="docutils literal notranslate"><span class="pre">print(list(corals_clean.columns))</span></code>.</p>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">corals_select_data</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> with the only following columns selected:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">site</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">year</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">corals_percent</span></code></p></li>
-</ul>
-<p>These columns will be relevant to this week’s anlaysis.</p>
-</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fish_data</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> created by reading in the <code class="docutils literal notranslate"><span class="pre">fish.csv</span></code> file.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
-<span class="n">corals_data</span> <span class="o">=</span> <span class="c1"># read the file</span>
-
-<span class="n">corals_clean</span> <span class="o">=</span> <span class="n">corals_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># do not modify this line</span>
-
-<span class="n">co_columns</span> <span class="o">=</span> <span class="n">corals_clean</span><span class="o">.</span><span class="n">columns</span> <span class="c1"># do not modify this line; use the variable to access the &quot;uncleaned&quot; column names</span>
-
-<span class="n">corals_clean</span> <span class="o">=</span> <span class="c1"># rename the columns</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">corals_clean</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span> <span class="c1"># do not modify this line; prints your &quot;claned&quot; column names to help you verify your work</span>
-
-<span class="n">corals_select_data</span> <span class="o">=</span> <span class="c1"># select the relevant columns from corals_clean</span>
 </pre></div>
 </div>
 </div>
@@ -528,70 +488,73 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
 </section>
 <section id="exploring-the-data">
 <h2>Exploring the data<a class="headerlink" href="#exploring-the-data" title="Permalink to this heading">#</a></h2>
-<p>Create a histogram of the percentage of coral coverage using the <code class="docutils literal notranslate"><span class="pre">bins</span></code> variable provided to specify the histogram bins. You do not need to store the result in a variable.</p>
+<p>Create a histograms of the following:</p>
+<ul class="simple">
+<li><p>vertical length of the fish (in cm)</p></li>
+<li><p>width of the fish (in cm)</p></li>
+<li><p>weight of the fish (in grams)</p></li>
+</ul>
+<p>You do not need to store the results in a variable. Label the y-axis with “Frequency” and the x-axes with “Vertical Length (cm)”, “Width (cm)” and “Weight (g)” where appropriate. Start with <code class="docutils literal notranslate"><span class="pre">bins=15</span></code> to create 15 bins and then try different number of bins as you see fti for each histogram.  <strong>(3 marks)</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
-<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># do not modify this line; use it to specify the histogram bins</span>
+<span class="c1"># add additional cells as necessary</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Comment on the shape of the histogram and the distribution of the coral percentage. What is a better representation of the centre of the data, the mean or the median? Why? <strong>(2 marks)</strong></p>
+<p>Comment on the shape of each histogram and the distribution of the vertical length, width, and weight of the fish in terms of the skewness, the range, and the number of modes. <strong>(3 marks)</strong></p>
 <blockquote>
-<div><p><strong>Answer here</strong></p>
+<div><p><strong>Answer goes here</strong></p>
 </div></blockquote>
-<p>Compute the following summaries:</p>
+<p>Create two scatterplots:</p>
 <ul class="simple">
-<li><p>the median percentage of coral coverage, and store the result in <code class="docutils literal notranslate"><span class="pre">median_coverage</span></code></p></li>
-<li><p>the mean percentage of coral coverage, and store the result in <code class="docutils literal notranslate"><span class="pre">mean_coverage</span></code></p></li>
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g</span></code> on the y-axis.</p></li>
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">length_vertical_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g</span></code> on the y-axis.</p></li>
 </ul>
+<p>Label the axes with “Vertical Length (cm)”, “Width (cm)” and “Weigth (g)” where appropriate. You do not need to save the values in a variable. <strong>(2 marks)</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
-
-<span class="c1"># Check the values</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The median coral coverage in % is </span><span class="si">{</span><span class="n">median_coverage</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean coral coverage in % is </span><span class="si">{</span><span class="n">mean_coverage</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="c1"># add additional cells as necessary</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Comment on the shape of each scatterplot. Specifically commenting on whether the trends looks “positive” or “negative” and whether the trends appear linear or not. <strong>(2 marks)</strong></p>
+<blockquote>
+<div><p><strong>Answer goes here</strong></p>
+</div></blockquote>
+<p>Create a new column in <code class="docutils literal notranslate"><span class="pre">fish_data</span></code> called <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> which takes the <code class="docutils literal notranslate"><span class="pre">weight_g</span></code> and square roots the values. <em>Hint: this can be done by using <code class="docutils literal notranslate"><span class="pre">.apply(np.sqrt)</span></code></em>. <strong>(1 mark)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now create two new scatterplots:</p>
+<ul class="simple">
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> on the y-axis.</p></li>
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">length_vertical_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> on the y-axis.</p></li>
+</ul>
+<p>Label the axes with “Vertical Length (cm)”, “Width (cm)” and “Weight Sqrt” where appropriate. <strong>(1 mark)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
+<span class="c1"># add additional cells as necessary</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Comment on the linearity of the scatterplots with weight square rooted. <strong>(1 mark)</strong></p>
+<blockquote>
+<div><p><strong>Answer goes here</strong></p>
+</div></blockquote>
 </section>
-<section id="method-bootstrap-confidence-interval">
-<h2>Method: Bootstrap Confidence Interval<a class="headerlink" href="#method-bootstrap-confidence-interval" title="Permalink to this heading">#</a></h2>
-<p>Here we will run a bootstrap to estimate resampling technique by:</p>
-<ul class="simple">
-<li><p>creating a resampling function that calculates the median of a resample</p></li>
-<li><p>running the resampling function multiple times and having multiple resample medians</p></li>
-<li><p>getting the 2.5% and 97.5% percentiles of all of our resample medians to get a 95% confidence interval.</p></li>
-</ul>
-<p>Create a function called <code class="docutils literal notranslate"><span class="pre">one_bootstrap_med()</span></code> which will take one argument <code class="docutils literal notranslate"><span class="pre">data</span></code> (a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>), resample the <code class="docutils literal notranslate"><span class="pre">corals_percent</span></code> column of <code class="docutils literal notranslate"><span class="pre">data</span></code>, and calculate and return the median of the new sample.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Complete the function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">one_bootstrap_med</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="c1"># Fill in the code below</span>
-    <span class="o">...</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now compute 10,000 bootstrap medians by writing a for loop. Use your student number as a seed prior to running the bootstrap. Save the medians as a list in a variable called <code class="docutils literal notranslate"><span class="pre">bootstrap_medians</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following line of code uses your student number to set a random seed.</span>
-<span class="c1"># This ensures that every time you run this cell, you&#39;ll get the same result.</span>
-<span class="c1"># Do not modify this line of code!</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">student_number</span><span class="p">)</span>
-
-<span class="c1"># Write your code below</span>
-<span class="n">bootstrap_medians</span> <span class="o">=</span> <span class="p">[]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Create a histogram of the 10,000 bootstrap median coral coverage percentages. Set <code class="docutils literal notranslate"><span class="pre">bins=12</span></code> inside the plotting function to set the number of bins to 12. You do not need to store the result in a variable.</p>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">#</a></h2>
+<p>Setup a linear regression, called <code class="docutils literal notranslate"><span class="pre">regmod1</span></code>, estimate and fit the model (call this <code class="docutils literal notranslate"><span class="pre">regmod1_fit</span></code>) and calculate the parameter estimates (using <code class="docutils literal notranslate"><span class="pre">.params</span></code>), specifically with <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> as the dependent variable and <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> as the independent variable. <strong>(3 marks)</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
@@ -599,7 +562,11 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
 </div>
 </div>
 </div>
-<p>Calculate the lower bound and upper bound of the 95% confidence intervals for the median percentage of coral coverage in a given quadrat. Save these values as <code class="docutils literal notranslate"><span class="pre">lower_bound</span></code> and <code class="docutils literal notranslate"><span class="pre">upper_bound</span></code>, respectively.</p>
+<p>What is the estimated line of best fit for <code class="docutils literal notranslate"><span class="pre">regmod1</span></code>? Provide an interpretation for the y-intercept and slope estimates. Comment on whether the y-intercept makes sense. <strong>(2 marks)</strong></p>
+<blockquote>
+<div><p><strong>Answer goes here</strong></p>
+</div></blockquote>
+<p>Setup another linear regression, called <code class="docutils literal notranslate"><span class="pre">regmod2</span></code>, estimate and fit the model (call this <code class="docutils literal notranslate"><span class="pre">regmod2_fit</span></code>) and calculate the parameter estimates (using <code class="docutils literal notranslate"><span class="pre">.params</span></code>), specifically with <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> as the dependent variable and both <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> and <code class="docutils literal notranslate"><span class="pre">length_vertical_cm</span></code> as the independent variables. <strong>(1 mark)</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
@@ -607,11 +574,22 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
 </div>
 </div>
 </div>
+<p>What is the estimated line of best fit for <code class="docutils literal notranslate"><span class="pre">regmod2</span></code>? Provide an interpretation for the y-intercept and slope estimates. <strong>(2 marks)</strong></p>
+<blockquote>
+<div><p><strong>Answer goes here</strong></p>
+</div></blockquote>
+<p>Print out the summary tables for both models (<code class="docutils literal notranslate"><span class="pre">regmod1</span></code> and <code class="docutils literal notranslate"><span class="pre">regmod2</span></code>) which display the p-values ande 95% confidence intervals associated with the intercept and slope estimates. <strong>(1 mark)</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the computed values</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The lower bound of the 95% confidence interval is </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The uppwer bound of the 95% confidence interval is </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculate the <span class="math notranslate nohighlight">\(R^2\)</span> for both models, and save them in <code class="docutils literal notranslate"><span class="pre">regmod1_rsquared</span></code> and <code class="docutils literal notranslate"><span class="pre">regmod2_rsquared</span></code>. <strong>(1 mark)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code below</span>
 </pre></div>
 </div>
 </div>
@@ -619,9 +597,9 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
 </section>
 <section id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
-<p>Provide a 1-2 sentence explanation of what the 95% confidence interval represents. <strong>(1 mark)</strong></p>
+<p>Based on the scatterplots, p-values, confidence intervals and <span class="math notranslate nohighlight">\(R^2\)</span> which of the two models would you select to model a fish’s weight (square rooted). You will be graded based on the appropriate justification(s) provided. <strong>(2 marks)</strong></p>
 <blockquote>
-<div><p><strong>Answer here</strong></p>
+<div><p><strong>Answer goes here</strong></p>
 </div></blockquote>
 </section>
 </section>
@@ -639,7 +617,7 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
         },
         kernelOptions: {
             name: "python3",
-            path: "./weekly-materials/week10/homework"
+            path: "./weekly-materials/week11/homework"
         },
         predefinedOutput: true
     }
@@ -655,22 +633,13 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../lecture/lecture10-solution.html"
+       href="../lecture/lecture11.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Week 10: Bootstrap</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../../week11/lecture/lecture11.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Week 11: Linear Regression</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -694,7 +663,7 @@ We’ve incuded submission instructions at the end of this notebook.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-bootstrap-confidence-interval">Method: Bootstrap Confidence Interval</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>

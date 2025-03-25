@@ -1,0 +1,1593 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Week 11: Linear Regression &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week11/lecture/lecture11';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Homework 11: Linear Regression" href="../homework/Homework_11.html" />
+    <link rel="prev" title="Homework 10: Bootstrap" href="../../week10/homework/Homework_10.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_proposal.html">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_instructions.html">Final Project Instructions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week08/lecture/lecture8.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week08/homework/Homework_8.html">Week 8 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week09/lecture/lecture9.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/lecture/lecture9-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/homework/Homework_9.html">Week 9 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/homework/marking/Homework_9_solutions.html">Homework 9: Hypothesis Testing</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week10/lecture/lecture10.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week10/lecture/lecture10-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week10/homework/Homework_10.html">Week 10 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 11</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../homework/Homework_11.html">Week 11 Homework</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week11/lecture/lecture11.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week11/lecture/lecture11.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 11: Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#march-26-2025">March 26, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exam-info">Exam Info</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-evaluations">Course Evaluations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-methods">Data Science Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-idea">Basic idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-close-to-linear-from-last-week">Example 3: Close to linear - from last week</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values-and-residuals">Predicted values and residuals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-linear-regression">Accuracy of linear regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-to-estimate-gestation-using-some-combination-of-body-mass-and-longevity">Regression model to estimate gestation using some combination of body mass and longevity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disclaimer">Disclaimer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-the-data">Transform the data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-1-length-of-longevity-on-gestation">Regression Model 1: Length of longevity on gestation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-the-regression-model">Fit the regression model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-the-regression-model">Statistical summary of the regression model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-regression-model">Accuracy of regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-2-log-of-length-of-longevity-on-gestation">Regression Model 2: Log of length of longevity on gestation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-3-body-mass-on-gestation">Regression Model 3: Body mass on gestation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-4-log-of-body-mass-on-gestation">Regression Model 4: Log of body mass on gestation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-5">Regression Model 5</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-with-longevity-and-log-body-mass">Multiple regression with longevity and log body mass</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-models-1-4-and-5">Comparing Models 1, 4 and 5</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-when-trying-to-model-gestation">Conclusions when trying to model gestation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causality">Causality</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-outcomes-and-randomized-control-trials">Potential outcomes and randomized control trials</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-for-model-selection">Alternative for Model Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-vs-testing">Training vs Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">Root Mean Squared Error (RMSE)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-a-pandas-dataframe-by-index">Splitting a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> by <code class="docutils literal notranslate"><span class="pre">index</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-training-and-test-data-sets-from-a-single-dataset">Creating training and test data sets from a single dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1">Step 1:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-fit-the-regression-model-on-the-training-data">Step 2: Fit the regression model on the training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-predicted-fitted-values-using-training-data">Step 3: Compute predicted (fitted) values using training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-evaluate-accuracy-using-root-mean-squared-error-on-training-data">Step 4: Evaluate accuracy using root mean-squared error on training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-evaluate-the-accuracy-of-regression-model-on-the-test-data-using-root-mean-squared-error">Step 5: Evaluate the accuracy of regression model on the test data using root mean-squared error</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-of-caution">Note of caution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-11-linear-regression">
+<h1>Week 11: Linear Regression<a class="headerlink" href="#week-11-linear-regression" title="Permalink to this heading">#</a></h1>
+<section id="march-26-2025">
+<h2>March 26, 2025<a class="headerlink" href="#march-26-2025" title="Permalink to this heading">#</a></h2>
+<p><strong>Michael Jongho Moon</strong></p>
+</section>
+<section id="exam-info">
+<h2>Exam Info<a class="headerlink" href="#exam-info" title="Permalink to this heading">#</a></h2>
+<div style="float:left; width:45%;">
+<ul>
+<li>Final Exam is on Thursday, April 17, 2025 from 2 pm ET to 5 pm ET.</li>
+<li>The final exam will be written in a supervised, in-person setting, in computer labs on campus. We're still finalizing the room assignments, and will post a new announcement with room assignments next week.</li>
+<li>Bring your Tcard or some other form of goernment-issued photo ID.</li>
+<li>You must remain in the lab while writing the exam (i.e., you cannot go grab a coffee/food during the exam).</li>
+</ul>
+</div>
+<div style="float:left; width:45%;">
+<ul>
+<li>Each student will use a lab computer, <em>not their own laptop,</em> to complete the exam.</li>
+<li>You'll login with your UTORid and password, and will also need your U of T email address to login to JupyterHub.</li>
+<li>The exam will be semi-open book. You'll have access to the EEB125 course website, JupyterHub (including all of your course work from the semester), and MarkUs. However, you won't have access to any other websites (e.g., Quercus, Google, Facebook), and of course will not be allowed to communicate with anyone else during the exam.</li>
+</ul>
+</div></section>
+<section id="course-evaluations">
+<h2>Course Evaluations<a class="headerlink" href="#course-evaluations" title="Permalink to this heading">#</a></h2>
+<a class="reference internal image-reference" href="../../../_images/evals.png"><img alt="../../../_images/evals.png" src="../../../_images/evals.png" style="width: 400px;" /></a>
+<p>Course evaluations are until April 8.</p>
+</section>
+<section id="data-science-methods">
+<h2>Data Science Methods<a class="headerlink" href="#data-science-methods" title="Permalink to this heading">#</a></h2>
+<p><strong>Hypothesis testing</strong> covered how to:</p>
+<ul class="simple">
+<li><p>test if a percentage (statistic) is different from some hypothesized values.</p></li>
+<li><p>test if two different groups have different means (or median).</p></li>
+</ul>
+<p><strong>Confidence intervals</strong> covered how to:</p>
+<ul class="simple">
+<li><p>get a range of values which estimate a parameter (i.e., mean, median, percentage).</p></li>
+<li><p>get a range of values which estimate the difference in means (or medians) of two different groups.</p></li>
+</ul>
+<p><strong>Linear regression</strong> we covered how to:</p>
+<ul class="simple">
+<li><p>look at the relationship between two columns in a data frame. (e.g., the relationship between height and mass of mammals).</p></li>
+</ul>
+</section>
+<section id="linear-regression">
+<h2>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this heading">#</a></h2>
+<section id="basic-idea">
+<h3>Basic idea<a class="headerlink" href="#basic-idea" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Linear regression is a useful technique for creating models to explain relationships between variables.</p></li>
+<li><p>The dependent variable must be numeric, and have meaningful numeric values.</p></li>
+<li><p>The independent variables can be interval or categorical variables.</p></li>
+</ul>
+<p>Essentially we have some data and want to estimate the line.</p>
+<a class="reference internal image-reference" href="../../../_images/line1.png"><img alt="../../../_images/line1.png" src="../../../_images/line1.png" style="width: 400px;" /></a>
+<p>We call the estimated line <span class="math notranslate nohighlight">\(\hat{Y} = b_0 + b_1 X\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(b_0\)</span> is the estimated y-intercept</p></li>
+<li><p><span class="math notranslate nohighlight">\(b_1\)</span> is the estimated slope</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/lines.png"><img alt="../../../_images/lines.png" src="../../../_images/lines.png" style="width: 400px;" /></a>
+<p>Specifically, we are looking for the slope to be non-zero, to have an analytical linear relationship between the independent and dependent variables.</p>
+<p><strong>Recall, the summary table will output a p-value for testing: <span class="math notranslate nohighlight">\(H_0: slope = 0\)</span>.</strong></p>
+<p>Thus, if the p-value is small there is evidence against the null hypothesis that there is no linear relationship between the variables.</p>
+<ul class="simple">
+<li><p>if the p-value is small then we say that analytically, there is evidence that the slope is not 0. Implying there is a linear relationship between the independent and dependent variable.</p></li>
+<li><p>if the p-value is large then we say that analytically, there is evidence that the slope is 0. Implying there is not a lineawr relationship between the independent and dependent variable.</p></li>
+</ul>
+</section>
+<section id="example-3-close-to-linear-from-last-week">
+<h3>Example 3: Close to linear - from last week<a class="headerlink" href="#example-3-close-to-linear-from-last-week" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Last week in Example 3 we did a linear regression on data that was almost perfectly linear.</p></li>
+<li><p>Let’s build on this example to assess whether the model is appropriate.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2025</span><span class="p">)</span> <span class="c1"># set the seed so that it&#39;s reproducible</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;depvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;indvar&quot;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">)}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span> 
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;indvar&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;depvar&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;indvar&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;depvar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">regmod</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;depvar ~ indvar&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">regmod_fit</span> <span class="o">=</span> <span class="n">regmod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+
+<span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span> <span class="c1"># get parameter estimates</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, now the relationship isn’t perfectly linear, but close.  The equation of this regression line is:</p>
+<div class="math notranslate nohighlight">
+\[\texttt{depvar} = 1.1127 + 0.9644 \times \texttt{indvar}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># sns.regplot(x=&quot;indvar&quot;, y=&quot;depvar&quot;, data=df, ci=90); # 90% confidence interval</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;indvar&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;depvar&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">regplot()</span></code> function in the <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> library will produce a scatter plot with the regression line.</p>
+<p>The parameters of <code class="docutils literal notranslate"><span class="pre">regplot()</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> is the independent variable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> is the dependent variable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ci=None</span></code> specifies no confidence interval for the regression line</p></li>
+</ul>
+</section>
+<section id="predicted-values-and-residuals">
+<h3>Predicted values and residuals<a class="headerlink" href="#predicted-values-and-residuals" title="Permalink to this heading">#</a></h3>
+<p>If the values of the independent variable are plugged into the regression equation then we obtain the fitted values.</p>
+<div class="math notranslate nohighlight">
+\[\texttt{depvar} = 1.1127 + 0.9644 \times \texttt{indvar}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The fitted value for the first row of <code class="docutils literal notranslate"><span class="pre">df</span></code> is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="c1"># 1.1127 + 0.9644 * 0.2710</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If the linear regression model is used on an independent variable that is not in the data set used to build the model then it’s often referred to as a <strong>predicted value</strong>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">regmod_fit</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">9</span> <span class="c1"># e.g., independent variable at 9</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To extract the fitted values from a regression model use the <code class="docutils literal notranslate"><span class="pre">fittedvalues</span></code> function in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">fittedvalues</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <strong>residual</strong> is how far above or below the line a point is. So, it is the dependent variable minus the fitted value.</p>
+<p>So, for the first row the residual is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="o">-</span> <span class="mf">1.37398</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below is what the residuals look like on a scatter plot against the independent variable, in comparison to the scatter plot of the dependent variable (with the line of best fit overlaidon top of it).</p>
+<a class="reference internal image-reference" href="../../../_images/residuals_explain.png"><img alt="../../../_images/residuals_explain.png" src="../../../_images/residuals_explain.png" style="width: 400px;" /></a>
+<p>To extract the residuals from a regression model use the <code class="docutils literal notranslate"><span class="pre">resid</span></code> attribute of the fitted object (i.e., <code class="docutils literal notranslate"><span class="pre">regmod_fit</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">resid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;depvar&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">regmod_fit</span><span class="o">.</span><span class="n">fittedvalues</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Visualizing the <strong>residuals</strong> against the <strong>fitted values</strong> can reveal unwanted patterns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">fittedvalues</span><span class="p">,</span> <span class="n">regmod_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;fitted values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;residuals&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The scatter plot of residuals versus fitted values is an example of a <strong>diagnostic</strong> plot of the model.</p></li>
+<li><p>If the linear regression model fits the data well then the residuals should be close to and randomly spread around 0.</p></li>
+<li><p>A plot that looks like a random scatter of points around 0 indicates that linear regression is an appropriate model.</p></li>
+<li><p>Since there are only 8 points it’s hard to spot a pattern in this toy example.</p></li>
+</ul>
+<ul class="simple">
+<li><p>If the model is good/appropriate, the residuals shouldn’t have a pattern not captured by the regression line/model.</p></li>
+<li><p>We want a plot of the residuals to look like the first graphic below:</p></li>
+</ul>
+<a class="reference internal image-reference" href="../../../_images/residuals.png"><img alt="../../../_images/residuals.png" src="../../../_images/residuals.png" style="width: 400px;" /></a>
+</section>
+</section>
+<section id="accuracy-of-linear-regression">
+<h2>Accuracy of linear regression<a class="headerlink" href="#accuracy-of-linear-regression" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>There are several measures of accuracy for linear regression.</p></li>
+<li><p>Popular measures are R-squared and root-mean squared error.</p></li>
+<li><p>R-squared can be calculated from a fitted model regression model using the <code class="docutils literal notranslate"><span class="pre">rsquared</span></code> function in <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>.</p></li>
+<li><p>R-squared is always between 0 and 1.</p>
+<ul>
+<li><p>R-squared of 0 indicates a poor fit</p></li>
+<li><p>R-squared of 1 indicates a perfect fit</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regmod_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-model-to-estimate-gestation-using-some-combination-of-body-mass-and-longevity">
+<h2>Regression model to estimate gestation using some combination of body mass and longevity<a class="headerlink" href="#regression-model-to-estimate-gestation-using-some-combination-of-body-mass-and-longevity" title="Permalink to this heading">#</a></h2>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>pantheria data contains data on longevity and body mass.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="n">pantheria</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;pantheria.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">pantheria</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="disclaimer">
+<h3>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>In this example, we are showcasing some ways to “statistically” select a regression model.</p></li>
+<li><p>There are lots of other approaches to select a regression model.</p></li>
+<li><p>And selecting using <em>only</em> statistical output is usually not enough. i.e., usually you want to speak with a subject-matter expert to help avoid spurious findings and ensure that the model makes sense.</p></li>
+</ul>
+<p>We will be interested in the following columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;5-1_AdultBodyMass_g&quot;</span><span class="p">,</span> <span class="s2">&quot;17-1_MaxLongevity_m&quot;</span><span class="p">,</span> <span class="s2">&quot;9-1_GestationLen_d&quot;</span><span class="p">,</span> <span class="s2">&quot;MSW05_Binomial&quot;</span><span class="p">]</span>
+
+<span class="n">panthdat</span> <span class="o">=</span> <span class="n">pantheria</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+
+<span class="n">colnames</span> <span class="o">=</span> <span class="p">{</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;bodymass&quot;</span><span class="p">,</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;longevity&quot;</span><span class="p">,</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;gestation&quot;</span><span class="p">,</span>
+            <span class="n">cols</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">}</span>
+
+<span class="n">panthdata</span> <span class="o">=</span> <span class="n">panthdat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">panthdata</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">colnames</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">panthdata</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at the distribution of <code class="docutils literal notranslate"><span class="pre">&quot;bodymass&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;longevity&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;gestation&quot;</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">panthdata</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bodymass&quot;</span><span class="p">,</span> <span class="s2">&quot;longevity&quot;</span><span class="p">,</span> <span class="s2">&quot;gestation&quot;</span><span class="p">],</span> 
+               <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can start by estimating the line with gestation as the dependent variable and longevity as the independent variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;longevity&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;gestation&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">panthdata</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">})</span> <span class="c1"># helps display overlapping data values </span>
+<span class="c1"># seaborn also uses matplotlib as the backend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longevity (months)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;longevity&quot;</span><span class="p">],</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span> <span class="c1"># helps display overlapping data values </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longevity (months)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s think about the line with gestation as the dependent variable and body mass as the independent variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;bodymass&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Body mass (g)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="transform-the-data">
+<h3>Transform the data<a class="headerlink" href="#transform-the-data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>This is a bit hard to interpret and the body mass vs. gestation scatterplot looks non-linear.</p></li>
+<li><p>One way to deal with data that is clumped together on the left (right-skewed) is to transform the x-values using <span class="math notranslate nohighlight">\(\log_{e}(x)\)</span> to stretch the clump on the left.</p></li>
+<li><p>Note: there are other ways to address this issue</p>
+<ul>
+<li><p>e.g., maybe filter to only look at body mass between 0g and 0.1g,</p></li>
+<li><p>e.g., maybe take the y-values and transform them using <span class="math notranslate nohighlight">\(e^y\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">logx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">logx</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(x)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can compute <span class="math notranslate nohighlight">\(log(x)\)</span> of each <code class="docutils literal notranslate"><span class="pre">&quot;bodymass&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;longevity&quot;</span></code> using <code class="docutils literal notranslate"><span class="pre">np.log()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">panthdata</span><span class="p">[[</span><span class="s2">&quot;bodymass&quot;</span><span class="p">,</span> <span class="s2">&quot;longevity&quot;</span><span class="p">]])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">panthdata</span><span class="p">[[</span><span class="s2">&quot;bodymass_log&quot;</span><span class="p">,</span> <span class="s2">&quot;longevity_log&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">panthdata</span><span class="p">[[</span><span class="s2">&quot;bodymass&quot;</span><span class="p">,</span> <span class="s2">&quot;longevity&quot;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;longevity_log&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log of Longevity (months)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;bodymass_log&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log of Body mass (g)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It will also be helpful to drop missing values.  This can be done using the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> function <code class="docutils literal notranslate"><span class="pre">dropna</span></code> with the parameter <code class="docutils literal notranslate"><span class="pre">inplace=True</span></code>, so that it modifies the existing <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">panthdata</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1"># check for missing values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">panthdata</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">panthdata</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1"># check for missing values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we are not ready to fit models</span>
+<span class="n">panthdata</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="regression-model-1-length-of-longevity-on-gestation">
+<h2>Regression Model 1: Length of longevity on gestation<a class="headerlink" href="#regression-model-1-length-of-longevity-on-gestation" title="Permalink to this heading">#</a></h2>
+<section id="fit-the-regression-model">
+<h3>Fit the regression model<a class="headerlink" href="#fit-the-regression-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+
+<span class="n">reg_mod1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;gestation ~ longevity&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">panthdata</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">reg_mod1_fit</span> <span class="o">=</span> <span class="n">reg_mod1</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-summary-of-the-regression-model">
+<h3>Statistical summary of the regression model<a class="headerlink" href="#statistical-summary-of-the-regression-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod1_summ</span> <span class="o">=</span> <span class="n">reg_mod1_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+
+<span class="n">reg_mod1_summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The regression equation is: <span class="math notranslate nohighlight">\(\texttt{gestation} = 39.04 + 0.43\times \texttt{longevity}\)</span></p></li>
+<li><p>The <strong>slope</strong> indicates that for a 1 month <strong>increase</strong> in longevity, we expect the gestational period to increase by 0.43 days.</p></li>
+<li><p>The <strong>y-intercept</strong> indicates that when longevity is 0 months, gestational period is 39 days.</p></li>
+</ul>
+<ul class="simple">
+<li><p>The p-value for the slope is 0 indicating the slope is significantly different from 0.</p></li>
+</ul>
+</section>
+<section id="accuracy-of-regression-model">
+<h3>Accuracy of regression model<a class="headerlink" href="#accuracy-of-regression-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod1_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reg_mod1_fit</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">reg_mod1_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fitted values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>What do you notice?</em></p>
+</section>
+</section>
+<section id="regression-model-2-log-of-length-of-longevity-on-gestation">
+<h2>Regression Model 2: Log of length of longevity on gestation<a class="headerlink" href="#regression-model-2-log-of-length-of-longevity-on-gestation" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;......&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">panthdata</span><span class="p">)</span> <span class="c1"># setup the model</span>
+<span class="n">reg_mod2_fit</span> <span class="o">=</span> <span class="n">reg_mod2</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+<span class="n">reg_mod2_summ</span> <span class="o">=</span> <span class="n">reg_mod2_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="n">reg_mod2_summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The regression equation is: <span class="math notranslate nohighlight">\(\texttt{gestation} = -280 + 81.94\times \texttt{log.longevity}\)</span></p></li>
+<li><p>The <strong>slope</strong> indicates that for a _____ month <strong>increase</strong> in longevity, we expect the gestational period to increase by 81.9 days.</p></li>
+<li><p>The <strong>y-intercept</strong> indicates that when longevity is _______ months, gestational period is -280.9 days, which isn’t sensible.</p></li>
+<li><p>The p-value for the slope indicates that log of longevity has a non-zero slope when predicting gestation.</p></li>
+</ul>
+<p>Let’s take a look at the model’s accuracy, by checking it’s R squared and residuals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod2_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reg_mod2_fit</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">reg_mod2_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fitted values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model 1 R squared:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">reg_mod1_fit</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model 2 R squared:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">reg_mod2_fit</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(R^2\)</span> of model 2 is lower than model 1 and the residuals look worse in model 2. So we should probably stick with model 1 (<code class="docutils literal notranslate"><span class="pre">longevity</span></code>) in lieu of model 2 (<code class="docutils literal notranslate"><span class="pre">longevity_log</span></code>).</p>
+<p>How else can we improve the model?</p>
+</section>
+<section id="regression-model-3-body-mass-on-gestation">
+<h2>Regression Model 3: Body mass on gestation<a class="headerlink" href="#regression-model-3-body-mass-on-gestation" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Recall the scatterplot didn&#39;t look great</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;bodymass&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Body mass (g)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod3</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;......&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">panthdata</span><span class="p">)</span> <span class="c1"># setup the model</span>
+<span class="n">reg_mod3_fit</span> <span class="o">=</span> <span class="n">reg_mod3</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+<span class="n">reg_mod3_summ</span> <span class="o">=</span> <span class="n">reg_mod3_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="n">reg_mod3_summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The regression equation is: <span class="math notranslate nohighlight">\(\texttt{gestation} = 128 + 0.00000308 \times \texttt{body.mass}\)</span></p></li>
+<li><p>The p-value for the slope indicates that body mass has a non-zero slope when predicting gestation.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod3_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reg_mod3_fit</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">reg_mod3_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fitted values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The same issue in the scatterplot is showing in the residual plot. But specifically, there is inconsistent variance so this model is not appropriate.</p>
+</section>
+<section id="regression-model-4-log-of-body-mass-on-gestation">
+<h2>Regression Model 4: Log of body mass on gestation<a class="headerlink" href="#regression-model-4-log-of-body-mass-on-gestation" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Recall the scatterplot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;bodymass_log&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log of Body mass (g)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod4</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;......&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">panthdata</span><span class="p">)</span> <span class="c1"># setup the model</span>
+<span class="n">reg_mod4_fit</span> <span class="o">=</span> <span class="n">reg_mod4</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+<span class="n">reg_mod4_summ</span> <span class="o">=</span> <span class="n">reg_mod4_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="n">reg_mod4_summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The regression equation is: <span class="math notranslate nohighlight">\(\texttt{gestation} = -65 + 25 \times \log(\texttt{body.mass})\)</span></p></li>
+<li><p>The p-value for the slope is still significant after transformation. So log body mass has a non-zero slope when predicting gestation.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod4_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reg_mod4_fit</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">reg_mod4_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fitted values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Still not perfect, but this looks better than the model 3 residual plot.</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(R^2\)</span> value is also much higher.</p></li>
+</ul>
+</section>
+<section id="regression-model-5">
+<h2>Regression Model 5<a class="headerlink" href="#regression-model-5" title="Permalink to this heading">#</a></h2>
+<section id="multiple-regression-with-longevity-and-log-body-mass">
+<h3>Multiple regression with longevity and log body mass<a class="headerlink" href="#multiple-regression-with-longevity-and-log-body-mass" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Recall the scatterplot for longevity and gestation (model 1)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;longevity&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longevity (months)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Recall the scatterplot for log body mass and gestation (model 4)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">panthdata</span><span class="p">[</span><span class="s2">&quot;bodymass_log&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log of Body mass (g)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gestation (days)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod5</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;......&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">panthdata</span><span class="p">)</span> <span class="c1"># setup the model</span>
+<span class="n">reg_mod5_fit</span> <span class="o">=</span> <span class="n">reg_mod5</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+<span class="n">reg_mod5_summ</span> <span class="o">=</span> <span class="n">reg_mod5_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="n">reg_mod5_summ</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The regression equation is: <span class="math notranslate nohighlight">\(\texttt{gestation} = \texttt{\{...\}} + \texttt{\{...\}} \times \texttt{longevity}+ \texttt{\{...\}} \times \log(\texttt{body.mass})\)</span></p></li>
+<li><p>The <strong>slope</strong> of longevity indicates that for every 1 month <strong>increase</strong> in longevity, <em>while keeping body mass constant</em>, we expect the gestational period to increase by _____ days.</p></li>
+<li><p>The <strong>slope</strong> of log body mass indicates that for every 1 unit <strong>increase</strong> in log body mass, <em>while keeping longevity length constant</em>, we expect the gestational period to increase by _____ days.</p></li>
+<li><p>The <strong>y-intercept</strong> indicates that when longevity is 0 months and log body mass is 0, gestational period is _____ days.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Note: both slopes have small p-values, meaning they are both helpful in predicting gestational length in the model.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_mod5_fit</span><span class="o">.</span><span class="n">rsquared</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">reg_mod5_fit</span><span class="o">.</span><span class="n">fittedvalues</span> <span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">reg_mod5_fit</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fitted values&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The residuals of model 5 aren’t great. They are showing similar issues to the residual plots of models 1 and 4.</p>
+</section>
+</section>
+<section id="comparing-models-1-4-and-5">
+<h2>Comparing Models 1, 4 and 5<a class="headerlink" href="#comparing-models-1-4-and-5" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Residual plots of all 3 show similar attributes.</p></li>
+<li><p><span class="math notranslate nohighlight">\(R^2\)</span> of model 5 is highest.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model 1: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">reg_mod1_fit</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model 4: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">reg_mod4_fit</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model 5: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">reg_mod5_fit</span><span class="o">.</span><span class="n">rsquared</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>p-values of all slopes indicate non-zero relationships in models 1, 4 and 5; it suggests that the two independent variables together have non-zero linear relationship with gestation.</p></li>
+<li><p>Note that a lower p-value <strong>does NOT</strong> indicate a more accurate model. Each p-value for the slopes indicates whether there is evidence for a non-zero linear relationship. How valid the assessment is will depend on the quality of the model.</p></li>
+</ul>
+<p>Let’s stick with model 5, which uses both longevity and log of body mass to make predictions of gestational period.</p>
+<section id="conclusions-when-trying-to-model-gestation">
+<h3>Conclusions when trying to model gestation:<a class="headerlink" href="#conclusions-when-trying-to-model-gestation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The regression equation is: <span class="math notranslate nohighlight">\(\texttt{gestation} = -50.6 + 0.2\times \texttt{longevity}+ 17.7\times \texttt{log.body.mass}\)</span></p></li>
+<li><p>The <strong>slope</strong> of longevity indicates that for every 1 month <strong>increase</strong> in longevity, while keeping body mass constant, we expect the gestational period to increase by 0.2 days.</p></li>
+<li><p>The <strong>slope</strong> of log body mass indicates that for every 1 unit <strong>increase</strong> in log body mass, while keeping longevity length constant, we expect the gestational period to increase by 17.7 days.</p></li>
+<li><p>The <strong>y-intercept</strong> indicates that when longevity is 0 months and log body mass is 0, gestational period is -50.6 days.</p></li>
+</ul>
+</section>
+</section>
+<section id="causality">
+<h2>Causality<a class="headerlink" href="#causality" title="Permalink to this heading">#</a></h2>
+<p>Recall that <strong>correlation does not imply causation</strong>. All data we analyzed are observational, and has hidden/confounding variables that may be leading the relationship.</p>
+<ul class="simple">
+<li><p>e.g., our results show that (log) body mass has a positive relationship with gestation length, but that does not mean that body mass itself is <strong>causing</strong> gestational period to increased.</p></li>
+</ul>
+<ul class="simple">
+<li><p>What is an example of a confounding/hidden variable in this relationship?</p></li>
+</ul>
+<section id="potential-outcomes-and-randomized-control-trials">
+<h3>Potential outcomes and randomized control trials<a class="headerlink" href="#potential-outcomes-and-randomized-control-trials" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Establishing causality involves comparing <strong>potential outcomes</strong>.</p></li>
+<li><p>The problem is that we can never observe all (log) body masses and the resulting gestational length (in the same animal at the same time under the same conditions).</p></li>
+<li><p>Randomized control trials are studies (usually on human subjects) where we randomly assign subjects to different options (e.g., medication vs placebo) and then compare the outcomes; the idea is that if people are randomly assigned, there should be balance in the confounding variables.</p></li>
+<li><p>Randomized control trials are considered the gold standard way to explore a causal relationship (from a statistical perspective).</p></li>
+</ul>
+</section>
+</section>
+<section id="alternative-for-model-selection">
+<h2>Alternative for Model Selection<a class="headerlink" href="#alternative-for-model-selection" title="Permalink to this heading">#</a></h2>
+<section id="training-vs-testing">
+<h3>Training vs Testing<a class="headerlink" href="#training-vs-testing" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Ideally we could assess the accuracy of this linear regression model on a new set of data (i.e., longevity in species from another study).</p></li>
+<li><p>But, we don’t have this data.</p></li>
+<li><p>One trick that data scientists use to fit the model on part of the data (training data) and use the remaining part (testing data) to test the accuracy.</p></li>
+<li><p>If we only have one data set then the training data can be obtained by randomly selecting rows from the data to fit the regression model, then the remaining rows can be used to test the accuracy of the model.</p></li>
+</ul>
+</section>
+<section id="root-mean-squared-error-rmse">
+<h3>Root Mean Squared Error (RMSE)<a class="headerlink" href="#root-mean-squared-error-rmse" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[RMSE = \sqrt{\frac{\sum_{i=1}^n (\hat{y}_i-y_i)^2}{n}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> are the fitted and <span class="math notranslate nohighlight">\(y_i\)</span> are the observed values for <span class="math notranslate nohighlight">\(i=1,2,...n\)</span>.</p>
+<blockquote>
+<div><p>i.e., RMSE is the “average” of the residuals.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>We want RMSE to be small.</p></li>
+<li><p>We do NOT want RMSE of training data to be much smaller than the RMSE of test data, since we are likely overfitting - fit to the current sample but not to the general population.</p></li>
+</ul>
+</section>
+<section id="splitting-a-pandas-dataframe-by-index">
+<h3>Splitting a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> by <code class="docutils literal notranslate"><span class="pre">index</span></code><a class="headerlink" href="#splitting-a-pandas-dataframe-by-index" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A Boolean array that is <code class="docutils literal notranslate"><span class="pre">True</span></code> if the index is <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To create a Boolean series that is <code class="docutils literal notranslate"><span class="pre">False</span></code> if the index is <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">True</span></code> otherwise we can negate <code class="docutils literal notranslate"><span class="pre">df.index.isin([0,1])</span></code> this Boolean series using the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator <code class="docutils literal notranslate"><span class="pre">~df.index.isin([0,1])</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-training-and-test-data-sets-from-a-single-dataset">
+<h3>Creating training and test data sets from a single dataset<a class="headerlink" href="#creating-training-and-test-data-sets-from-a-single-dataset" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="step-1">
+<h3>Step 1:<a class="headerlink" href="#step-1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Split the data into a training set with 75% of the rows.</p></li>
+<li><p>Use the remaining 25% of the data for testing.</p></li>
+</ul>
+<blockquote>
+<div><p><em>Note: In practice, other splits may be used.</em></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="c1"># for reproducibility</span>
+
+<span class="c1"># randomly select 75% of neighbourhoods; we don&#39;t want to replace rows</span>
+<span class="n">reg_df_train</span> <span class="o">=</span> <span class="n">panthdata</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+
+<span class="c1"># get index of training data</span>
+<span class="n">train_index</span> <span class="o">=</span> <span class="n">reg_df_train</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Exclude indicies from <code class="docutils literal notranslate"><span class="pre">reg_df_train</span></code> using <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">isin</span></code> function.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># exclude rows in training to define test data</span>
+<span class="n">reg_df_test</span> <span class="o">=</span> <span class="n">panthdata</span><span class="p">[</span><span class="o">~</span><span class="n">panthdata</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">train_index</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">panthdata</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reg_df_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reg_df_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-fit-the-regression-model-on-the-training-data">
+<h3>Step 2: Fit the regression model on the training data<a class="headerlink" href="#step-2-fit-the-regression-model-on-the-training-data" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reg_train</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s2">&quot;gestation ~ longevity&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">reg_df_train</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">reg_train_fit</span> <span class="o">=</span> <span class="n">reg_train</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-compute-predicted-fitted-values-using-training-data">
+<h3>Step 3: Compute predicted (fitted) values using training data<a class="headerlink" href="#step-3-compute-predicted-fitted-values-using-training-data" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the model fit on the training data to predict longevity rates</span>
+<span class="c1"># from the test set. </span>
+<span class="n">predvalues_train</span> <span class="o">=</span> <span class="n">reg_train_fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">reg_df_train</span><span class="p">[</span><span class="s2">&quot;longevity&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-evaluate-accuracy-using-root-mean-squared-error-on-training-data">
+<h3>Step 4: Evaluate accuracy using root mean-squared error on training data<a class="headerlink" href="#step-4-evaluate-accuracy-using-root-mean-squared-error-on-training-data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Compares observed values of the dependent variable with the fitted values.</p></li>
+<li><p>It can be computed using the <code class="docutils literal notranslate"><span class="pre">rmse()</span></code> function from <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>.</p></li>
+</ul>
+<p>Compute root mean-squared error for the training data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tools.eval_measures</span><span class="w"> </span><span class="kn">import</span> <span class="n">rmse</span>
+
+<span class="c1"># compute the accuracy of these predictions</span>
+<span class="n">rmse</span><span class="p">(</span><span class="n">predvalues_train</span><span class="p">,</span>          <span class="c1"># predicted values</span>
+     <span class="n">reg_df_train</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">])</span> <span class="c1"># observed values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># computing it &quot;manually&quot;</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>                   <span class="c1"># root</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>               <span class="c1"># mean</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span>          <span class="c1"># squared</span>
+            <span class="n">predvalues_train</span> <span class="o">-</span> <span class="n">reg_df_train</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">],</span> <span class="c1"># error</span>
+        <span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The observed gestational periods deviate from the predictted values for each species by 78 days in the training set on “average”.</p></li>
+<li><p>Is this an acceptable prediction error?</p></li>
+<li><p>Let’s examine the accuracy of the linear regression model on the test set</p></li>
+<li><p>First compute the predicted values using the test data.</p></li>
+</ul>
+</section>
+<section id="step-5-evaluate-the-accuracy-of-regression-model-on-the-test-data-using-root-mean-squared-error">
+<h3>Step 5: Evaluate the accuracy of regression model on the test data using root mean-squared error<a class="headerlink" href="#step-5-evaluate-the-accuracy-of-regression-model-on-the-test-data-using-root-mean-squared-error" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Compute predictions using test data</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predvalues_test</span> <span class="o">=</span> <span class="n">reg_train_fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">reg_df_test</span><span class="p">[</span><span class="s2">&quot;longevity&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Now compute the root mean-squared error for the test data using the model fit on the training data.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmse</span><span class="p">(</span><span class="n">predvalues_test</span><span class="p">,</span> <span class="n">reg_df_test</span><span class="p">[</span><span class="s2">&quot;gestation&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="note-of-caution">
+<h2>Note of caution<a class="headerlink" href="#note-of-caution" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>In this class we discussed how to “statistically” select a model, but model selection should consider more than the statistical measures.</p></li>
+<li><p>e.g., if you want to answer “What is the relationship between hours slept and grade on the exam, controlling for other factors?” then you need to have <em>“hours slept”</em> in your model while you may be able to add or remove <em>“other factors”</em>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Having a team to bounce ideas off of, and collaborate is a good idea.</p></li>
+</ul>
+<ul class="simple">
+<li><p>If you aren’t sure of something reach out to a data scientist/statistician. The <a class="reference external" href="https://datasciences.utoronto.ca/">Data Sciences Institute</a> has lots of resources.</p></li>
+</ul>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>You are now able to:</p>
+<ul class="simple">
+<li><p>perform a hypothesis test which assess if a percentage is different/greater than/less than some number.<br />
+e.g. “Is the percentage of educated citizens greater than 10%?”</p></li>
+<li><p>perform a hypothesis test which assesses if the mean (or median) of one group are different/greater than/less than the mean (or median) of another group.<br />
+e.g. “do women have a higher GPA than men?”</p></li>
+<li><p>produce a plausible range of values for a certain metric of interest.<br />
+e.g., “What is the 95% confidence interval for the median body mass of mammals?”</p></li>
+<li><p>perform a multiple linear regression to look at the relationship between two or more numeric columns.<br />
+e.g., “What is the relationship between heights and body weights of mammals?”</p></li>
+</ul>
+<p>A <span class="xref myst">practice exercise set</span> is available with sample solutions.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week11/lecture"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../week10/homework/Homework_10.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 10: Bootstrap</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../homework/Homework_11.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Homework 11: Linear Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#march-26-2025">March 26, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exam-info">Exam Info</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-evaluations">Course Evaluations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-science-methods">Data Science Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-idea">Basic idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-close-to-linear-from-last-week">Example 3: Close to linear - from last week</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicted-values-and-residuals">Predicted values and residuals</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-linear-regression">Accuracy of linear regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-to-estimate-gestation-using-some-combination-of-body-mass-and-longevity">Regression model to estimate gestation using some combination of body mass and longevity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disclaimer">Disclaimer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transform-the-data">Transform the data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-1-length-of-longevity-on-gestation">Regression Model 1: Length of longevity on gestation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-the-regression-model">Fit the regression model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary-of-the-regression-model">Statistical summary of the regression model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-of-regression-model">Accuracy of regression model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-2-log-of-length-of-longevity-on-gestation">Regression Model 2: Log of length of longevity on gestation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-3-body-mass-on-gestation">Regression Model 3: Body mass on gestation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-4-log-of-body-mass-on-gestation">Regression Model 4: Log of body mass on gestation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-model-5">Regression Model 5</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-regression-with-longevity-and-log-body-mass">Multiple regression with longevity and log body mass</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-models-1-4-and-5">Comparing Models 1, 4 and 5</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-when-trying-to-model-gestation">Conclusions when trying to model gestation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causality">Causality</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-outcomes-and-randomized-control-trials">Potential outcomes and randomized control trials</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-for-model-selection">Alternative for Model Selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-vs-testing">Training vs Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">Root Mean Squared Error (RMSE)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-a-pandas-dataframe-by-index">Splitting a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> by <code class="docutils literal notranslate"><span class="pre">index</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-training-and-test-data-sets-from-a-single-dataset">Creating training and test data sets from a single dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1">Step 1:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-fit-the-regression-model-on-the-training-data">Step 2: Fit the regression model on the training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-compute-predicted-fitted-values-using-training-data">Step 3: Compute predicted (fitted) values using training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-evaluate-accuracy-using-root-mean-squared-error-on-training-data">Step 4: Evaluate accuracy using root mean-squared error on training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-evaluate-the-accuracy-of-regression-model-on-the-test-data-using-root-mean-squared-error">Step 5: Evaluate the accuracy of regression model on the test data using root mean-squared error</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#note-of-caution">Note of caution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

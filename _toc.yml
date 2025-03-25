@@ -87,5 +87,7 @@ parts:
     chapters:
     - file: weekly-materials/week10/lecture/lecture10.ipynb
       title: Prof. Moon's Notebook
+    - file: weekly-materials/week10/lecture/lecture10-solution.ipynb
+      title: Prof. Moon's Notebook with Exercise Solutions
     - file: weekly-materials/week10/homework/Homework_10.ipynb
       title: Week 10 Homework 

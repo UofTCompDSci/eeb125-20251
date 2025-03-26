@@ -97,5 +97,7 @@ parts:
     chapters:
     - file: weekly-materials/week11/lecture/lecture11.ipynb
       title: Prof. Moon's Notebook
+    - file: weekly-materials/week11/exercise/exercise11.ipynb
+      title: Practice Exercise
     - file: weekly-materials/week11/homework/Homework_11.ipynb
       title: Week 11 Homework 

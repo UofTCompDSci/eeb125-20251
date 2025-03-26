@@ -91,6 +91,8 @@ parts:
       title: Prof. Moon's Notebook with Exercise Solutions
     - file: weekly-materials/week10/homework/Homework_10.ipynb
       title: Week 10 Homework 
+    - file: weekly-materials/week10/homework/marking/Homework_10_solutions.ipynb
+      title: Week 10 Homework Solution
   - caption: Week 11
     chapters:
     - file: weekly-materials/week11/lecture/lecture11.ipynb

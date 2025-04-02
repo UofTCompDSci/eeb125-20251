@@ -1,0 +1,856 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Week 12: A short note on reproducibility &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week12/lecture/lecture12';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="Homework 11: Linear Regression" href="../../week11/homework/marking/Homework_11_solutions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_proposal.html">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project/project_instructions.html">Final Project Instructions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week08/lecture/lecture8.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week08/homework/Homework_8.html">Week 8 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week09/lecture/lecture9.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/lecture/lecture9-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/homework/Homework_9.html">Week 9 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week09/homework/marking/Homework_9_solutions.html">Homework 9: Hypothesis Testing</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week10/lecture/lecture10.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week10/lecture/lecture10-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week10/homework/Homework_10.html">Week 10 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week10/homework/marking/Homework_10_solutions.html">Week 10 Homework Solution</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 11</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../week11/lecture/lecture11.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week11/exercise/exercise11.html">Practice Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week11/homework/Homework_11.html">Week 11 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../week11/homework/marking/Homework_11_solutions.html">Week 11 Homework Solution</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 12</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 12: A short note on reproducibility</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week12/lecture/lecture12.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/weekly-materials/week12/lecture/lecture12.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 12: A short note on reproducibility</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Week 12: A short note on reproducibility</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#april-2-2025">April 2, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-do-salmons-understand-social-experience-of-humans">Example 1: Do salmons understand social experience of humans?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-have-they-learned">What have they learned?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-too-many-siblings">Example 2: Too many siblings?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#there-is-more-than-one-way-answer-the-question-with-the-data">There is more than one way answer the question with the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-it-mean-for-your-project">What does it mean for your project?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-more-tip-for-your-slides">One more tip for your slides</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#good-luck">Good luck!</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-12-a-short-note-on-reproducibility">
+<h1>Week 12: A short note on reproducibility<a class="headerlink" href="#week-12-a-short-note-on-reproducibility" title="Permalink to this heading">#</a></h1>
+<section id="april-2-2025">
+<h2>April 2, 2025<a class="headerlink" href="#april-2-2025" title="Permalink to this heading">#</a></h2>
+<p><strong>Michael Jongho Moon</strong></p>
+</section>
+<section id="example-1-do-salmons-understand-social-experience-of-humans">
+<h2>Example 1: Do salmons understand social experience of humans?<a class="headerlink" href="#example-1-do-salmons-understand-social-experience-of-humans" title="Permalink to this heading">#</a></h2>
+<p><em>Can you bond with a pet salmon?</em></p>
+<ul class="simple">
+<li><p>A group of researchers studying psychology conducted an experiement with an Atlantic Salmon.</p></li>
+<li><p>They showed a series of photos depicting humans experiencing either socially pleasant or unpleasant emotions.</p></li>
+<li><p>They measured the salmon’s brain activity with a fMRI.</p></li>
+<li><p>They tested whether there was any statistically significant (p&lt;0.001) difference in the measured signal in any of the brain regions the fMRI captured.</p></li>
+</ul>
+<p><img alt="" src="../../../_images/salmon-fMRI.png" /></p>
+</section>
+<section id="what-have-they-learned">
+<h2>What have they learned?<a class="headerlink" href="#what-have-they-learned" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The analysis indicates that Atlantic Salmons might understand, or at least react to, human’s emotions in social settings.</p></li>
+</ul>
+<p>Found in the Journal of Serendipitous and Unexpected Results <a class="reference external" href="https://teenspecies.github.io/pdfs/NeuralCorrelates.pdf">article</a> (Bennet et al., 2010)</p>
+<blockquote>
+<div><p>One mature Atlantic Salmon (Salmo salar) participated in the fMRI study. The salmon measured approximately 18 inches long, weighed 3.8 lbs, and was not alive at the time of scanning. It is not known if the salmon was male or female, but given the post-mortem state of the subject this was not thought to be a critical variable.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Foam padding was placed within the head coil as a method of limi- ting salmon movement during the scan, but proved to be largely unnecessary as subject motion was exceptionally low.</p>
+</div></blockquote>
+<p><img alt="" src="https://imgs.xkcd.com/comics/significant.png" /></p>
+<p><em>Source: <a class="reference external" href="https://xkcd.com/882/">https://xkcd.com/882/</a></em></p>
+</section>
+<section id="example-2-too-many-siblings">
+<h2>Example 2: Too many siblings?<a class="headerlink" href="#example-2-too-many-siblings" title="Permalink to this heading">#</a></h2>
+<p><img alt="" src="../../../_images/blue-tit.jpg" /></p>
+<p><em>Photo by Francis C. Franklin. <a class="reference external" href="https://en.wikipedia.org/wiki/File:Eurasian_blue_tit_Lancashire.jpg">Source</a></em></p>
+<p><em>How is the growth of nestlings influenced by the number of siblings in the nest?</em></p>
+<ul class="simple">
+<li><p>Researchers set up 1,100 nest boxes for blue tits and manipulated brood sizes one or two days after hatching to artifically create nests with smaller brood sizes vs. larger brood sizes.</p></li>
+<li><p>They measured and recorded the growths of the chicks.</p></li>
+<li><p>They recruited many analysts teams and shared the same data to answer the question.</p></li>
+</ul>
+<p>The original data include many variables…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">bts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;blue_tit_data_updated_2020-04-18.csv&quot;</span><span class="p">)</span>
+<span class="n">bts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at the main variables of interest…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bts_selected</span> <span class="o">=</span> <span class="n">bts</span><span class="o">.</span><span class="n">copy</span><span class="p">()[</span>
+    <span class="p">[</span><span class="s2">&quot;rear_Cs_at_start_of_rearing&quot;</span><span class="p">,</span> <span class="s2">&quot;day_14_weight&quot;</span><span class="p">,</span> <span class="s2">&quot;day_14_tarsus_length&quot;</span><span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;rear_Cs_at_start_of_rearing&quot;</span><span class="p">:</span><span class="s2">&quot;Maniuplated Brood Size&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;day_14_weight&quot;</span><span class="p">:</span><span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;day_14_tarsus_length&quot;</span><span class="p">:</span><span class="s2">&quot;Tarsus Length on Day 14&quot;</span>
+    <span class="p">})</span>
+<span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">bts</span><span class="p">[</span><span class="s2">&quot;rear_nest_trt&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Increased&quot;</span>
+<span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">bts</span><span class="p">[</span><span class="s2">&quot;rear_nest_trt&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Decreased&quot;</span>
+<span class="n">bts_selected</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">bts_selected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Increased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">]);</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Increased brood size&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Decreased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">]);</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Decreased brood size&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Increased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Decreased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>How is the growth of nestlings influenced by the number of siblings in the nest?</em></p>
+<p>To answer the question, we can compute the difference in mean weights by day 14 between those placed in inflated broods vs. those placed in reduced broods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_mean_diff</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+    
+    <span class="n">mean_weight_increaed_brood</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Increased&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    
+    <span class="n">mean_weight_reduced_brood</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Decreased&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">mean_weight_reduced_brood</span> <span class="o">-</span> <span class="n">mean_weight_increaed_brood</span>
+
+<span class="n">observed_diff</span> <span class="o">=</span> <span class="n">compute_mean_diff</span><span class="p">(</span><span class="n">bts_selected</span><span class="p">,</span> <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also compute the associated 95% confidence interval.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">boot_mean_diff</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">):</span>
+    <span class="n">boot</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">boot_diff</span> <span class="o">=</span> <span class="n">compute_mean_diff</span><span class="p">(</span><span class="n">boot</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">boot_diff</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boot_diffs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="n">boot_diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">boot_mean_diff</span><span class="p">(</span><span class="n">bts_selected</span><span class="p">))</span>
+    
+<span class="n">boot_diffs_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">boot_diffs</span><span class="p">)</span>
+<span class="n">diff_ci_95</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">boot_diffs</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">.83</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boot_diffs_series</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;teal&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boot_diffs_series</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">boot_diffs_series</span> <span class="o">&gt;</span> <span class="n">diff_ci_95</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">|</span> <span class="p">(</span><span class="n">boot_diffs_series</span> <span class="o">&lt;</span> <span class="n">diff_ci_95</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> 
+         <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The observed difference in mean weight on day 14 is </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">observed_diff</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The bootstrap 95% CI for the difference in means is </span><span class="si">{</span><span class="n">diff_ci_95</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="there-is-more-than-one-way-answer-the-question-with-the-data">
+<h2>There is more than one way answer the question with the data<a class="headerlink" href="#there-is-more-than-one-way-answer-the-question-with-the-data" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>We could have answered the question by comparing the birds’ Tarsus Lengths.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observed_diff_length</span> <span class="o">=</span> <span class="n">compute_mean_diff</span><span class="p">(</span><span class="n">bts_selected</span><span class="p">,</span> <span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">)</span>
+
+<span class="n">boot_diffs_length</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+    <span class="n">boot_diffs_length</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">boot_mean_diff</span><span class="p">(</span><span class="n">bts_selected</span><span class="p">,</span> <span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">))</span>
+    
+<span class="n">boot_diffs_length_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">boot_diffs_length</span><span class="p">)</span>
+<span class="n">diff_length_ci_95</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">boot_diffs_length</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.52</span><span class="p">,</span> <span class="mf">.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boot_diffs_length_series</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;teal&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boot_diffs_length_series</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">boot_diffs_length_series</span> <span class="o">&gt;</span> <span class="n">diff_length_ci_95</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> 
+    <span class="o">|</span> <span class="p">(</span><span class="n">boot_diffs_length_series</span> <span class="o">&lt;</span> <span class="n">diff_length_ci_95</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> 
+         <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The observed difference in mean weight on day 14 is </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">observed_diff_length</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The bootstrap 95% CI for the difference in means is </span><span class="si">{</span><span class="n">diff_length_ci_95</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>There are other analytical decisions and combinations of such decisions can lead to a large number of possible, and valid, analyses.</p></li>
+<li><p>The recruited teams for the project reported over 100 different results (Gould et al. 2024; <a class="reference external" href="https://egouldo.github.io/ManyAnalysts/#fig-forest-plots-Zr-1">https://egouldo.github.io/ManyAnalysts/#fig-forest-plots-Zr-1</a>)</p></li>
+</ul>
+<iframe src="https://egouldo.github.io/ManyAnalysts/#fig-forest-plots-Zr-1" width="100%" height="800"></iframe></section>
+<section id="what-does-it-mean-for-your-project">
+<h2>What does it mean for your project?<a class="headerlink" href="#what-does-it-mean-for-your-project" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>One of the evaluation criteria for your final projects is <em>reproducibility of slide content</em>.</p></li>
+<li><p>You must demonstrate that you understand the concepts introduced in class and apply them to answer a research question.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Your TA will attempt to reproduce your slides using the Jupyter notebook (.ipynb) and data files you submit.</p></li>
+<li><p>If your TA cannot run the .ipynb files you submit to reproduce your slides content then your group will receive 0; if the TA has to make minor changes to get it to run then your group will receive 1; and if it runs with no changes then your group will receive 2.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Producing reproducible research also helps communicate your analytical decisions/process in a transparent manner.</p></li>
+</ul>
+<p><strong>Help TAs!</strong></p>
+<ul class="simple">
+<li><p>The easiest method would be to place your data file(s) in the same folder as your notebook file and read the data file with the file name only.</p></li>
+<li><p>If you must use a folder, use a <strong>relative path</strong> to the folder from the notebook file’s location. e.g., <code class="docutils literal notranslate"><span class="pre">data/datafile.csv</span></code> if your notebook file is in <code class="docutils literal notranslate"><span class="pre">project/notebook.ipynb</span></code> and data file is in <code class="docutils literal notranslate"><span class="pre">project/data/datafile.csv</span></code></p></li>
+</ul>
+<section id="one-more-tip-for-your-slides">
+<h3>One more tip for your slides<a class="headerlink" href="#one-more-tip-for-your-slides" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Code for creating plots are often very long.</p></li>
+<li><p>Displaying long lines of codes isn’t effective way of communicating your work on a slide presentation; especially for a time-limited video.</p></li>
+<li><p>Include codes that generate and save plots as files (<code class="docutils literal notranslate"><span class="pre">plt.savefig()</span></code>). Then, use markdown to load the saved images. You can “skip” the codes in the slide show but your notebooks will still be reproducible.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="c1"># place multiple plots together</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">tight_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Increased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#999999&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Increased brood size&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Decreased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#999999&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Increased&quot;</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">]</span> <span class="o">&lt;=</span>  <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Decreased&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> 
+        <span class="s2">&quot;Weight on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Decreased brood size&quot;</span><span class="p">)</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mf">19.3</span><span class="p">,</span> <span class="mf">.3</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Increased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#999999&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Increased&quot;</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">]</span> <span class="o">&lt;=</span>  <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Decreased&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> 
+        <span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;royalblue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bts_selected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">bts_selected</span><span class="p">[</span><span class="s2">&quot;Brood Size Manipulation&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Decreased&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;Tarsus Length on Day 14&quot;</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#999999&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">);</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span>
+        <span class="c1"># remove plot frame except bottom</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># axs[i][j].spines[&#39;bottom&#39;].set_visible(False)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># remoe y axis ticks</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([]);</span>
+
+<span class="c1"># place a global plot title on top of the group of subplots</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;There are more chicks that did not grow in 14 days as much as</span><span class="se">\n</span><span class="s2">their siblings among Blue Tits placed in broods with more siblings.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;fig.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span> <span class="c1"># bbox_inches=&quot;tight&quot; avoids plot elements being cut off</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="../../../_images/fig.png" /></p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="good-luck">
+<h1>Good luck!<a class="headerlink" href="#good-luck" title="Permalink to this heading">#</a></h1>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week12/lecture"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../week11/homework/marking/Homework_11_solutions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 11: Linear Regression</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Week 12: A short note on reproducibility</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#april-2-2025">April 2, 2025</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-do-salmons-understand-social-experience-of-humans">Example 1: Do salmons understand social experience of humans?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-have-they-learned">What have they learned?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-too-many-siblings">Example 2: Too many siblings?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#there-is-more-than-one-way-answer-the-question-with-the-data">There is more than one way answer the question with the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-it-mean-for-your-project">What does it mean for your project?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-more-tip-for-your-slides">One more tip for your slides</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#good-luck">Good luck!</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

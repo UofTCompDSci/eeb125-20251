@@ -1,0 +1,971 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Homework 11: Linear Regression &#8212; Computation and Data Science for the Life and Physical Sciences</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weekly-materials/week11/homework/marking/Homework_11_solutions';</script>
+    <link rel="shortcut icon" href="../../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Week 12: A short note on reproducibility" href="../../../week12/lecture/lecture12.html" />
+    <link rel="prev" title="Homework 11: Linear Regression" href="../Homework_11.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../../../jupyter-book/index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computation and Data Science for the Life and Physical Sciences</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../jupyter-book/index.html">
+                    👋 Course Website for EEB125H1-S Winter 2025
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Quick Links</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../syllabus/eeb125_syllabus.html">Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/courses/382086/announcements">Announcements</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://piazza.com/">Piazza</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/jupyterhub_guide.html">JupyterHub Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../guides/markus_guide.html">MarkUs Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Midterm</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../midterm/Midterm.html">Midterm Notebook</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://q.utoronto.ca/files/35589307/download?download_frd=1">Prof. Parins-Fukuchi's Slides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week01/lecture/Class1_EEB125_KR.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week01/homework/Homework_1.html">Week 1 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week02/lecture/lecture_week2.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week02/homework/Homework_2.html">Week 2 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week03/lecture/lecture3.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week03/homework/Homework_3.html">Week 3 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week04/lecture/lecture4.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week04/homework/Homework_4.html">Week 4 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week05/lecture/lecture5.html">Prof. Parins-Fukuchi's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week05/homework/Homework_5.html">Week 5 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week07/lecture/lecture7.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week07/homework/Homework_7.html">Week 7 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../project/project_proposal.html">Final Project Proposal Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../project/project_instructions.html">Final Project Instructions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week08/lecture/lecture8.html">Prof. Reid's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week08/homework/Homework_8.html">Week 8 Homework</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week09/lecture/lecture9.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week09/lecture/lecture9-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week09/homework/Homework_9.html">Week 9 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week09/homework/marking/Homework_9_solutions.html">Homework 9: Hypothesis Testing</a></li>
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week10/lecture/lecture10.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week10/lecture/lecture10-solution.html">Prof. Moon's Notebook with Exercise Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week10/homework/Homework_10.html">Week 10 Homework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../week10/homework/marking/Homework_10_solutions.html">Week 10 Homework Solution</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 11</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../lecture/lecture11.html">Prof. Moon's Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../exercise/exercise11.html">Practice Exercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Homework_11.html">Week 11 Homework</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 11 Homework Solution</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 12</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../week12/lecture/lecture12.html">Week 12: A short note on reproducibility</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://jupyter.utoronto.ca/hub/user-redirect/git-pull?repo=https%3A//github.com/UofTCompDSci/eeb125-20251&urlpath=tree/eeb125-20251/weekly-materials/week11/homework/marking/Homework_11_solutions.ipynb&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/weekly-materials/week11/homework/marking/Homework_11_solutions.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Homework 11: Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-and-learning-objectives">Instructions and Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="homework-11-linear-regression">
+<h1>Homework 11: Linear Regression<a class="headerlink" href="#homework-11-linear-regression" title="Permalink to this heading">#</a></h1>
+<section id="logistics">
+<h2>Logistics<a class="headerlink" href="#logistics" title="Permalink to this heading">#</a></h2>
+<p><strong>Due date</strong>: The homework is due 11:59 pm on Tuesday, April 1.</p>
+<p>You will submit your work on <a class="reference external" href="https://markus.teach.cs.toronto.edu/markus/main/login_remote_auth">MarkUs</a>.
+To submit your work:</p>
+<ol class="arabic simple">
+<li><p>Download this file (<code class="docutils literal notranslate"><span class="pre">Homework_11.ipynb</span></code>) from JupyterHub. (See <span class="xref myst">our JupyterHub Guide</span> for detailed instructions.)</p></li>
+<li><p>Submit this file to MarkUs under the <strong>hw11</strong> assignment. (See <span class="xref myst">our MarkUs Guide</span> for detailed instructions.)
+All homeworks will take place in a Jupyter notebook (like this one). When you are done, you will download this notebook and submit it to MarkUs.
+We’ve incuded submission instructions at the end of this notebook.</p></li>
+</ol>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>For this week’s homework, we will look at the relationship between the length and width of fish with the weight of the fish, available in the <code class="docutils literal notranslate"><span class="pre">fish.csv</span></code> file. This dataset is a record of 7 common different fish species used in fish market sales. The 7 species include: Bream, Parkki, Perch, Pike, Roach, Smelt, and Whitefish.</p>
+</section>
+<section id="question">
+<h2>Question<a class="headerlink" href="#question" title="Permalink to this heading">#</a></h2>
+<p><em>General Question: What can we say about the relationship between the length and width of a fish while trying to predict its weight?</em></p>
+</section>
+<section id="instructions-and-learning-objectives">
+<h2>Instructions and Learning Objectives<a class="headerlink" href="#instructions-and-learning-objectives" title="Permalink to this heading">#</a></h2>
+<p>In this homework, you will:</p>
+<ul class="simple">
+<li><p>Create a data story in a notebook exploring the question.</p></li>
+<li><p>Visualize and analyze the relationships between length, width and weight.</p></li>
+<li><p>Create and compare different linear regression models.</p></li>
+</ul>
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<p>First import <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>, and <code class="docutils literal notranslate"><span class="pre">statsmodels.formula.api</span></code> by running the cell below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.formula.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">smf</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-section">
+<h2>Data section<a class="headerlink" href="#data-section" title="Permalink to this heading">#</a></h2>
+<p>The this part of your notebook should read the raw data, extract a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> containing the columns of interest.</p>
+<p>Create the following pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fish_data</span></code>: the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> created by reading in the <code class="docutils literal notranslate"><span class="pre">fish.csv</span></code> file.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SOLUTION</span>
+<span class="n">fish_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;fish.csv&quot;</span><span class="p">)</span>
+
+<span class="n">fish_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>species</th>
+      <th>weight_g</th>
+      <th>length_vertical_cm</th>
+      <th>length_diagonal_cm</th>
+      <th>length_cross_cm</th>
+      <th>height_cm</th>
+      <th>width_cm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Bream</td>
+      <td>242.0</td>
+      <td>23.2</td>
+      <td>25.4</td>
+      <td>30.0</td>
+      <td>11.5200</td>
+      <td>4.0200</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bream</td>
+      <td>290.0</td>
+      <td>24.0</td>
+      <td>26.3</td>
+      <td>31.2</td>
+      <td>12.4800</td>
+      <td>4.3056</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Bream</td>
+      <td>340.0</td>
+      <td>23.9</td>
+      <td>26.5</td>
+      <td>31.1</td>
+      <td>12.3778</td>
+      <td>4.6961</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Bream</td>
+      <td>363.0</td>
+      <td>26.3</td>
+      <td>29.0</td>
+      <td>33.5</td>
+      <td>12.7300</td>
+      <td>4.4555</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Bream</td>
+      <td>430.0</td>
+      <td>26.5</td>
+      <td>29.0</td>
+      <td>34.0</td>
+      <td>12.4440</td>
+      <td>5.1340</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="exploring-the-data">
+<h2>Exploring the data<a class="headerlink" href="#exploring-the-data" title="Permalink to this heading">#</a></h2>
+<p>Create a histograms of the following:</p>
+<ul class="simple">
+<li><p>vertical length of the fish (in cm)</p></li>
+<li><p>width of the fish (in cm)</p></li>
+<li><p>weight of the fish (in grams)</p></li>
+</ul>
+<p>You do not need to store the results in a variable. Label the y-axis with “Frequency” and the x-axes with “Vertical Length (cm)”, “Width (cm)” and “Weight (g)” where appropriate. Start with <code class="docutils literal notranslate"><span class="pre">bins=15</span></code> to create 15 bins and then try different number of bins as you see fti for each histogram.  <strong>(3 marks)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## SOLUTION</span>
+<span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;length_vertical_cm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;teal&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Vertical Length (cm)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/57559e15c3ae6c0072c630c98b3db153b1a2466a0b3e475b59cc6c488edcb1ab.png" src="../../../../_images/57559e15c3ae6c0072c630c98b3db153b1a2466a0b3e475b59cc6c488edcb1ab.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## SOLUTION</span>
+
+<span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;width_cm&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;darkgrey&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;steelblue&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Width (cm)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/5299f5f3014944e882c2549790af93b5f7dcb1386511ada6f889d5c7c3677241.png" src="../../../../_images/5299f5f3014944e882c2549790af93b5f7dcb1386511ada6f889d5c7c3677241.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## SOLUTION</span>
+
+<span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;weight_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Weight (g)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/45348a2d7a8bbca2744554a3eca92fc3822cd1bbebdd9cb35671679c3e1a22ee.png" src="../../../../_images/45348a2d7a8bbca2744554a3eca92fc3822cd1bbebdd9cb35671679c3e1a22ee.png" />
+</div>
+</div>
+<p>Comment on the shape of each histogram and the distribution of the vertical length, width, and weight of the fish in terms of the skewness, the range, and the number of modes. <strong>(3 marks)</strong></p>
+<blockquote>
+<div><p><strong>Sample solution</strong></p>
+<p>The vertical length is slightly right-skewed, multimodal, and has a range of 10 to 60cm.</p>
+<p>The width is fairly symmetric, multimodal, and has a range of 1 to 8cm.</p>
+<p>The weight is right-skewed and unimodal ranging from 0 to 1500g.</p>
+<p>_Note: the descriptions, especially on the number of modes, may vary depending on the number of bins used.</p>
+</div></blockquote>
+<p>Create two scatterplots:</p>
+<ul class="simple">
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g</span></code> on the y-axis.</p></li>
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">length_vertical_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g</span></code> on the y-axis.</p></li>
+</ul>
+<p>Label the axes with “Vertical Length (cm)”, “Width (cm)” and “Weight (g)” where appropriate. You do not need to save the values in a variable. <strong>(2 marks)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;width_cm&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;weight_g&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Width (cm)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Weight (g)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/1d2e10b3bae744c4eea3f49a7783bd55d4135461b7d61c1bdb571e9d968abd9e.png" src="../../../../_images/1d2e10b3bae744c4eea3f49a7783bd55d4135461b7d61c1bdb571e9d968abd9e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;length_vertical_cm&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;weight_g&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Vertical Length (cm)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Weight (g)&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/b2ce22c06fd4b26337d68158b897bb89f80e1a164072c0fd69edd52d1c309889.png" src="../../../../_images/b2ce22c06fd4b26337d68158b897bb89f80e1a164072c0fd69edd52d1c309889.png" />
+</div>
+</div>
+<p>Comment on the shape of each scatterplot. Specifically commenting on whether the trends looks “positive” or “negative” and whether the trends appear linear or not. <strong>(2 marks)</strong></p>
+<blockquote>
+<div><p><strong>Solution</strong></p>
+<p>Both plots appear to have a moderately positive trend, but the trend appears to have some curvature.</p>
+</div></blockquote>
+<p>Create a new column in <code class="docutils literal notranslate"><span class="pre">fish_data</span></code> called <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> which takes the <code class="docutils literal notranslate"><span class="pre">weight_g</span></code> and square roots the values. <em>Hint: this can be done by using <code class="docutils literal notranslate"><span class="pre">.apply(np.sqrt)</span></code></em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+
+<span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;weight_g_sqrt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;weight_g&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now create two new scatterplots:</p>
+<ul class="simple">
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> on the y-axis.</p></li>
+<li><p>one with <code class="docutils literal notranslate"><span class="pre">length_vertical_cm</span></code> on the x-axis and <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> on the y-axis.</p></li>
+</ul>
+<p>Label the axes with “Vertical Length (cm)”, “Width (cm)” and “Weight Sqrt” where appropriate. <strong>(1 mark)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;width_cm&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;weight_g_sqrt&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Width (cm)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Weight Sqrt&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/672cf991c7f08013b8e43f793fbaebbfa5d9fd7cb35a7f1c45ac86f8774a08ba.png" src="../../../../_images/672cf991c7f08013b8e43f793fbaebbfa5d9fd7cb35a7f1c45ac86f8774a08ba.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;length_vertical_cm&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">fish_data</span><span class="p">[</span><span class="s2">&quot;weight_g_sqrt&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Length Vertical (cm)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Weight Sqrt&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/e101c2ac5b38076b64fed9e6b2460f36274f8d5a5280a21320d2ae0d5740f446.png" src="../../../../_images/e101c2ac5b38076b64fed9e6b2460f36274f8d5a5280a21320d2ae0d5740f446.png" />
+</div>
+</div>
+<p>Comment on the linearity of the scatterplots with weight square rooted. <strong>(1 mark)</strong></p>
+<blockquote>
+<div><p><strong>Solution</strong></p>
+<p>The scatterplots appear to still have a positive, moderate trend, but now appear to be more linear. So a linear regression might be appropriate using the transformed variable.</p>
+</div></blockquote>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">#</a></h2>
+<p>Setup a linear regression, called <code class="docutils literal notranslate"><span class="pre">regmod1</span></code>, estimate and fit the model (call this <code class="docutils literal notranslate"><span class="pre">regmod1_fit</span></code>) and calculate the parameter estimates (using <code class="docutils literal notranslate"><span class="pre">.params</span></code>), specifically with <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> as the dependent variable and <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> as the independent variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+
+<span class="n">regmod1</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;weight_g_sqrt ~ width_cm&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">fish_data</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">regmod1_fit</span> <span class="o">=</span> <span class="n">regmod1</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+
+<span class="n">regmod1_fit</span><span class="o">.</span><span class="n">params</span> <span class="c1"># get parameter estimates</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept   -5.192309
+width_cm     5.185988
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>What is the estimated line of best fit for <code class="docutils literal notranslate"><span class="pre">regmod1</span></code>? Provide an interpretation for the y-intercept and slope estimates. Comment on whether the y-intercept makes sense. <strong>(2 marks)</strong></p>
+<blockquote>
+<div><p><strong>Solution</strong></p>
+<p>The estimated line is $<span class="math notranslate nohighlight">\(\texttt{Weight.Sqrt} = -5.192 + 5.186 \times \texttt{Width}\)</span>$</p>
+<p>The y-intercept of -5.192, means that a fish that is 0cm wide is expected to have a square root weight of -5.192. This is nonsensical since the square root and fish weight cannot be below 0g, but we need the y-intercept to define the line mathematically.</p>
+<p>The slope of 5.186, means that for every 1cm increase in a fish’s width, we expect the fish’s square rooted weight to increase by 5.186.</p>
+</div></blockquote>
+<p>Setup another linear regression, called <code class="docutils literal notranslate"><span class="pre">regmod2</span></code>, estimate and fit the model (call this <code class="docutils literal notranslate"><span class="pre">regmod2_fit</span></code>) and calculate the parameter estimates (using <code class="docutils literal notranslate"><span class="pre">.params</span></code>), specifically with <code class="docutils literal notranslate"><span class="pre">weight_g_sqrt</span></code> as the dependent variable and both <code class="docutils literal notranslate"><span class="pre">width_cm</span></code> and <code class="docutils literal notranslate"><span class="pre">length_vertical_cm</span></code> as the independent variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+
+<span class="n">regmod2</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;weight_g_sqrt ~ width_cm + length_vertical_cm&#39;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">fish_data</span><span class="p">)</span> <span class="c1"># setup the model</span>
+
+<span class="n">regmod2_fit</span> <span class="o">=</span> <span class="n">regmod2</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span> <span class="c1"># estimate/fit the model </span>
+
+<span class="n">regmod2_fit</span><span class="o">.</span><span class="n">params</span> <span class="c1"># get parameter estimates</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept            -6.704586
+width_cm              2.986523
+length_vertical_cm    0.427794
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>What is the estimated line of best fit for <code class="docutils literal notranslate"><span class="pre">regmod2</span></code>? Provide an interpretation for the y-intercept and slope estimates. <strong>(2 marks)</strong></p>
+<blockquote>
+<div><p><strong>Solution</strong></p>
+<p>The estimated line is $<span class="math notranslate nohighlight">\(\texttt{Weight.Sqrt} = -6.705 + 2.987 \times \texttt{Width}+ 0.428 \times \texttt{Vertical.Length}\)</span>$</p>
+<p>The y-intercept of -6.705, means that a fish that is 0cm wide and 0cm long (vertically) is expected to have a square root weight of -6.705. This is non-sensical since the square root and fish weight cannot be below 0g, but we need the y-intercept to define the line mathematically.</p>
+<p>The slope of 2.987, means that for every 1cm increase in a fish’s width (with no change in the fish’s vertical length), we expect the fish’s square rooted weight to increase by 2.987.</p>
+<p>The slope of 0.428, means that for every 1cm increase in a fish’s vertical length (with no change in the fish’s width), we expect the fish’s square rooted weight to increase by 0.428.</p>
+</div></blockquote>
+<p>Print out the summary tables for both models (<code class="docutils literal notranslate"><span class="pre">regmod1</span></code> and <code class="docutils literal notranslate"><span class="pre">regmod2</span></code>) which display the p-values and 95% confidence intervals associated with the intercept and slope estimates. <strong>(1 mark)</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+<span class="n">regsum1</span> <span class="o">=</span> <span class="n">regmod1_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regsum1</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">regsum2</span> <span class="o">=</span> <span class="n">regmod2_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regsum2</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     -5.1923      0.654     -7.938      0.000      -6.484      -3.900
+width_cm       5.1860      0.138     37.471      0.000       4.913       5.459
+==============================================================================
+======================================================================================
+                         coef    std err          t      P&gt;|t|      [0.025      0.975]
+--------------------------------------------------------------------------------------
+Intercept             -6.7046      0.464    -14.465      0.000      -7.620      -5.789
+width_cm               2.9865      0.191     15.651      0.000       2.610       3.363
+length_vertical_cm     0.4278      0.032     13.294      0.000       0.364       0.491
+======================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculate the <span class="math notranslate nohighlight">\(R^2\)</span> for both models, and save them in <code class="docutils literal notranslate"><span class="pre">regmod1_rsquared</span></code> and <code class="docutils literal notranslate"><span class="pre">regmod2_rsquared</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Solution</span>
+
+<span class="n">regmod1_rsquared</span> <span class="o">=</span> <span class="n">regmod1_fit</span><span class="o">.</span><span class="n">rsquared</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regmod1_rsquared</span><span class="p">)</span>
+<span class="n">regmod2_rsquared</span> <span class="o">=</span> <span class="n">regmod2_fit</span><span class="o">.</span><span class="n">rsquared</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regmod2_rsquared</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8994288827287736
+0.9528478097297595
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>Based on the scatterplots, p-values, confidence intervals and <span class="math notranslate nohighlight">\(R^2\)</span> which of the two models would you select to model a fish’s weight (square rooted). You will be graded based on the appropriate justification(s) provided. <strong>(2 marks)</strong></p>
+<blockquote>
+<div><p><strong>Solution</strong></p>
+<p>They really can select either model and it is correct. The justification is what is important here:</p>
+<p>Option1: Choose regmod1 since it is the simpler model and already has fairly high <span class="math notranslate nohighlight">\(R^2\)</span>.</p>
+<p>Option2: Choose regmod2 since it is including vertical length which is significant and increases <span class="math notranslate nohighlight">\(R^2\)</span> by a fair amount.</p>
+</div></blockquote>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weekly-materials/week11/homework/marking"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Homework_11.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homework 11: Linear Regression</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../../week12/lecture/lecture12.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Week 12: A short note on reproducibility</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistics">Logistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question">Question</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-and-learning-objectives">Instructions and Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-section">Data section</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-the-data">Exploring the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methods">Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By EEB125 Instructors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

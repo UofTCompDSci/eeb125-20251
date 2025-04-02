@@ -101,3 +101,9 @@ parts:
       title: Practice Exercise
     - file: weekly-materials/week11/homework/Homework_11.ipynb
       title: Week 11 Homework 
+    - file: weekly-materials/week11/homework/marking/Homework_11_solutions.ipynb
+      title: Week 11 Homework Solution
+  - caption: Week 12
+    chapters:
+    - file: weekly-materials/week12/lecture/lecture12.ipynb
+      title: Prof. Moon's Notebook

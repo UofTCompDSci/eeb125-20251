@@ -507,11 +507,191 @@ Since the linear transect runs from towards the inner ocean, as the scientists s
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>site</th>
+      <th>quadrat</th>
+      <th>year</th>
+      <th>depth_m</th>
+      <th>temp_c</th>
+      <th>sand_percent</th>
+      <th>macroalgae_percent</th>
+      <th>microalgae_percent</th>
+      <th>corals_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LTER01</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>27.529318</td>
+      <td>22.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>77.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LTER02</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>27.594212</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2.6</td>
+      <td>97.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LTER03</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>30.1</td>
+      <td>0.0</td>
+      <td>36.7</td>
+      <td>33.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LTER04</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>21.4</td>
+      <td>0.0</td>
+      <td>57.1</td>
+      <td>21.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LTER05</td>
+      <td>Q1.1</td>
+      <td>2005</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0.6</td>
+      <td>0.0</td>
+      <td>3.6</td>
+      <td>95.8</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>11785</th>
+      <td>LTER02</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.243200</td>
+      <td>0.0</td>
+      <td>2.2</td>
+      <td>62.2</td>
+      <td>31.9</td>
+    </tr>
+    <tr>
+      <th>11786</th>
+      <td>LTER03</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>21.7</td>
+      <td>45.6</td>
+      <td>22.8</td>
+    </tr>
+    <tr>
+      <th>11787</th>
+      <td>LTER04</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.271281</td>
+      <td>0.0</td>
+      <td>12.3</td>
+      <td>62.6</td>
+      <td>21.9</td>
+    </tr>
+    <tr>
+      <th>11788</th>
+      <td>LTER05</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.202561</td>
+      <td>2.8</td>
+      <td>4.5</td>
+      <td>84.7</td>
+      <td>7.3</td>
+    </tr>
+    <tr>
+      <th>11789</th>
+      <td>LTER06</td>
+      <td>Q5.8</td>
+      <td>2021</td>
+      <td>20</td>
+      <td>28.194049</td>
+      <td>0.0</td>
+      <td>36.0</td>
+      <td>46.0</td>
+      <td>17.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>11790 rows × 9 columns</p>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check your column names:</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">corals_clean</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;site&#39;,
+ &#39;quadrat&#39;,
+ &#39;year&#39;,
+ &#39;depth_m&#39;,
+ &#39;temp_c&#39;,
+ &#39;sand_percent&#39;,
+ &#39;macroalgae_percent&#39;,
+ &#39;microalgae_percent&#39;,
+ &#39;corals_percent&#39;]
 </pre></div>
 </div>
 </div>
@@ -546,6 +726,113 @@ Since the linear transect runs from towards the inner ocean, as the scientists s
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>site</th>
+      <th>year</th>
+      <th>temp_c</th>
+      <th>corals_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LTER01</td>
+      <td>2005</td>
+      <td>27.529318</td>
+      <td>77.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LTER02</td>
+      <td>2005</td>
+      <td>27.594212</td>
+      <td>97.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LTER03</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>33.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LTER04</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>21.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LTER05</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>95.8</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>11785</th>
+      <td>LTER02</td>
+      <td>2021</td>
+      <td>28.243200</td>
+      <td>31.9</td>
+    </tr>
+    <tr>
+      <th>11786</th>
+      <td>LTER03</td>
+      <td>2021</td>
+      <td>NaN</td>
+      <td>22.8</td>
+    </tr>
+    <tr>
+      <th>11787</th>
+      <td>LTER04</td>
+      <td>2021</td>
+      <td>28.271281</td>
+      <td>21.9</td>
+    </tr>
+    <tr>
+      <th>11788</th>
+      <td>LTER05</td>
+      <td>2021</td>
+      <td>28.202561</td>
+      <td>7.3</td>
+    </tr>
+    <tr>
+      <th>11789</th>
+      <td>LTER06</td>
+      <td>2021</td>
+      <td>28.194049</td>
+      <td>17.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>11790 rows × 4 columns</p>
+</div></div></div>
 </div>
 </section>
 <section id="exercise-3">
@@ -575,6 +862,125 @@ Since the linear transect runs from towards the inner ocean, as the scientists s
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>site</th>
+      <th>year</th>
+      <th>temp_c</th>
+      <th>corals_percent</th>
+      <th>is_percent_corals_over_50</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LTER01</td>
+      <td>2005</td>
+      <td>27.529318</td>
+      <td>77.5</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LTER02</td>
+      <td>2005</td>
+      <td>27.594212</td>
+      <td>97.4</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LTER03</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>33.2</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LTER04</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>21.5</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LTER05</td>
+      <td>2005</td>
+      <td>NaN</td>
+      <td>95.8</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>11785</th>
+      <td>LTER02</td>
+      <td>2021</td>
+      <td>28.243200</td>
+      <td>31.9</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11786</th>
+      <td>LTER03</td>
+      <td>2021</td>
+      <td>NaN</td>
+      <td>22.8</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11787</th>
+      <td>LTER04</td>
+      <td>2021</td>
+      <td>28.271281</td>
+      <td>21.9</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11788</th>
+      <td>LTER05</td>
+      <td>2021</td>
+      <td>28.202561</td>
+      <td>7.3</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>11789</th>
+      <td>LTER06</td>
+      <td>2021</td>
+      <td>28.194049</td>
+      <td>17.5</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>11790 rows × 5 columns</p>
+</div></div></div>
 </div>
 </section>
 <section id="exercise-4">
@@ -627,6 +1033,11 @@ of all quadrats belonging to the two groups indicated in <code class="docutils l
 <span class="n">observed_diff_in_mean_temperature</span> <span class="o">=</span> <span class="n">mean_diff_temperature_by_coral_sa</span><span class="p">(</span><span class="n">corals_select_data</span><span class="p">)</span>
 
 <span class="n">observed_diff_in_mean_temperature</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.06443893039795512
 </pre></div>
 </div>
 </div>
@@ -709,6 +1120,22 @@ of all quadrats belonging to the two groups indicated in <code class="docutils l
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     -0.001322
+1      0.007525
+2      0.006518
+3     -0.004206
+4     -0.022146
+         ...   
+995   -0.016183
+996    0.004826
+997   -0.003907
+998   -0.007532
+999   -0.001234
+Length: 1000, dtype: float64
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="exercise-8">
@@ -732,9 +1159,14 @@ of all quadrats belonging to the two groups indicated in <code class="docutils l
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample solution</span>
 <span class="n">abs_test_statistics</span> <span class="o">=</span> <span class="n">resample_test_statistics</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
 
-<span class="n">p_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">abs_test_statistics</span> <span class="o">&gt;=</span> <span class="n">observed_diff_in_mean_temperature</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">p_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">abs_test_statistics</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">observed_diff_in_mean_temperature</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
 <span class="n">p_value</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
 </pre></div>
 </div>
 </div>
@@ -765,6 +1197,12 @@ of all quadrats belonging to the two groups indicated in <code class="docutils l
 <span class="n">observed_diff_in_mean_temperature</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.06443893039795512
+</pre></div>
+</div>
+<img alt="../../../_images/6c9e721ce9b1c10143f6436ce407ec204c54219d5318b437c622064242692bfa.png" src="../../../_images/6c9e721ce9b1c10143f6436ce407ec204c54219d5318b437c622064242692bfa.png" />
 </div>
 </div>
 </section>
